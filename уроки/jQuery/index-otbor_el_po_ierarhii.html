@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Отбор елементов по иерархии</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+	<script type="text/javascript">
+		var active = 0;
+		var links = false;
+
+		$(document).ready(function () {
+			var element = $("#menu li a:first");
+			alert(element.html());
+			element = $("#menu a:eq(3)");
+			alert(element.html());
+		})
+
+		function parseDocument () {
+			if(!links) links = $("#menu a");
+			for(var i = 0; i < links.length; i++){
+				if(i == active) links[i].style.color = "red";
+				else links[i].style.color = "blue";
+			}
+			if((active + 1) == links.length) active = 0;
+			else active++;
+			setTimeout(parseDocument, 100);
+		}
+	</script>
+</head>
+<body onload="parseDocument()">
+	<ul id="menu">
+		<li>
+			<a href="#">Ссылка 1</a>
+		</li>
+		<li>
+			<a href="#">Ссылка 2</a>
+		</li>
+		<li>
+			<a href="#">Ссылка 3</a>
+		</li>
+		<li>
+			<a href="#">Ссылка 4</a>
+		</li>
+		<li>
+			<a href="#">Ссылка 5</a>
+		</li>
+	</ul>
+</body>
+</html>

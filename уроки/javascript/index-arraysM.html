@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Многомерные массивы</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript">
+		var arr_1 = new Array();
+		var arr_2 = new Array();
+		var arr_3 = new Array();
+		
+		for(var i = 0; i < 5; i++){
+			arr_1[i] = i;	
+		}
+
+		for(var i = 0; i < 10; i++){
+			arr_2[i] = i*2;
+		}
+
+		for(var i = 0; i < 15; i++){
+			arr_3[i] = i*3;
+		}
+
+		var arr = new Array(arr_1, arr_2, arr_3);
+
+		for(var i = 0; i < arr.length; i++){
+			for(var j = 0; j < arr[i].length; j++){
+				document.write(arr[i][j] + " ");
+			}
+			document.write("<br/>");
+		}
+	</script>
+</head>
+<body>
+
+</body>
+</html>

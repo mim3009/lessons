@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Анимация</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+	<style type="text/css">
+		@keyframes anim_ml{
+			from{
+				margin-left: 0px;
+			}
+			to{
+				margin-left: 200px;
+			}
+		}
+
+		@keyframes anim_mt{
+			0%{
+				margin-top: 0px;
+			}
+			20%{
+				margin-top: 10px;
+			}
+			50%{
+				margin-top: 90px;
+			}
+			100%{
+				margin-top: 110px;
+			}
+		}
+
+		#f_1{
+			animation: anim_ml 2s 2;
+		}
+
+		#f_2{
+			animation: anim_mt 4s;
+		}
+	</style>
+</head>
+<body>
+	<figure id="f_1">
+		<img src="1.jpg" alt="Песик">
+	</figure>
+	<figure id="f_2">
+		<img src="2.jpg" alt="Тигрик">
+	</figure>
+</body>
+</html>

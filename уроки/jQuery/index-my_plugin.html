@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Собственный плагин</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+	<script type="text/javascript" src="my.js"></script>
+</head>
+<body>
+	<div class="c_1">Блок 1</div>
+	<br/>
+	<div class="c_1">Блок 2</div>
+	<br/>
+	<div class="c_2">Блок 3</div>
+	<br/>
+	<div class="c_3">Блок 4</div>
+	<script type="text/javascript">
+		$(".c_1").myExt();
+		$(".c_2").myExt({
+			baseColor: "green",
+			howerColor: "yellow"
+		});
+		$(".c_3").myExt({
+			widthLine: "5px",
+			baseColor: "green",
+			howerColor: "yellow"
+		});
+	</script>
+</body>
+</html>

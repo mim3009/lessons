@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Установка обработчика событий</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+	<script type="text/javascript">
+		function incSize (event) {
+			var width = Number(event.target.style.width.substring(0, event.target.style.width.length - 2));
+			event.target.style.width = (width + 10) + "px";
+			$("<p>Координаты мыши во время клика: (" +  event.screenX + ", " + event.screenY + ")</p>").insertAfter("div:last");
+			//$(event.target).unbind();
+
+		}
+
+		$(document).ready(function () {
+			$("div").bind("click", incSize); //$(event.target).unbind(); снять события
+			$(document).on("click", "p", function(){ // on - установка событий на елементы которые были сделаны или сделаны в процессе работы jQuery
+				
+			});
+		});
+	</script>
+</head>
+<body>
+	<div style="width: 50px; height: 50px; background-color: #000;"></div>
+	<div style="width: 50px; height: 50px; background-color: #0f0;"></div>
+	<div style="width: 50px; height: 50px; background-color: #00f;"></div>
+	<p>Абзац</p>
+</body>
+</html>

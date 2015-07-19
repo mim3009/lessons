@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Формы</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+</head>
+<body>
+	<form name="myform" action="#" method="post">
+		<p>
+			Имя: <input type="text" name="name"/>
+		</p>
+		<p>
+			Email: <input type="email" name="email" required="required"/> - (Не может быть пустым)
+		</p>
+		<p>
+			Телефон: <input type="tel" name="tel" pattern="096-[0-9]{2}-[0-9]{2}-[0-9]{3}"> - (096-81-87-428)
+		</p>
+		<p>
+			Дата вашего рождения: <input type="date" name="date">
+		</p>
+		<p>
+			Пароль: <input type="password" name="pass">
+		</p>
+		<input type="submit" value="Регистрация"/>
+	</form>
+</body>
+</html>

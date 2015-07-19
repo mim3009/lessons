@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Формы</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+</head>
+<body>
+	<form name="myform" action="#" method="post">
+		<p>
+			Email: <input type="email" name="email" required="required" autofocus="autofocus" placeholder="Ваш е-mail"/>
+		</p>
+		<p>
+			Телефон: <input type="tel" name="tel" pattern="8495-[0-9]{3}-[0-9]{2}-[0-9]{2}"/> - (Пример 8495-111-11-11)
+		</p>
+		<p>
+			<input type="range" name="range" min="1" max="100" value="99"/>
+		</p>
+		<p>
+			Номер месяца, в который вы родились: <input type="number" min="1" max="12" step="1" />
+		</p>
+		<p>
+			Цвет: <input type="color" name="color"/>
+		</p>
+		<p>
+			Поиск: <input type="text" name="search" list="search" />
+		</p>
+		<datalist id="search">
+			<option label="HTML" value="html"></option>
+			<option label="HTML5" value="html5"></option>
+			<option label="CSS" value="css"></option>
+		</datalist>
+		<p>
+			Дата: <input type="date" name="date" />
+		</p>
+		<p>
+			Время: <input type="time" name="time" />
+		</p>
+		<p>
+			Дата и время: <input type="datetime-local" name="datetime" />
+		</p>
+		<p>
+			<progress value="5" max="10"></progress>
+		</p>
+		<p>
+			<input type="submit" value="Отправить">
+		</p>
+	</form>
+</body>
+</html>

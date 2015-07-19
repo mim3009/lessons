@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Место положения пользователя</title>
+	<meta http-equiv="Content-type" content="text/html; chatset=utf-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+</head>
+<body>
+	<script type="text/javascript">
+		navigator.geolocation.getCurrentPosition(success, error);
+
+		function success(position){
+			document.write("Широта: " + position.coords.latitude);
+			document.write("<br/>");
+			document.write("Долгота: " + position.coords.longitude);
+		}
+
+		function error(e){
+			switch(e.code){
+				case e.PERMISSION_DENIED:
+					alert("Вы запретили считывание информации о вашем местоположении.");
+					break;
+				case e.POSITION_UNAVAILABLE:
+					alert("Браузер не смог определить ваше местоположение.");
+					break; 
+				case e.TIMEOUT:
+					alert("Браузер не успел определить ваше местоположение.");
+					break;
+				case e.UNKNOWN_ERROR:
+					alert("Произошла неизвестная ошибка.");
+					break;
+			}
+		}
+	</script>
+</body>
+</html>

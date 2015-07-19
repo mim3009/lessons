@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Drag and Drop</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+</head>
+<body>
+	<div>
+		<img src="1.jpg" id="img_1" alt="Песик" draggable="true" ondragstart="dragStart(event)"/>
+		<img src="2.jpg" id="img_2" alt="Тигрик" draggable="true" ondragstart="dragStart(event)"/>
+	</div>
+	<div ondrop="drop(event)" ondragover="dragOver(event)">Контейнер</div>
+	<script type="text/javascript">
+		function dragStart(event) {
+			event.dataTransfer.setData("text/plain", event.target.id); //Сохранение елемента
+		}
+
+		function dragOver(event){
+			event.preventDefault(); //Отмена действия браузера по умолчанию
+		}
+
+		function drop(event){
+			event.preventDefault();
+			var img = event.dataTransfer.getData("text/plain"); //Загрузка елемента
+			var new_img = document.getElementById(img).cloneNode(true);
+			event.target.appendChild(new_img);
+		}
+	</script>
+</body>
+</html>

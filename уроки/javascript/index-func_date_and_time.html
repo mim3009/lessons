@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Функции. Дата и время</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript">
+		var date = new Date();
+
+		date.toString = function () {
+			var year = this.getFullYear();
+			var month = this.getMonth();
+			var day = this.getDate();
+			return year + "." + month + "." + day;
+		}
+
+		var text = "Год: " + date.getFullYear();
+		text += "\nМесяц: " + date.getMonth();
+		text += "\nЧисло: " + date.getDate();
+		text += "\nЧас: " + date.getHours();
+		text += "\nМинута: " + date.getMinutes();
+		text += "\nСекунда: " + date.getSeconds();
+		text += "\nДата: " + date;
+		alert(text);
+
+		//date = new Date(2000, 0, 2, 13, 0, 5);
+		//date.setSeconds(7);
+	</script>
+</head>
+<body>
+
+</body>
+</html>

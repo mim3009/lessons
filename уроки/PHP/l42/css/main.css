@@ -1,0 +1,169 @@
+body{
+	margin: 0;
+	padding: 0;
+}
+
+.clear{
+	clear: both;
+}
+
+.hidden{
+	overflow: hidden;
+}
+
+.right{
+	text-align: right;
+}
+
+#header{
+	background: #336CAB;
+}
+
+#header h2{
+	text-align: center;
+	margin: 0;
+}
+
+#center img{
+	float: left;
+	width: 150px;
+	height: 170px;
+	margin: 15px;
+}
+
+.article img{
+	float: left;
+	width: 150px;
+	height: 170px;
+	margin: 5px;
+}
+
+#menu{
+	background: #B1BCE8;
+	border-radius: 5px;
+}
+
+.imcap{
+	width: 90 !important;
+	height: 50 !important;
+}
+
+#menu h2{
+	text-align: center;
+	padding-top: 10px;
+}
+
+#menu ul{
+	padding: 0 10px 10px 30px;
+}
+
+#auth{
+	background: #8CFAD3;
+	border-radius: 5px;
+}
+
+#auth h2{
+	text-align: center;
+	padding-top: 10px;
+}
+
+#auth form{
+	margin-right: 7px;
+	margin-left: 7px;
+	padding-bottom: 7px;
+}
+
+#search{
+	background: #FF82E6;
+	border-radius: 5px;
+}
+
+#search form{
+	margin: 7px;
+	padding: 3px;
+}
+
+#banners{
+	background: #FF6666;
+	border-radius: 5px;
+	padding: 7px;
+}
+
+#banners h2{
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+
+#left, #right{
+	width: 230px;
+	padding: 0 10px;
+	min-height: 300px;
+}
+
+#left{
+	float: left;
+}
+
+#right{
+	float: right;
+}
+
+#center{
+	margin: 0 250px;
+	padding: 0 10px;
+}
+
+#center h1{
+	margin: 0;
+	text-align: center;
+}
+
+hr{
+	margin: 0;
+}
+
+.banner{
+	border: 1px solid #000;
+	margin: 10px auto 0;
+	width: 200px;
+}
+
+#footer{
+	background: #548AF9;
+	height: 50px;
+}
+
+#footer p{
+	text-align: center;
+	padding-top: 15px;
+}
+
+#pagination p{
+	font-size: 110%;
+	margin: 0;
+	text-align: center;
+}
+
+#pagination a{
+	display: inline-block;
+	padding: 3px;
+}
+
+form table tr td input[name='login'], form table tr td input[name='password']{
+	width: 100%;
+}
+
+#reg form table{
+	margin: 0 auto;
+}
+
+.message{
+	color: #f00;
+	text-align: center;
+}
+
+#message p{
+	text-align: center;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Практика JavaScript</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript">
+	function checkForm (form) {
+		var login = form.login.value;
+		var password = form.password.value;
+		var bad = "";
+		if (login == "") {
+			bad += "Вы не ввели логин\n";
+		}else if(login.length < 3){
+			bad += "Логин слишком короткий\n";
+		}
+		if (password == "") {
+			bad += "Вы не ввели пароль\n";
+		}else if(password.length < 6){
+			bad += "Пароль слишком простой\n";
+		}
+		if(bad != ""){
+			alert(bad);
+			return false;
+		}
+		return true;
+	}
+	</script>
+</head>
+<body>
+	<form action="#" method="post" name="form" onsubmit="return checkForm(this)">
+		<div>
+			<label>Логин:</label>
+			<input type="text" name="login">
+			<br/>
+			<label>Пароль:</label>
+			<input type="password" name="password">
+			<br/>
+			<input type="submit" value="Отправить">
+		</div>
+	</form>
+</body>
+</html>

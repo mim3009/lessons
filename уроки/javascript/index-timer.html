@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Таймеры</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript">
+		//var id = setInterval("myF()", 1000);
+		var counter = 0;
+		function myf () {
+			counter++;
+			alert("прошло секунд " + counter);
+			if(counter == 5){
+				clearInterval(id);
+			}
+		}
+
+		var counter_2 = 0;
+		function myF2 () {
+			counter_2++;
+			alert("Прошло секунд " + counter_2);
+			if(counter_2 < 5){
+				setTimeout("myF2()", 1000);
+			} 
+		}
+
+		//myF2();
+
+		function timer(){
+			var s = Number(document.getElementById("timer").innerHTML);
+			s++;
+			document.getElementById("timer").innerHTML = s;
+			setTimeout("timer()", 1000);
+		}
+	</script>
+</head>
+<body onload="timer()">
+	Прошло <span id="timer">-1</span> секунд
+</body>
+</html>

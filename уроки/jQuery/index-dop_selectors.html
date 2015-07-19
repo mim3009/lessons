@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Дополнительные селекторы в jQuery</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+	<script type="text/javascript">
+		function check(){
+			var element = $("input[name='sex']:checked");
+			if (element.length == 0) {
+				alert("Вы не выбрали пол");
+			}else{
+				alert("Вы выбрали: " + element.get(0).value);
+			}
+		}
+	</script>
+</head>
+<body>
+	<form name="myform" action="#" method="post">
+		<p>Ваш пол:</p>
+		<p>
+			<input type="radio" name="sex" value="male">Муж.
+			<input type="radio" name="sex" value="female">Жен.
+		</p>
+		<p>
+			<input type="text" name="login">
+		</p>
+		<p>
+			<input type="button" value="Проверить форму" onclick="check()">
+		</p>
+	</form>
+	<script type="text/javascript">
+		var elements = $(":text");
+		alert(elements.get(0).name);
+		var ele = $(":text").add("input[type='radio']");
+		alert(ele.length);
+		ele = $(":text, input[type='radio']");
+		//alert(ele.length);
+		ele = ele.parents();
+		var text = "";
+		for(var i = 0; i < ele.length; i++){
+			text += ele[i] + "\n";
+		}
+		alert(text);
+
+		ele = $("body").children();
+		var text2 = "";
+		for(var i = 0; i < ele.length; i++){
+			text2 += ele[i] + "\n";
+		}
+		alert(text2);
+	</script>
+</body>
+</html>

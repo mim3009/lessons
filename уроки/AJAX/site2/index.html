@@ -1,0 +1,43 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+ 	<title>Работа с сервером</title>
+ 	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+ </head>
+ <body>
+ 	<script type="text/javascript">
+ 	function getXmlHttp () {
+ 		var xmlhttp;
+ 		try{
+ 			xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+ 		}catch(e){
+ 			try{
+ 				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+ 			}catch(E){
+ 				xmlhttp = false;
+ 			}
+ 		}
+ 		if(!xmlhttp && typeof XMLHttpRequest != "undefined"){
+ 			xmlhttp = new XMLHttpRequest();
+ 		}
+ 		return xmlhttp;
+ 	}
+
+ 	function checkLogin (login) {
+ 		var xmlhttp = getXmlHttp();
+ 		xmlhttp.open("POST", "script.php", true); //Открываем асинхронное соединение
+ 		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); //Отправляем кодировку
+ 		xmlhttp.send("login=" + encodeURIComponent(login)); //Преобразовываем строку в норм кодировку и отправляем
+ 		xmlhttp.onreadystatechange = function () { //Ждем ответа от сервера
+ 			if(xmlhttp.readyState == 4){
+ 				if(xmlhttp.status == 200){
+ 					if(xmlhttp.responseText == "error") alert("Логин занят");
+ 					else alert("Логин свободен");
+ 				}
+ 			}
+ 		}
+ 	}
+ 	</script>
+ 	<input type="text" name="login" onblur="checkLogin(this.value)">
+ </body>
+ </html>

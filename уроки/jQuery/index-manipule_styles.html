@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Манипулирование стилями</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+</head>
+<body>
+	<div>Блок</div>
+	<script type="text/javascript">
+		$("div").css("background-color", "#f0f");
+		$("div").css("width", "500px");
+		$("div").css("height", function () {
+			return $(this).width();
+		});
+	</script>
+</body>
+</html>

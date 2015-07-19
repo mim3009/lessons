@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Отправка GET и POST запросов</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+	<script type="text/javascript">
+		function changeData (data) {
+			var element = $("#content");
+			if(element.length == 0){
+				$("<p id='content'>" + data + "</p>").appendTo($("body"));
+			}else{
+				$("#content").text(data);
+			}
+		}
+
+		$(document).ready(function () {
+			$("#p_1").bind("click", function () {
+				$.get("script.php" , {id: 1}, changeData);
+			});
+			$("#p_2").bind("click", function () {
+				$.post("script.php" , {id: 2}, changeData);
+			});
+		});
+	</script>
+</head>
+<body>
+	<span id="p_1">Вкладка 1</span>
+	<span id="p_2">Вкладка 2</span>
+</body>
+</html>

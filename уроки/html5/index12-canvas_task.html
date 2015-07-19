@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+</head>
+<body>
+	<canvas id="canvas" width="700" height="500" onclick="onClk()"></canvas>
+	<script type="text/javascript">
+		document.getElementById("canvas").style.background = "red";
+		var can = document.getElementById("canvas").getContext("2d");
+		var x = 0;
+		var y = 0;
+
+		function onClk(){
+			var e =  window.event;
+			if(x == '0' && y == '0'){
+				x = e.clientX;
+				y = e.clientY;
+				can.beginPath();
+				can.moveTo(x,y);
+			}
+			else{
+				var x1 = e.clientX;
+				var y1 = e.clientY;
+				can.lineTo(x1,y1);
+				can.stroke();
+				x = x1;
+				y = y1;
+			}
+		}
+
+	</script>
+</body>
+</html>

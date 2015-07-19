@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Массивы</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript">
+		var arr = new Array(-7.5, 5, "str", false);
+		document.write("Элемент с индексом 0 равен " + arr[0]);
+		document.write("<br/>");
+		for(var i = 0; i < arr.length; i++){
+			document.write("Элемент с индексом " + i + " равен " + arr[i] + "<br/>");
+		}
+		arr = new Array();
+		var k = 0;
+		for (var i = 0; i < 10; i++) {
+			for (var j = 0; j < 5; j++) {
+				arr[k] = i * j;
+				k++;		
+			}
+		}
+		document.write("<br/>");
+		var summa = 0;
+		for (var i = 0; i < arr.length; i++) {
+			summa += arr[i];
+		}
+		document.write("Сумма всех элементов массива равна " + summa);
+		document.write("<br/>");
+		document.write("Среднее арифметическое равно " + (summa/arr.length));
+	</script>
+</head>
+<body>
+
+</body>
+</html>

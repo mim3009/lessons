@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Регулярные выражения</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript">
+		function checkForm(form){
+			var email = form.email.value;
+			var m = email.match(/^[a-z0-9][a-z0-9\._-]*[a-z0-9]*@([a-z0-9]+([a-z0-9-]*[a-z0-9]+)*\.)+[a-z]+$/i);
+			if (!m) {
+				alert("Введенный вами E-mail не корректен!");
+				return false;
+			}
+			return true;
+		}
+	</script>
+</head>
+<body>
+	<form name="myform" action="http://yandex.ru" method="post" onsubmit="return checkForm(this)">
+		<p>
+			E-mail: <input type="text" name="email">
+		</p>
+		<p>
+			<input type="submit" value="Отправить">
+		</p>
+	</form>
+</body>
+</html>

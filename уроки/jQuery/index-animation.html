@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Анимация</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+	<script type="text/javascript">
+		function showComments () {
+			$("#comments").show(1000, function () { //hide()
+				$("#show").hide();
+				$("#hide").show();
+			});
+		}
+
+		function hideComments () {
+			$("#comments").fadeOut(1000, function(){ //fadeIn()
+				$("#show").show();
+				$("#hide").hide();
+			});
+		}
+
+		$(document).ready(function () {
+			$("#show").bind("click", showComments);
+			$("#hide").bind("click", hideComments);
+		});
+	</script>
+</head>
+<body>
+	<a href="#" id="hide" onclick="return false;">Скрыть комментарии</a>
+	<a href="#" id="show" onclick="return false;" style="display: none;">Показать комментарии</a>
+	<div id="comments">
+		<p>Комментарий 1</p>
+		<p>Комментарий 2</p>
+		<p>Комментарий 3</p>
+	</div>
+</body>
+</html>

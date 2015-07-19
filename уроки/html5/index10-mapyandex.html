@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Примеры. Размещение карты на странице.</title>
+    <!--
+        Подключаем API карт
+	    Если вы используете API локально, то в URL ресурса необходимо указывать протокол в стандартном виде (http://...)
+    -->
+    <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript">
+        var myMap;
+
+        // Дождёмся загрузки API и готовности DOM.
+        ymaps.ready(init);
+
+        navigator.geolocation.getCurrentPosition(init, error);
+
+        function init () {
+                
+            // Создание экземпляра карты и его привязка к контейнеру с
+            // заданным id ("map").
+            myMap = new ymaps.Map('map', {
+                // При инициализации карты обязательно нужно указать
+                // её центр и коэффициент масштабирования.
+                center: [position.coords.latitude, position.coord.longitude], // Москва
+                zoom: 10
+            }, {
+                searchControlProvider: 'yandex#search'
+            });
+        }
+
+        function error(e){
+            switch(e.code){
+                case e.PERMISSION_DENIED:
+                    alert("Вы запретили считывание информации о вашем местоположении.");
+                    break;
+                case e.POSITION_UNAVAILABLE:
+                    alert("Браузер не смог определить ваше местоположение.");
+                    break; 
+                case e.TIMEOUT:
+                    alert("Браузер не успел определить ваше местоположение.");
+                    break;
+                case e.UNKNOWN_ERROR:
+                    alert("Произошла неизвестная ошибка.");
+                    break;
+            }
+        }
+    </script>
+	<style>
+        body, html {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #map {
+            width: 100%;
+            height: 90%;
+        }
+    </style>
+</head>
+
+<body>
+<div id="map"></div>
+</body>
+
+</html>

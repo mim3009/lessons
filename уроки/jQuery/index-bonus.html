@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Реализация ProgressBar</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+	<script type="text/javascript">
+		var all_task = 250;
+		var complete_task = 0;
+		function task() {
+			/* Что-то выполняем...*/
+			complete_task += Math.ceil(Math.random() * 20);
+			var percent = (complete_task / all_task) * 100;
+			if (percent > 100) percent = 100;
+			$(".progress-label").text(percent.toFixed(0) + "%");
+			$("#progressbar").progressbar({
+				value: percent
+			});
+			if (percent == 100) alert("Задача выполнена");
+			else setTimeout(task, 100);
+		}
+</script>
+</head>
+<body onload="task()">
+<div id="progressbar">
+	<div class="progress-label" style="float: left; margin-left: 50%; margin-top: 7px;">0%</div>
+</div>
+</body>
+</html>

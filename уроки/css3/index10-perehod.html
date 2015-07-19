@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Эффект перехода</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+	<style type="text/css">
+		#block{
+			background-color: #000;
+			height: 400px;
+			transition: width 1s;
+			width: 500px;
+		}
+
+		#block:hover{
+			width: 800px;
+		}
+
+		input{
+			transition: color 2s, font-size 2s;
+		}
+
+		input:focus{
+			color: #f00;
+			font-size: 150%;
+		}
+
+		ul li ul{
+			display: none;
+			transition: all 2s;
+		}
+
+		ul li:hover ul{
+			color:red;
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<div id="block"></div>
+	<p>
+		<input type="text" name="name" />
+	</p>
+	<ul>
+		<li>
+			<a href="#">Пункт 1</a>
+			<ul>
+				<li>Подпункт 1</li>
+				<li>Подпункт 2</li>
+			</ul>
+		</li>
+		<li>
+			<a href="#">Пункт 2</a>
+			<ul>
+				<li>Подпункт 1</li>
+				<li>Подпункт 2</li>
+			</ul>
+		</li>
+	</ul>
+</body>
+</html>

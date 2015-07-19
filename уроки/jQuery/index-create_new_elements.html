@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Создание новых елементов</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+</head>
+<body>
+	<div>Блок</div>
+	<script type="text/javascript">
+		$("<p>Новый абзац</p>"); // - новый елемент
+		$("<p>Новый абзац</p>").insertAfter("div"); //insertBefore()
+		$("div").after("<p>Новый абзац 2</p>"); //before()
+		$("<p>Новый абзац в блоке</p>").appendTo("div");
+
+		var element = $("<p>Очень новый абзац</p>");
+		$("body").append(element);
+	</script>
+</body>
+</html>

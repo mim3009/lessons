@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Drag & drop</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+</head>
+<body>
+	<div>
+		<img src="1.jpg" id="im1" alt="Песик" draggable="true" ondragstart="dragStart(event)" price="100"/>
+		<img src="2.jpg" id="im2" alt="Левик" draggable="true" ondragstart="dragStart(event)" price="150"/>
+	</div>
+	<div ondrop="drop(event)" ondragover="dragOver(event)">
+		<div id="bucket">
+			Корзинка для покупок
+		</div>
+		<div id="img2">
+			0
+		</div>
+	</div>
+	<script type="text/javascript">
+		function dragStart(event){
+			event.dataTransfer.setData("text/plain", event.target.id);
+		}
+
+		function dragOver(event){
+			event.preventDefault();
+		}
+
+		function drop(event){
+			event.preventDefault();
+			var img = event.dataTransfer.getData("text/plain");
+			var price_el = document.getElementById(img).getAttribute("price");
+			var old_price = document.getElementById("img2").innerHTML;
+			var new_img = document.getElementById(img).cloneNode(true);
+			document.getElementById("img2").innerHTML = Number(price_el) + Number(old_price);
+			event.target.appendChild(new_img);
+		}
+	</script>
+</body>
+</html>

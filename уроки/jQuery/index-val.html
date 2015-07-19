@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Функция val()</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+</head>
+<body>
+	<input type="radio" name="sex" value="male">М
+	<input type="radio" name="sex" value="female">Ж
+	<input type="button" value="Проверить" onclick="check()">
+
+	<script type="text/javascript">	
+ 		function check () {
+ 			var value = $("input[name='sex']:checked").val();
+ 			alert(value);
+ 		}
+	</script>
+</body>
+</html>

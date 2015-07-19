@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+	<script type="text/javascript">
+		var delay = 500;
+		$(document).ready(function(){
+			$(".block h1").bind("click", function(event){
+				var parent = $(event.target).parent();
+				var p = parent.find("p");
+				if ($(p).is(":visible")) {
+					$(p).slideUp(delay);
+				}else{
+					$(p).slideDown(delay);
+				}
+			});
+		});
+	</script>
+	<style type="text/css">
+		.block{
+			border: 2px solid #ccc;
+			border-radius: 5px;
+			margin: 10px 0;
+			width: 300px;
+		}
+
+		.block h1{
+			border-bottom: 2px solid #ccc;
+			cursor: pointer;
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="block">
+		<h1>Блок</h1>
+		<p>Содержимое блока</p>
+		<p>Содержимое блока</p>
+		<p>Содержимое блока</p>
+	</div>
+	<div class="block">
+		<h1>Блок</h1>
+		<p>Содержимое блока</p>
+		<p>Содержимое блока</p>
+		<p>Содержимое блока</p>
+	</div>
+	<div class="block">
+		<h1>Блок</h1>
+		<p>Содержимое блока</p>
+		<p>Содержимое блока</p>
+		<p>Содержимое блока</p>
+	</div>
+</body>
+</html>

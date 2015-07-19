@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Пользовательская анимация</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("img").bind("click", function (event) {
+				$(this).parent().css("text-align", "center");
+				$(this).animate({
+					width: $(this).width() * 10, //либо event.target либо this оно равносильно!!!
+					height: $(event.target).height() * 10
+				}, 3000);
+			});
+		});
+	</script>
+</head>
+<body>
+	<p class="img">
+		<img src="1.jpg" style="width: 100px;" alt="Картинка">
+	</p>
+	<p class="img">
+		<img src="1.jpg" style="width: 100px;" alt="Картинка">
+	</p>
+	<p class="img">
+		<img src="1.jpg" style="width: 100px;" alt="Картинка">
+	</p>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Добавление елементов</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+</head>
+<body>
+	<div><p>Абзац</p></div>
+	<img src="1.jpg" alt="">
+	<img src="2.jpg" alt="">
+	<img src="3.jpg" alt="">
+	<div id="images"></div>
+	<a href="#">Ссылка 1</a>
+	<a href="#">Ссылка 2</a>
+	<script type="text/javascript">
+		$("div").append("<p>Абзац 2</p>"); //есть prepend и prependTo добавляет в начало
+		$("img").appendTo($("#images"));
+		$("a").wrap("<p class='link'></p>"); //обертка елементов
+		$("#images").remove(); //удаляет
+		$("p.link").empty(); //очищает внутренность
+	</script>
+</body>
+</html>

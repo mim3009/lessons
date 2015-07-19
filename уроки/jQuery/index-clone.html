@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Функция clone()</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+</head>
+<body>
+	<div><p>Абзац</p></div>
+	<script type="text/javascript">
+		var element = $("div").clone();
+		element.html("<p>Абзац 1</p>");
+		element.css("color", "red");
+		element.css("font-size", "150%");
+		$("body").append(element);
+	</script>
+</body>
+</html>

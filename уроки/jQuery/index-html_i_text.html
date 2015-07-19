@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Функции html() и text()</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+</head>
+<body>
+	<div>Блок
+		<p>Абзац</p>	
+	</div>
+	<script type="text/javascript">
+		alert($("div").html());
+		alert($("div").text());
+		$("div").html("<p>Новый абзац</p>");
+	</script>
+</body>
+</html>
