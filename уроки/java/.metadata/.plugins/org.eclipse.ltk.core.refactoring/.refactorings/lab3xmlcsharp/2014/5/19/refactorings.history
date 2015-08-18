@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;org.exampleforlab3.JaxbBookTransformed&apos; to &apos;JaxbBookTransformer&apos;&#x0D;&#x0A;- Original project: &apos;lab3xmlcsharp&apos;&#x0D;&#x0A;- Original element: &apos;org.exampleforlab3.JaxbBookTransformed&apos;&#x0D;&#x0A;- Renamed element: &apos;org.exampleforlab3.JaxbBookTransformer&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;JaxbBookTransformed&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;org.exampleforlab3{JaxbBookTransformed.java[JaxbBookTransformed" matchStrategy="1" name="JaxbBookTransformer" qualified="false" references="true" similarDeclarations="false" stamp="1399633212915" textual="false" version="1.0"/>
+</session>

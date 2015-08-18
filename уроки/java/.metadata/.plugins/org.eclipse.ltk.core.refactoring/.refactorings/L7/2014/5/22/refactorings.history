@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;stn.cn.ua.MainInfo&apos; to &apos;MailInfo&apos;&#x0D;&#x0A;- Original project: &apos;L7&apos;&#x0D;&#x0A;- Original element: &apos;stn.cn.ua.MainInfo&apos;&#x0D;&#x0A;- Renamed element: &apos;stn.cn.ua.MailInfo&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;MainInfo&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;stn.cn.ua{MainInfo.java[MainInfo" matchStrategy="1" name="MailInfo" qualified="false" references="true" similarDeclarations="false" stamp="1401561151844" textual="false" version="1.0"/>
+</session>

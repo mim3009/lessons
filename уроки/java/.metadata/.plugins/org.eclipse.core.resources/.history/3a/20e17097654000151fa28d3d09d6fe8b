@@ -1,0 +1,18 @@
+package fileIO;
+
+import java.io.IOException;
+
+public class InputText {
+	
+	public static void main(String[] args){
+		
+		int c;
+		try{
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+	}
+	
+}

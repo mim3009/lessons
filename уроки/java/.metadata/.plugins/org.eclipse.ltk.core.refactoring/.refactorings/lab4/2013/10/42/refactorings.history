@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;ddd.Vector&apos; to &apos;VectorKomp&apos;&#x0D;&#x0A;- Original project: &apos;lab4&apos;&#x0D;&#x0A;- Original element: &apos;ddd.Vector&apos;&#x0D;&#x0A;- Renamed element: &apos;ddd.VectorKomp&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Vector&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;ddd{Vector.java[Vector" matchStrategy="1" name="VectorKomp" qualified="false" references="true" similarDeclarations="false" stamp="1382007479074" textual="false" version="1.0"/>
+</session>

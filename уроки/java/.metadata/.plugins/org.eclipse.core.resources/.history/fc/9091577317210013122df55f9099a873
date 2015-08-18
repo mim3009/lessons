@@ -1,0 +1,19 @@
+
+public class CalcClass {
+private static double nextU(double u, double x, int i) {
+		
+		return u*x*x/(2*i-2)/(2*i-1);
+		}
+		public static double calcSinh(double x, double e){
+			double u = x;
+			double sum = u;
+			int i = 1;
+			while (Math.abs(u) > e){
+				i++;
+				u = nextU(u,x,i);
+				sum += u;
+			}
+			return sum;
+		}
+
+}

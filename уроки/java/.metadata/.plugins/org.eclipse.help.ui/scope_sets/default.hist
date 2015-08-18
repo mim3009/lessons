@@ -1,0 +1,6 @@
+#Thu Oct 31 13:22:47 EET 2013
+__DEFAULT__=false
+org.eclipse.sdk.Eclipse.master=true
+org.eclipse.sdk.Google.master=true
+org.eclipse.help.ui.localSearch.master=true
+expression=default

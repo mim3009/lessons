@@ -1,0 +1,11 @@
+package command;
+
+public class StereoOffCommand {
+	
+	String stereo;
+
+	public StereoOffCommand(String stereo) {
+		this.stereo = stereo;
+	}
+
+}

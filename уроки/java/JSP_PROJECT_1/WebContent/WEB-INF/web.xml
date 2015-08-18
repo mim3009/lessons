@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app version="2.4" xmnls="http://java.sun.com/xml/ns/i2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/i2ee http://java.sun.com/xml/ns/i2ee/web-app_2_4.xsd">
+	<display-name>IShop</display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+	</welcome-file-list>
+	
+	<servlet>
+		<servlet-name>myServlet</servlet-name>
+		<servlet-class>Servlets.MyServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>startServlet</servlet-name>
+		<servlet-class>Servlets.StartServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>myServlet</servlet-name>
+		<url-pattern>/myServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>startServlet</servlet-name>
+		<url-pattern>/startServlet</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

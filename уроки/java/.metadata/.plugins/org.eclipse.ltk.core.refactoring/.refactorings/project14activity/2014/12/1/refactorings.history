@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;project14activity/res/layout/tool.xml&apos; to &apos;two.xml&apos;" description="Rename resource &apos;tool.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="res/layout/tool.xml" name="two.xml" stamp="1419842408301" updateReferences="true"/>
+</session>

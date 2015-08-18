@@ -1,0 +1,28 @@
+package observer;
+
+import java.util.Observable;
+
+public class CurrentConditionsDisplay implements Observer, DisplayElement{
+	
+	Observable observable;
+	private float temperature;
+	private float humidity;
+	
+	public CurrentConditionsDisplay(Observable observable) {
+		this.observable = observable;
+		observable.addObserver(this);
+	}
+
+	@Override
+	public void display() {
+		System.out.println("Current conditions: " + temperature + "F degrees and " + humidity + "% hudimity");
+	}
+
+	@Override
+	public void update(float temp, float humidity, float pressure) {
+		this.temperature = temp;
+		this.humidity = humidity;
+		display();
+	}
+
+}

@@ -1,0 +1,25 @@
+package command;
+
+public class CeilingFan {
+
+	public void high(){
+		System.out.println("Ceiling Fan High Speed");
+	}
+	
+	public void medium(){
+		System.out.println("Ceiling Fan Medium Speed");
+	}
+	
+	public void low(){
+		System.out.println("Ceiling Fan Low Speed");
+	}
+	
+	public void off(){
+		System.out.println("Ceiling Fan is Off");
+	}
+	
+	public void getSpeed(){
+		
+	}
+	
+}

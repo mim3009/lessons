@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<clay-model clay-version="2.0.1">
+<database-model author="" begin-script="" end-script="" id="3705cd:14310eade5b:-7ffa" name="dbModel" sql-dialect-id="jp.azzurri.clay.dialect.Postgre_7_3_Dialect" version="1.0">
+<schema-list>
+<schema alias="Parichm" id="3705cd:14310eade5b:-7ff7" name="parichm">
+<table-list>
+<table alias="Parichmaher" id="3705cd:14310eade5b:-7ff9" name="parichmaher">
+<column-list>
+<column alias="Id" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7fd7" mandatory="true" name="id">
+<data-type name="SERIAL" selected-variant-pattern="SERIAL"/>
+</column>
+<column alias="Fio" auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7faa" mandatory="false" name="fio">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column alias="Staj" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7fa7" mandatory="false" name="staj">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column alias="Pay" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7fa4" mandatory="false" name="pay">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+</column-list>
+<primary-key id="3705cd:14310eade5b:-7ff8" name="PK_PARICHMAHER">
+<primary-key-column name="id"/>
+</primary-key>
+<index-list>
+<index alias="Ix Парихмахер 1" id="3705cd:14310eade5b:-7aee" name="IX_Парихмахер_1" unique="false">
+<index-column name="fio" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table alias="Pricheska" id="3705cd:14310eade5b:-7ff2" name="pricheska">
+<column-list>
+<column alias="Id" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7fd1" mandatory="true" name="id">
+<data-type name="SERIAL" selected-variant-pattern="SERIAL"/>
+</column>
+<column alias="Tipprich" auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="1e08f1b:1431adaec58:-7fda" mandatory="false" name="tipprich">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column alias="Cost" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="1e08f1b:1431adaec58:-7fd7" mandatory="false" name="cost">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column alias="Namepric" auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="1e08f1b:1431adaec58:-7fd4" mandatory="false" name="namepric">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="3705cd:14310eade5b:-7ff1" name="PK_PRICHESKA">
+<primary-key-column name="id"/>
+</primary-key>
+</table>
+<table alias="Dopusl" id="3705cd:14310eade5b:-7fee" name="dopusl">
+<column-list>
+<column alias="Id" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7fe0" mandatory="true" name="id">
+<data-type name="SERIAL" selected-variant-pattern="SERIAL"/>
+</column>
+<column alias="Name" auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="1e08f1b:1431adaec58:-7fe6" mandatory="false" name="name">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column alias="Cost" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="1e08f1b:1431adaec58:-7fe3" mandatory="false" name="cost">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+</column-list>
+<primary-key id="3705cd:14310eade5b:-7fed" name="PK_DOPUSL">
+<primary-key-column name="id"/>
+</primary-key>
+</table>
+<table alias="Klient" id="3705cd:14310eade5b:-7fea" name="klient">
+<column-list>
+<column alias="Id" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7fce" mandatory="true" name="id">
+<data-type name="SERIAL" selected-variant-pattern="SERIAL"/>
+</column>
+<column alias="Fio" auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7fa1" mandatory="false" name="fio">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column alias="Pol" auto-increment="false" column-size="1" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7aea" mandatory="false" name="pol">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="3705cd:14310eade5b:-7fe9" name="PK_KLIENT">
+<primary-key-column name="id"/>
+</primary-key>
+</table>
+<table alias="Zakaz" id="3705cd:14310eade5b:-7fe6" name="zakaz">
+<column-list>
+<column alias="Id" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7fd4" mandatory="true" name="id">
+<data-type name="SERIAL" selected-variant-pattern="SERIAL"/>
+</column>
+<column alias="Namezakazchik" auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7fb0" mandatory="false" name="namezakazchik">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column alias="Numzak" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7faf" mandatory="false" name="numzak">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column alias="Dataoformlzak" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7fad" mandatory="false" name="dataoformlzak">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column alias="Datavipzakaza" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7b0f" mandatory="false" name="datavipzakaza">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+<column alias="Idklient" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7ed2" mandatory="false" name="idklient">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column alias="Idparichm" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7dea" mandatory="false" name="idparichm">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column alias="Idpricha" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7c52" mandatory="false" name="idpricha">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column alias="Cost" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="3705cd:14310eade5b:-7b15" mandatory="false" name="cost">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column alias="Idprice" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="1ffcd2e:145bd35d61d:-7fe8" mandatory="false" name="idprice">
+<data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
+</column>
+</column-list>
+<primary-key id="3705cd:14310eade5b:-7fe5" name="PK_ZAKAZ">
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list>
+<unique-key alias="Uq Заказ 1" id="3705cd:14310eade5b:-7afc" name="UQ_Заказ_1">
+<unique-key-column name="id"/>
+</unique-key>
+<unique-key id="3705cd:14310eade5b:-7afb" name="UQ_Заказ_2">
+<unique-key-column name="numzak"/>
+</unique-key>
+</unique-key-list>
+<foreign-key-list>
+<foreign-key alias="Fk Заказ 3" id="3705cd:14310eade5b:-7c37" name="FK_Заказ_3" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_PRICHESKA" referenced-table="pricheska" referenced-table-schema="parichm" source-entity-role="" source-multiplicity="1..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="idpricha" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key alias="Fk Заказ 1" id="3705cd:14310eade5b:-7eb0" name="FK_Заказ_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_KLIENT" referenced-table="klient" referenced-table-schema="parichm" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1..*" target-relationship-type="">
+<foreign-key-column column-name="idklient" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key alias="Fk Заказ 2" id="3705cd:14310eade5b:-7ddd" name="FK_Заказ_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_PARICHMAHER" referenced-table="parichmaher" referenced-table-schema="parichm" source-entity-role="" source-multiplicity="1..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="idparichm" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key id="1ffcd2e:145bd35d61d:-7f91" name="FK_zakaz_4" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_PRICE" referenced-table="price" referenced-table-schema="parichm" source-entity-role="" source-multiplicity="1" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="idprice" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index alias="Ix Заказ 1" id="3705cd:14310eade5b:-7af2" name="IX_Заказ_1" unique="false">
+<index-column name="numzak" sort="ASC"/>
+</index>
+<index id="3705cd:14310eade5b:-7af0" name="IX_Заказ_2" unique="false">
+<index-column name="id" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table alias="Zakazusl" id="1e08f1b:1431adaec58:-7fd3" name="zakazusl">
+<column-list>
+<column alias="Id" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="1e08f1b:1431adaec58:-7fcd" mandatory="true" name="id">
+<data-type name="SERIAL" selected-variant-pattern="SERIAL"/>
+</column>
+<column alias="Idzakaz" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="1e08f1b:1431adaec58:-7fca" mandatory="false" name="idzakaz">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+<column alias="Iddopusl" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="1e08f1b:1431adaec58:-7fc9" mandatory="false" name="iddopusl">
+<data-type name="INT" selected-variant-pattern="INT"/>
+</column>
+</column-list>
+<primary-key id="1e08f1b:1431adaec58:-7fd2" name="PK_ZAKAZUSL">
+<primary-key-column name="id"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="1e08f1b:1431adaec58:-7e76" name="FK_заказ-услуги_3" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_DOPUSL" referenced-table="dopusl" referenced-table-schema="parichm" source-entity-role="" source-multiplicity="1" source-relationship-type="" target-entity-role="" target-multiplicity="1..*" target-relationship-type="">
+<foreign-key-column column-name="iddopusl" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key id="1e08f1b:1431adaec58:-7ea2" name="FK_заказ-услуги_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ZAKAZ" referenced-table="zakaz" referenced-table-schema="parichm" source-entity-role="" source-multiplicity="1" source-relationship-type="" target-entity-role="" target-multiplicity="1..*" target-relationship-type="">
+<foreign-key-column column-name="idzakaz" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="1ffcd2e:145bd35d61d:-7fe7" name="price">
+<column-list>
+<column alias="id" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="1ffcd2e:145bd35d61d:-7fe3" mandatory="true" name="id">
+<data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
+</column>
+<column alias="Name" auto-increment="false" column-size="30" decimal-digits="0" default-value="" id="1ffcd2e:145bd35d61d:-7fe2" mandatory="false" name="name">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column alias="Price" auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="1ffcd2e:145bd35d61d:-7fe1" mandatory="false" name="price">
+<data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
+</column>
+</column-list>
+<primary-key id="1ffcd2e:145bd35d61d:-7fe6" name="PK_PRICE">
+<primary-key-column name="id"/>
+</primary-key>
+</table>
+</table-list>
+</schema>
+</schema-list>
+</database-model>
+<diagram>
+<table-figure height="89" refid="3705cd:14310eade5b:-7ff9" width="158" x="364" y="221"/>
+<table-figure height="85" refid="3705cd:14310eade5b:-7ff2" width="158" x="546" y="43"/>
+<table-figure height="70" refid="3705cd:14310eade5b:-7fee" width="158" x="74" y="147"/>
+<table-figure height="71" refid="3705cd:14310eade5b:-7fea" width="157" x="546" y="148"/>
+<table-figure height="163" refid="3705cd:14310eade5b:-7fe6" width="204" x="256" y="16"/>
+<table-figure height="69" refid="1e08f1b:1431adaec58:-7fd3" width="161" x="8" y="9"/>
+<table-figure height="68" refid="1ffcd2e:145bd35d61d:-7fe7" width="133" x="193" y="226"/>
+</diagram>
+</clay-model>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;sort.sdgfgb&apos; to &apos;sortAll&apos;&#x0D;&#x0A;- Original project: &apos;sort&apos;&#x0D;&#x0A;- Original element: &apos;sort.sdgfgb&apos;&#x0D;&#x0A;- Renamed element: &apos;sort.sortAll&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;sdgfgb&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;sort{sdgfgb.java[sdgfgb" matchStrategy="1" name="sortAll" qualified="false" references="true" similarDeclarations="false" stamp="1437326792651" textual="false" version="1.0"/>
+</session>

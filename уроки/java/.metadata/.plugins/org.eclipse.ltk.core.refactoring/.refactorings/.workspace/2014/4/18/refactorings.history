@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Forma&apos; to &apos;Openarc&apos;" description="Rename resource &apos;Forma&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/Forma" name="Openarc" stamp="1398782346570" updateReferences="true"/>
+</session>

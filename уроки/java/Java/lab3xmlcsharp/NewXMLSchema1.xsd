@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/NewXMLSchema1" xmlns:tns="http://www.example.org/NewXMLSchema1" elementFormDefault="qualified">
+
+    <element name="laba3" type="tns:Laba3"></element>
+    
+    <complexType name="Laba3">
+    	<sequence>
+    		<element name="polka" type="tns:Polka" minOccurs="0" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+
+
+    <complexType name="Polka">
+    	<sequence>
+    		<element name="nomer" type="int"></element>
+    		<element name="riad" type="int"></element>
+    		<element name="book" type="tns:Book" minOccurs="0" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="Book">
+    	<sequence>
+    		<element name="name" type="string"></element>
+    		<element name="kolstr" type="int"></element>
+    	</sequence>
+    </complexType>
+</schema>

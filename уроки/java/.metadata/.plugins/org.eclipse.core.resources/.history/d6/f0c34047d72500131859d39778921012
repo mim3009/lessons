@@ -1,0 +1,55 @@
+package lab3;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+
+
+public class Main extends JComponent{
+	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static void main(String[] args) {
+	JFrame frame = new JFrame();
+	frame.setSize(800, 400);
+	frame.setTitle("Shape Example");
+	frame.getContentPane().add(new Main());
+	frame.setVisible(true);
+}
+	public void paint(Graphics g) {
+		Shape obj = new Triangle( 200, 200, 0, 0, -45, -5, -90, 10);
+		obj.setColor(Color.BLUE);
+		obj.draw(g);
+		
+		Shape obj1 = new Triangle( 220, 220, -20, -5, -70, -5, +40, -15);
+		obj1.setColor(Color.BLUE);
+		obj1.draw(g);
+		
+		Shape obj2 = new Triangle( 210, 190, 0,0, -150,0, 40, 40);
+		obj2.setColor(Color.RED);
+		obj2.draw(g);
+			
+		
+		Shape obj3 = new Triangle( 400, 200, 0, 0, -45, -5, -90, 10 );
+		obj3.setColor(Color.BLUE);
+		obj3.draw(g);
+		
+		Shape obj4 = new Triangle( 420, 220, -20, -5, -70, -5, +40, -15);
+		obj4.setColor(Color.BLUE);
+		obj4.draw(g);
+		
+		Shape obj5 = new Triangle2( 410, 190, 0,0, -150,0, 40, 40,10,10);
+		obj5.setColor(Color.RED);
+		obj5.draw(g);
+		
+		
+		Shape obj6 = new Triangle( 600, 200, 0, 0, -45, -5, -90, 10 );
+		obj6.setColor(Color.BLUE);
+		obj6.draw(g);
+	}
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.stu.cn.ua/StudentService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="StudentService" targetNamespace="http://www.stu.cn.ua/StudentService/">
+<wsdl:types>
+<xsd:schema targetNamespace="http://www.stu.cn.ua/StudentService/">
+	<xsd:element name="NewOperationResponse" type="tns:StudentInfo" />
+	<xsd:element name="NewOperationRequest" type="xsd:string"/>
+            <xsd:complexType name="StudentInfo">
+            	<xsd:sequence>
+            		<xsd:element name="Name" type="xsd:string"></xsd:element>
+            		<xsd:element name="Sex" type="xsd:string"></xsd:element>
+            		<xsd:element name="Boss" type="xsd:boolean"></xsd:element>
+            	</xsd:sequence></xsd:complexType>
+        </xsd:schema>
+</wsdl:types>
+<wsdl:message name="NewOperationResponse">
+<wsdl:part element="tns:NewOperationResponse" name="NewOperationResponse"/>
+</wsdl:message>
+<wsdl:message name="NewOperationRequest">
+<wsdl:part element="tns:NewOperationRequest" name="NewOperationRequest"/>
+</wsdl:message>
+<wsdl:portType name="StudentService">
+<wsdl:operation name="NewOperation">
+<wsdl:input message="tns:NewOperationRequest"/>
+<wsdl:output message="tns:NewOperationResponse"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="StudentServiceSOAP" type="tns:StudentService">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="NewOperation">
+<soap:operation soapAction="http://www.stu.cn.ua/StudentService/NewOperation"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="StudentService">
+<wsdl:port binding="tns:StudentServiceSOAP" name="StudentServiceSOAP">
+<soap:address location="http://www.stu.cn.ua/"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

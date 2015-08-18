@@ -1,0 +1,5 @@
+package duck;
+
+public interface QuackMBehavior {
+	public void quack();
+}

@@ -1,0 +1,6 @@
+E:\android\CSharp\ASP\ASP1Lesson_2Part\bin\ASP1Lesson_2Part.dll.config
+E:\android\CSharp\ASP\ASP1Lesson_2Part\bin\ASP1Lesson_2Part.dll
+E:\android\CSharp\ASP\ASP1Lesson_2Part\bin\ASP1Lesson_2Part.pdb
+E:\android\CSharp\ASP\ASP1Lesson_2Part\obj\Debug\ASP1Lesson_2Part.csprojResolveAssemblyReference.cache
+E:\android\CSharp\ASP\ASP1Lesson_2Part\obj\Debug\ASP1Lesson_2Part.dll
+E:\android\CSharp\ASP\ASP1Lesson_2Part\obj\Debug\ASP1Lesson_2Part.pdb

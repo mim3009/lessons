@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<lab3 xmlns="http://www.example.org/NewXMLSchema">
+	<Group>
+		<id>3</id>
+		<name>asd</name>
+		<student>
+			<name>Vasia</name>
+			<age>22</age>
+		</student>
+	</Group>
+</lab3>

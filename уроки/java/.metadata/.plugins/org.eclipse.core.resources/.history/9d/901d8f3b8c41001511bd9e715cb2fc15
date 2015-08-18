@@ -1,0 +1,21 @@
+package command;
+
+public class Hottub {
+	
+	public void circulate(){
+		System.out.println("Water Circulating");
+	}
+	
+	public void jetsOn(){
+		System.out.println("Jets is On");
+	}
+	
+	public void jetsOff(){
+		System.out.println("Jets is Off");
+	}
+	
+	public void setTemperature(){
+		
+	}
+	
+}

@@ -1,0 +1,11 @@
+ddms.logcat.auotmonitor.level=error
+ddms.logcat.automonitor.userprompt=true
+eclipse.preferences.version=1
+logcat.view.colsize.Application=34
+logcat.view.colsize.Level=23
+logcat.view.colsize.PID=24
+logcat.view.colsize.TID=37
+logcat.view.colsize.Tag=47
+logcat.view.colsize.Text=681
+logcat.view.colsize.Time=19
+logcat.view.filters.list=name\: 'Mylog', tag\: 'myLog', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'States', tag\: 'States', text\: '', pid\: '', app\: '', level\: 'verbose', 

@@ -1,0 +1,18 @@
+package factory;
+
+public class CalifornyPizzaStore extends PizzaStore{
+
+	@Override
+	Pizza createPizza(String item) {
+		if(item.equals("cheese")){
+			return new CalifornyStyleCheesePizza();
+		}else if(item.equals("veggie")){
+			return new CalifornyStyleVeggiePizza();
+		}else if(item.equals("clam")){
+			return new CalifornyStyleClamPizza();
+		}else if(item.equals("pepperoni")){
+			return new CalifornyStylePepperoniPizza();
+		}else return null;
+	}
+	
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TipCalculator</string>
+    <string name="billTotal">Bill total</string>
+    <string name="tip">Tip</string>
+    <string name="total">Total</string>
+    <string name="custom">custom</string>
+    <string name="zero">0.0</string>
+    <string name="action_settings"></string>
+
+
+</resources>

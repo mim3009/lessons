@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 2 elements to &apos;lab6tel/src&apos;&#x0D;&#x0A;- Original project: &apos;lab4tel&apos;&#x0D;&#x0A;- Destination element: &apos;lab6tel/src&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     lab4tel.Client.java&#x0D;&#x0A;     lab4tel.Server.java" description="Copy compilation units" destination="=lab6tel/src" element1="/src&lt;lab4tel{Client.java" element2="/src&lt;lab4tel{Server.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1426252539634" units="2" version="1.0"/>
+</session>

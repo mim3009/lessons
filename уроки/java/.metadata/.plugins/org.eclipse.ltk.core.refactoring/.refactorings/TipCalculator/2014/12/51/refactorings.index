@@ -1,0 +1,12 @@
+1419147420328	Delete element
+1419147581649	Change Layout
+1419147762101	Rename field 'TableLayout1'
+1419151498773	Rename field 'textView1'
+1419151516091	Rename field 'editText1'
+1419151539323	Rename field 'textView2'
+1419151555792	Rename field 'editText2'
+1419153973009	Extracts string 'null' into R.string.billTotal
+1419154072107	Extracts string 'null' into R.string.tip
+1419154094245	Extracts string 'null' into R.string.total
+1419154117585	Extracts string 'null' into R.string.custom
+1419154144585	Extracts string 'null' into R.string.zero

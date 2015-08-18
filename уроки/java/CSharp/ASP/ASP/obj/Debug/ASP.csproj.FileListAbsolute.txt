@@ -1,0 +1,6 @@
+E:\android\CSharp\ASP\ASP\bin\ASP.dll.config
+E:\android\CSharp\ASP\ASP\bin\ASP.dll
+E:\android\CSharp\ASP\ASP\bin\ASP.pdb
+E:\android\CSharp\ASP\ASP\obj\Debug\ASP.csprojResolveAssemblyReference.cache
+E:\android\CSharp\ASP\ASP\obj\Debug\ASP.dll
+E:\android\CSharp\ASP\ASP\obj\Debug\ASP.pdb

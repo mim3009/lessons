@@ -1,0 +1,14 @@
+package decorator;
+
+public class Decaf extends Bevare{
+
+	public Decaf() {
+		description = "Decaf";
+	}
+	
+	@Override
+	public double cost() {
+		return .79;
+	}
+
+}

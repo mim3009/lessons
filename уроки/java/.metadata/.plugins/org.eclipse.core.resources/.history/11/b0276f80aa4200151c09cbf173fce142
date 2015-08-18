@@ -1,0 +1,13 @@
+package iterator;
+
+public class Waitress {
+
+	PancakeHouseMenu pancakeHouseMenu;
+	DinnerMenu dinnerMenu;
+	
+	public Waitress(PancakeHouseMenu pancakeHouseMenu, DinnerMenu dinnerMenu) {
+		this.pancakeHouseMenu = pancakeHouseMenu;
+		this.dinnerMenu = dinnerMenu;
+	}
+	
+}

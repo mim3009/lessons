@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">project43wg3</string>
+    <string name="config">Config</string>
+    <string name="update">Update</string>
+    <string name="count">Count</string>
+    <string name="ok">Ok</string>
+
+</resources>

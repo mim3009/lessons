@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 7 elements from project &apos;sClient&apos;&#x0D;&#x0A;- Original project: &apos;sClient&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     axis.jar&#x0D;&#x0A;     commons-discovery-0.2.jar&#x0D;&#x0A;     commons-logging.jar&#x0D;&#x0A;     jaxrpc.jar&#x0D;&#x0A;     saaj.jar&#x0D;&#x0A;     webserviceutils.jar&#x0D;&#x0A;     wsdl4j.jar" description="Delete elements" element1="WebContent/WEB-INF/lib/commons-logging.jar" element2="WebContent/WEB-INF/lib/jaxrpc.jar" element3="WebContent/WEB-INF/lib/commons-discovery-0.2.jar" element4="WebContent/WEB-INF/lib/saaj.jar" element5="WebContent/WEB-INF/lib/wsdl4j.jar" element6="WebContent/WEB-INF/lib/axis.jar" element7="WebContent/WEB-INF/lib/webserviceutils.jar" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="7" stamp="1401557747224" subPackages="false" version="1.0"/>
+</session>

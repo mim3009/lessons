@@ -1,0 +1,4 @@
+﻿<div>
+	<p>login: <%LOGIN%></p>
+	<p>email: <%EMAIL%></p>
+</div>

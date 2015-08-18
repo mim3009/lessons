@@ -1,0 +1,13 @@
+package command;
+
+public class Sprinkler {
+
+	public void waterOn(){
+		System.out.println("Water is On");
+	}
+	
+	public void waterOff(){
+		System.out.println("Water is Off");
+	}
+	
+}

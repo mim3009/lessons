@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;lab4PiRo&apos; to &apos;compute&apos;&#x0D;&#x0A;- Original project: &apos;lab4PiRo&apos;&#x0D;&#x0A;- Original element: &apos;lab4PiRo/src/lab4PiRo&apos;&#x0D;&#x0A;- Renamed element: &apos;lab4PiRo/src/compute&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;lab4PiRo&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;lab4PiRo" name="compute" qualified="false" references="true" stamp="1427108040101" textual="false" version="1.0"/>
+</session>

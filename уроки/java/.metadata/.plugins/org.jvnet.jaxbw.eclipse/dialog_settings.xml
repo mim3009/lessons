@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="false" key="xjc.create.ro.files"/>
+	<item value="E:\java\lab3xmlcsharp\src" key="xjc.output.dir"/>
+	<item value="" key="xjc.user.cp"/>
+	<item value="true" key="xjc.strict.validation"/>
+	<item value="" key="xjc.catalog.files"/>
+	<item value="false" key="xjc.allow.extensions"/>
+	<item value="org.exampleforlab3" key="xjc.package.name"/>
+	<item value="" key="xjc.http.proxy"/>
+</section>

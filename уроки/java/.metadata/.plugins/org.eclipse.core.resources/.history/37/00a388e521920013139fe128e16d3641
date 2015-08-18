@@ -1,0 +1,39 @@
+package lab1csharp;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
+public class Lab2 {
+
+	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException{
+		ClassLoader loader = new MyClassLoader(args[0]);
+		JarFile f = new JarFile(args[0]);
+		Enumeration<JarEntry> enumeration = f.entries();
+		String s;
+		Class c;
+		JarEntry e;
+		while(enumeration.hasMoreElements()){
+			e = enumeration.nextElement();
+			if(e.getName().contains(".class")){
+				System.out.print(e.getName() + ":");
+				s = e.getName().replaceAll("/", ".");
+				s = s.substring(0, s.length()-6);
+				try{
+					c = Class.forName(s, false, loader);
+					if(c!=null){
+						System.out.println(":" + ClassDetail.getInfo(c));
+					}
+				}catch(Exception e2){
+					System.out.println("Error: " + e2.getMessage());
+				}
+			}else{
+				//System.out.println(e.getName());
+			}
+		}
+		f.close();
+	}
+
+}

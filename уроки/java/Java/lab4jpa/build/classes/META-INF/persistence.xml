@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="Laba4" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProviderImpl</provider>
+
+		<class>lab4jpa.Dopusl</class>
+		<class>lab4jpa.Klient</class>
+		<class>lab4jpa.Parichmaher</class>
+		<class>lab4jpa.Price</class>
+		<class>lab4jpa.Pricheska</class>
+		<class>lab4jpa.Zakaz</class>
+		<class>lab4jpa.Zakazusl</class>
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/database" />
+			<property name="javax.persistence.jdbc.user" value="pg" />
+			<property name="javax.persistence.jdbc.password" value="roma251293" />
+			<property name="javax.persistence.target-database" value="PostgreSQL" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+
+		</properties>
+		
+	</persistence-unit>
+</persistence>

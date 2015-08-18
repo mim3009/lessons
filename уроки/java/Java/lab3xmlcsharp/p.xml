@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<laba3 xmlns="http://www.example.org/NewXMLSchema1">
+	<polka>
+		<nomer>3</nomer>
+		<riad>15</riad>
+		<book>
+			<name>The King</name>
+			<kolstr>451</kolstr>
+		</book>
+		<book>
+			<name>The King IIppp</name>
+			<kolstr>401</kolstr>
+		</book>
+	</polka>
+</laba3>

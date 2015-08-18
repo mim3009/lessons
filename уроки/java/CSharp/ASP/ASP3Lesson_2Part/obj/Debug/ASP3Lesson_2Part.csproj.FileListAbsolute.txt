@@ -1,0 +1,5 @@
+E:\android\CSharp\ASP\ASP3Lesson_2Part\bin\ASP3Lesson_2Part.dll.config
+E:\android\CSharp\ASP\ASP3Lesson_2Part\bin\ASP3Lesson_2Part.dll
+E:\android\CSharp\ASP\ASP3Lesson_2Part\bin\ASP3Lesson_2Part.pdb
+E:\android\CSharp\ASP\ASP3Lesson_2Part\obj\Debug\ASP3Lesson_2Part.dll
+E:\android\CSharp\ASP\ASP3Lesson_2Part\obj\Debug\ASP3Lesson_2Part.pdb

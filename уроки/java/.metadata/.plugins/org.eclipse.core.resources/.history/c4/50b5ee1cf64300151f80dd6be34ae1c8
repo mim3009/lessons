@@ -1,0 +1,10 @@
+package iteratorPlusKomponovschik;
+
+public class MenuTestDrive {
+	public static void main(String[] args) {
+				
+		MenuComponent pancakeHouse = new Menu("PANCAKE HOUSE MENU", "Breakfast");
+		
+		
+	}
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="1/org.eclipse.jst.ws.wsImpl.java">
+		<item value="/Lab6/src/StudentService.wsdl"/>
+		<item value="/L6/StudentService.wsdl"/>
+		<item value="/s/StudentService.wsdl"/>
+		<item value="/L6/WebContent/wsdl/StudentServiceSOAP.wsdl"/>
+		<item value="/Lab6/StudentService.wsdl"/>
+	</list>
+	<list key="0/org.eclipse.jst.ws.wsImpl.java">
+		<item value="ua.cn.stu.www.StudentService.StudentServiceSOAPImpl"/>
+	</list>
+</section>

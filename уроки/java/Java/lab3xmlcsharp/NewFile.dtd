@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT Lab3(Polka+ ) > 
+<!ELEMENT Polka(nomer, riad, Book+) >
+<!ATTLIST Polka nomer CDATA #REQUIRED >
+<!ELEMENT nomer(#PCDATA)>
+<!ELEMENT riad(#PCDATA)>
+<!ELEMENT Book(name, kolstr)>
+<!ATTLIST Book name CDATA #REQUIRED>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT kolstr (#PCDATA)>
+

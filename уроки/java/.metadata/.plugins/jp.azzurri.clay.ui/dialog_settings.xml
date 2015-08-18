@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="EditTableDialog2">
+		<item value="0" key="selectedTab"/>
+	</section>
+	<section name="NewDatabaseModelWizard">
+		<item value="/kursOOP/model" key="container.full.path"/>
+		<item value="dbModel.clay" key="filename"/>
+		<item value="PostgreSQL 7.3/7.4" key="sql.dialect"/>
+	</section>
+	<section name="GenerateDDLScriptWizard">
+		<item value="false" key="generateIndexComments"/>
+		<item value="true" key="generateDrop"/>
+		<item value="false" key="generateDropDomain"/>
+		<item value="true" key="generateOutOfLinePrimaryKey"/>
+		<item value="false" key="generateDomainComments"/>
+		<item value="/kursOOP/model" key="container.full.path"/>
+		<item value="false" key="generateCreateDomain"/>
+		<item value="true" key="generateOutOfLineForeignKey"/>
+		<item value="true" key="generateKeyDuplicateIndexes"/>
+		<item value="false" key="generateTableComments"/>
+		<item value="false" key="generateColumnComments"/>
+		<item value="false" key="noSchemas"/>
+		<item value="true" key="generateOutOfLineUniqueKey"/>
+		<item value="true" key="useDomains"/>
+		<item value="true" key="generateTable"/>
+		<item value="false" key="alwaysQuote"/>
+		<item value="true" key="generateDropIndex"/>
+		<item value="dbModel.sql" key="filename"/>
+		<item value="true" key="generateIndexes"/>
+	</section>
+</section>

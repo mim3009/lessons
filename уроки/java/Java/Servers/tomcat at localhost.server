@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/tomcat at localhost-config" hostname="localhost" id="tomcat at localhost" name="tomcat at localhost" runtime-id="tomcat" server-type="org.eclipse.jst.server.tomcat.60" server-type-id="org.eclipse.jst.server.tomcat.60" start-timeout="45" stop-timeout="15" testEnvironment="false" timestamp="34">
+  <list key="modules" value0="L5::org.eclipse.jst.jee.server:L5::jst.web::2.5" value1="s::org.eclipse.jst.jee.server:s::jst.web::2.5" value2="sClient::org.eclipse.jst.jee.server:sClient::jst.web::2.5" value3="WebServiceProject::org.eclipse.jst.jee.server:WebServiceProject::jst.web::2.5" value4="L5Client::org.eclipse.jst.jee.server:L5Client::jst.web::2.5" value5="WebServiceProjectClient::org.eclipse.jst.jee.server:WebServiceProjectClient::jst.web::2.5"/>
+</server>

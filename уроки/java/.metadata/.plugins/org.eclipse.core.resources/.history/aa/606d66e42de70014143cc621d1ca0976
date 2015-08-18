@@ -1,0 +1,39 @@
+import java.util.Arrays;
+import java.util.Random;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.RecursiveTask;
+
+public class MainClass {
+
+	// общий пул задач
+	static final int P = 4;
+	static final int N = 10000000;
+	static final ForkJoinPool mainPool = new ForkJoinPool(P);
+	public static int res;
+
+	public static void main(String[] args) {
+		int[] anArray = new int[N];
+		Random r = new Random();
+		int nomer = 3900;
+
+		// параллельное заполнение элементов массива
+		RecursiveAction mainTask = new CreateTask(anArray, 0, N);
+		long time1 = System.currentTimeMillis();
+		mainPool.invoke(mainTask);
+		System.out.println("timeCreateAll = "
+				+ (System.currentTimeMillis() - time1));
+
+		RecursiveAction sortTask = new SortTask(anArray, 0, N);
+		long time2 = System.currentTimeMillis();
+		mainPool.invoke(sortTask);
+		System.out.println("timeOfSort = "
+				+ (System.currentTimeMillis() - time2));
+
+		RecursiveAction poiskTask = new PoiskTask(nomer, anArray, 0, N);
+		long time3 = System.currentTimeMillis();
+		mainPool.invoke(poiskTask);
+		System.out.println("timeOfPoisk = "
+				+ (System.currentTimeMillis() - time3) + " " + res);
+	}
+}

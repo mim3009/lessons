@@ -1,0 +1,8 @@
+#Tomcat publish data
+#Thu Nov 13 21:58:08 EET 2014
+org.eclipse.jst.jee.server\:WebServiceProjectClient=C\:\\tomcat\\apache-tomcat-6.0.18\\webapps\\WebServiceProjectClient
+org.eclipse.jst.jee.server\:s=C\:\\tomcat\\apache-tomcat-6.0.18\\webapps\\s
+org.eclipse.jst.jee.server\:sClient=C\:\\tomcat\\apache-tomcat-6.0.18\\webapps\\sClient
+org.eclipse.jst.jee.server\:WebServiceProject=C\:\\tomcat\\apache-tomcat-6.0.18\\webapps\\WebServiceProject
+org.eclipse.jst.jee.server\:L5Client=C\:\\tomcat\\apache-tomcat-6.0.18\\webapps\\L5Client
+org.eclipse.jst.jee.server\:L5=C\:\\tomcat\\apache-tomcat-6.0.18\\webapps\\L5

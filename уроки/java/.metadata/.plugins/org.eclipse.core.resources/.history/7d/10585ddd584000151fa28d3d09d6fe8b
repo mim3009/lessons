@@ -1,0 +1,10 @@
+package decorator;
+
+public class DarkRoast extends Bevare{
+
+	@Override
+	public double cost() {
+		return 1.2;
+	}
+
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+	<addCategory
+		id="category_1427219897884"
+		name="Custom"
+		description="Container for custom components"
+		visible="true"
+		open="true"/>
+	<addComponent
+		id="custom_1427219897884"
+		name="ExperimentManager"
+		description="Creates widgets.experiments.ExperimentManager component."
+		visible="true"
+		class="widgets.experiments.ExperimentManager"
+		category="category_1427219897884"/>
+	<addComponent
+		id="custom_1427220156064"
+		name="ExperimentManager"
+		description="Creates widgets.experiments.ExperimentManager component."
+		visible="true"
+		class="widgets.experiments.ExperimentManager"
+		category="category_1427219897884"/>
+	<addComponent
+		id="custom_1427220513664"
+		name="TransProcessManager"
+		description="Creates widgets.trans.TransProcessManager component."
+		visible="true"
+		class="widgets.trans.TransProcessManager"
+		category="category_1427219897884"/>
+	<addComponent
+		id="custom_1427220730905"
+		name="StatisticsManager"
+		description="Creates widgets.stat.StatisticsManager component."
+		visible="true"
+		class="widgets.stat.StatisticsManager"
+		category="category_1427219897884"/>
+	<addComponent
+		id="custom_1427369461397"
+		name="JTextPane"
+		description="Creates javax.swing.JTextPane component."
+		visible="true"
+		class="javax.swing.JTextPane"
+		category="category_1427219897884"/>
+	<addComponent
+		id="custom_1427369480241"
+		name="JTextPane"
+		description="Creates javax.swing.JTextPane component."
+		visible="true"
+		class="javax.swing.JTextPane"
+		category="category_1427219897884"/>
+</commands>
