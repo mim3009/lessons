@@ -2,8 +2,14 @@
 <html>
 <head>
 	<title>Тестовая страничка</title>
+	<script type="text/javascript">
+		window.onload = function(){
+			document.getElementById("test").innerHTML = "Тестовая страничка";
+			alert("Тестовый Алерт");
+		}
+	</script>
 </head>
 <body>
-	<h1>Тестовая страничка</h1>
+	<div id="test"></div>
 </body>
 </html>
