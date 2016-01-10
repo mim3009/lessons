@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>время</title>
+	<script type="text/javascript">
+		var WastedTime = {
+			start: new Date(),
+			displayElapsedTime: function(){
+				var now = new Date();
+				var elapsed = Math.round((now - WastedTime.start)/60000);
+				document.getElementById("time").innerHTML = "Прошло " + elapsed + " минут"; 
+			}
+		}
+		setInterval(WastedTime.displayElapsedTime, 60000);
+	</script>
+</head>
+<body>
+<div id="time"></div>
+</body>
+</html>
