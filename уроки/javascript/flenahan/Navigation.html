@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		function back(){
+			document.navbar.url.value  = "";
+			try{
+				parent.main.history.back();
+			}catch(e){
+				alert("Вызов History.back() заблокирован политикой общего происхождения: " + e.message);
+			}
+			setTimeout(updateURL, 1000);
+		}
+
+		function forward(){
+			document.navbar.url.value = "";
+			try{
+				parent.main.history.forward();
+			}catch(e){
+				alert("Вызов History.forward() заблокирован политикой общего происхождения: " + e.message);
+			}
+			setTimeout(updateURL, 1000);
+		}
+
+		function updateURL(){
+			try{
+				document.navbar.url.value = parent.main.location.href;
+			}catch(e){
+				document.navbar.url.value = "<Политика общего происхождения блокирует доступ к URL>";
+			}
+		}
+
+		function fixup(url){
+			if(url.substring(0,7) != "http://") url = "http://" + url;
+			return url;
+		}
+
+		function go(){
+			parent.main.location = fixup(document.navbar.url.value);
+		}
+
+		function displayInNewWindow(){
+			window.open(fixup(document.navbar.url.value))
+		}
+	</script>
+</head>
+<body>
+	<form name="navbar" onsubmit="go(); return false;">
+		<input type="button" value="Назад" onclick="back();">
+		<input type="button" value="Вперед" onclick="forward();">
+		URL: <input type="text" name="url" size="10">
+		<input type="button" value="Перейти" onclick="go();">
+		<input type="button" value="Новое окно" onclick="displayInNewWindow();">
+	</form>
+</body>
+</html>
