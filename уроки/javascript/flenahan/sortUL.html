@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Сортировка содержимого UL по алфавиту + uppercase</title>
+	<script type="text/javascript">
+		function sortkids(e){
+			if(typeof e == "string") e = document.getElementById(e);
+			var kids = [];
+			for(var x = e.firstChild; x != null; x = x.nextSibling){
+				if(x.nodeType == 1){
+					kids.push(x);
+				}
+			}
+			kids.sort(function(n,m){
+				var s = n.firstChild.data;
+				var t = m.firstChild.data;
+				if(s < t) return -1;
+				else if(s > t) return 1;
+				else return 0;
+			});
+			for(var i = 0; i < kids.length; i++){
+				e.appendChild(kids[i]);
+			}
+		}
+
+		function uppercase(n){
+			if(n.nodeType == 3){
+				n.data = n.data.toUpperCase();
+			}
+			else{
+				var kids = n.childNodes;
+				for(var i = 0; i < kids.length; i++){
+					uppercase(kids[i]);
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<ul id="list">
+		<li>b</li>
+		<li>a</li>
+		<li>d</li>
+		<li>e</li>
+		<li>c</li>
+	</ul>
+	<button onclick="sortkids('list');">Сортировать</button>
+	<button onclick="uppercase(document.body)">В верхний регистр</button>
+</body>
+</html>

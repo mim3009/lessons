@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Замена родителя узла елементом b</title>
+	<script type="text/javascript">
+		function embolden(n){
+			if(typeof n == "string") n = document.getElementById(n);
+			var b = document.createElement("b");
+			var parent = n.parentNode;
+			parent.replaceChild(b, n);
+			b.appendChild(n);
+		}
+	</script>
+</head>
+<body>
+	<p id="p1"><i>Это </i> абзац №1</p>
+	<p id="p2"><i>Это </i> абзац №2</p>
+	<button onclick="embolden('p1');">Выделить жирным шрифтом</button>
+</body>
+</html>
