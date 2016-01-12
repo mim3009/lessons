@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Получение выделенного текста</title>
+</head>
+<body>
+текста
+<a href="javascript:
+	var q;
+	if(window.getSelection) q = window.getSelection().toString();
+	else if(document.getSelection) q = document.getSelection();
+	else if(document.selection) q = document.selection.createRange().text;
+	void window.open('http://en.wikipedia.org/wiki/' + q);
+">
+Найти выделенный текст в Wikipedia
+</a>
+</body>
+</html>
