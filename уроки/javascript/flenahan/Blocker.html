@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Блоккер баннеров</title>
+	<script type="text/javascript">
+		function removeadvertising(){
+			var imgs = document.getElementsByTagName("img");
+			for(var i = 0; i < imgs.length; i++){
+				var img = imgs[i];
+				if(img.width > 468 && img.height > 60){
+					img.style.visibility = "hidden";
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+<img src="ITQVtGYt7KE.jpg">
+<button onclick="removeadvertising();">убрать рекламу</button>
+</body>
+</html>
