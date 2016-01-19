@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Одна функция и много обработчиков</title>
+	<script type="text/javascript">
+		function confirmLink(){
+			return confirm("Вы действительно хотите посетить " + this.href + "?");
+		}
+
+		window.onload = function(){
+			for(var i = 0; i < document.links.length; i++){
+				document.links[i].onclick = confirmLink;
+			}
+		}
+	</script>
+</head>
+<body>
+	<a href="vk.com">VK</a>
+	<a href="google.com">google</a>
+	<a href="ya.ru">yandex</a>
+</body>
+</html>

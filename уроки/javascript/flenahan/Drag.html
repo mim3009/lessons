@@ -1,0 +1,15 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>DRUG</title>
+	<script src="Drag.js"></script>
+</head>
+<body>
+	<div style="position: absolute; left: 200px; top: 100px; width: 250px; background: white; border: solid black;">
+		<div style="background: gray; border-bottom: dotted black; padding: 3px; font-family: sans-serif; font-weight: bold;" onmousedown="drag(this.parentNode, event);">Перетащи меня</div>
+		<p>Текст1</p>
+		<p>Текст2</p>
+	</div>
+	<img src="ITQVtGYt7KE.jpg" width="200px" height="300px" style="position: absolute; left: 0px; top: 0px;" onmousedown="if(event.shiftKey) drag(this, event);">
+</body>
+</html>

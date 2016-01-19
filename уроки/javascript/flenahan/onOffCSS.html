@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Включение или отключение CSS таблиц</title>
+	<script type="text/javascript">
+		function enableCSS(sheetid, enabled){
+			document.getElementById(sheetid).disabled = !enabled;
+		}
+	</script>
+	<link rel="stylesheet" type="text/css" href="ss0.css" id="ss0">
+	<link rel="alternate stylesheet" type="text/css" href="ss1.css" id="ss1" title="Кривой шрифт">
+	<link rel="alternate stylesheet" type="text/css" href="ss2.css" id="ss2" title="Высокий контраст">
+	<style type="text/css" id="ss3" title="Sans Serif">
+		body {
+			font-family: sans-serif;
+		}
+	</style>
+</head>
+<body>
+	<form>
+		<input type="checkbox" onclick="enableCSS('ss0', this.checked)" checked>Основная
+		<br/><input type="checkbox" onclick="enableCSS('ss1', this.checked)">Крупный шрифт
+		<br/><input type="checkbox" onclick="enableCSS('ss2', this.checked)">Кривой шрифт
+		<br/><input type="checkbox" onclick="enableCSS('ss3', this.checked)">Sans Sherif
+	</form>
+</body>
+</html>

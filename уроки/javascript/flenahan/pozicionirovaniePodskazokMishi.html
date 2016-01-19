@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>tooltip</title>
+	<script src="Tooltip.js"></script>
+	<script type="text/javascript">
+		window.onload = function(){
+			Tooltip.X_OFFSET = 25;
+			Tooltip.Y_OFFSET = 15;
+			Tooltip.DELAY = 500;
+
+			Tooltip.prototype.schedule = function(target, e){
+				var text = target.getAttribute("tooltip");
+				if(!text) return;
+
+				var x = e.clientX + Geometry.getHorizontalScroll();
+				var y = e.clientY + Geometry.getVerticalScroll();
+
+				x += Tooltip.X_OFFSET;
+				y += Tooltip.Y_OFFSET;
+
+				var self = this;
+				var timer = window.setTimeout(function(){ self.show(text, x, y); }, Tooltip.DELAY);
+
+				if(target.addEventListener) target.addEventListener("mouseout", mouseout, false);
+				else if(target.attachEvent) target.attachEvent("onmouseout", mouseout);
+				else target.onmouseout = mouseout;
+
+				function mouseout(){
+					self.hide();
+					window.clearTimeout(timer);
+					if(target.removeEventListener){
+						target.removeEventListener("mouseout", mouseout, false);
+					}
+					else if(target.detachEvent){
+						target.detachEvent("onmouseout", mouseout);
+					}
+					else target.onmouseout = null;
+				}
+			}
+
+			Tooltip.tooltip = new Tooltip();
+
+			Tooltip.schedule = function(target, e){ Tooltip.tooltip.schedule(target, e); }
+		}
+	</script>
+</head>
+<body>
+	<script type="text/javascript" src="Geometry.js"></script>
+	<a href="www.vk.com" tooltip="page VK.com" onmouseover="Tooltip.schedule(this, event)">VK</a>
+</body>
+</html>
