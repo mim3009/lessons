@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Form</title>
+	<script type="text/javascript">
+		window.onload = function(){
+			function report(element, event){
+				if((element.type == "select-one") || (element.type == "select-multiple")){
+					value = " ";
+					for(var i = 0; i < element.options.length; i++){
+						if(element.options[i].selected){
+							value += element.options[i].value + " ";
+						}
+					} 
+				}
+				else if(element.type == "textarea") value = "...";
+				else value = element.value;
+				var msg = event + ": " + element.name + ' (' + value + ')\n';
+				var t = element.form.textarea;
+				t.value = t.value + msg;
+			}
+
+			function addhandlers(f){
+				for(var i = 0; i < f.elements.length; i++){
+					var e = f.elements[i];
+					e.onclick = function(){ report(this, 'Click'); }
+					e.onchange = function(){ report(this, 'Change'); }
+					e.onfocus = function(){ report(this, 'Focus'); }
+					e.onblur = function(){ report(this, 'Blur'); }
+					e.onselect = function(){ report(this, 'Select'); }
+				}
+				f.clearbutton.onclick = function(){
+					this.form.textarea.value = '';
+					report(this, 'Click');
+				}
+				f.submitbutton.onclick = function(){
+					report(this, 'Click'); 
+					return false;
+				}
+				f.resetbutton.onclick = function(){
+					this.form.reset();
+					report(this, 'Click');
+					return false;
+				}
+			}
+
+			addhandlers(document.everything);
+		}
+	</script>
+</head>
+<body>
+	<form name="everything">
+		<table border="border" cellpadding="5">
+			<tr>
+				<td>Username:<br/>[1]<input type="text" name="username" size="15"></td>
+				<td>Password:<br/>[2]<input type="password" name="password" size="15"></td>
+				<td rowspan="4">Input Events[3]<br/>
+					<textarea name="textarea" rows="20" cols="28"></textarea>
+				</td>
+				<td rowspan="4" align="center" valign="center">
+					[9]<input type="button" value="clear" name="clearbutton"><br/>
+					[10]<input type="submit" name="submitbutton" value="submit"><br/>
+					[11]<input type="reset" name="resetbutton" value="reset">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					Filename: [4]<input type="file" name="file" size="15">
+				</td>
+			</tr>
+			<tr>
+				<td>My computer peripherals:<br/>
+					[5]<input type="checkbox" name="extras" value="burner">DVD Writer<br/>
+					[5]<input type="checkbox" name="extras" value="printer">Printer<br/>
+					[5]<input type="checkbox" name="extras" value="card">Card Reader<br/>
+				</td>
+				<td>My web browser:<br/>
+					[6]<input type="radio" name="browser" value="ff">Firefox<br/>
+					[6]<input type="radio" name="browser" value="ie">Internet Explorer<br/>
+					[6]<input type="radio" name="browser" value="other">Other<br/>
+				</td>
+			</tr>
+			<tr>
+				<td>My hobbies:[7]<br/>
+					<select multiple="multiple" name="hobbies" size="4">
+						<option value="programming">Hacking Javascript</option>
+						<option value="surfing">Surfing the web</option>
+						<option value="caffeine">Drinking coffee</option>
+						<option value="annoying">Annoying my friends</option>
+					</select>
+				</td>
+				<td align="center" valign="center">My favorite color:<br/>[8]
+					<select name="color">
+						<option value="red">Red</option>
+						<option value="green">Green</option>
+						<option value="blue">Blue</option>
+						<option value="white">White</option>
+						<option value="violet">Violet</option>
+						<option value="peach">Peach</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

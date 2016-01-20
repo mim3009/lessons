@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Check</title>
+	<script src="Validate.js"></script>
+	<style type="text/css">
+		input.invalid{
+			background: #faa;
+		}
+
+		input.valid{
+			background: #afa;
+		}
+	</style>
+</head>
+<body>
+	<form>
+		Name: <input type="text" name="name" myrec><br/>
+		e-mail: <input type="text" name="email" pattern="^\s*\w+@\w+\.\w+\s*$"><br/>
+		Post code: <input type="text" name="zip" pattern="^\s*\d{6}\s*$"><br/>
+		Not cheched field: <input type="text"><br/>
+		<input type="submit">
+	</form>
+</body>
+</html>
