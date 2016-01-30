@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>cookie</title>
+	<script type="text/javascript">
+		window.onload = function(){
+			var allcookies = document.cookie;
+			var pos = allcookies.indexOf("version=");
+			if(pos != -1){
+				var start = pos + 8;
+				var end = allcookies.indexOf(";", start);
+				if(end == -1) end = allcookies.length;
+				var value = allcookies.substring(start, end);
+				value = decodeURIComponent(value);
+				if(value != document.lastModified){
+					alert("Документ был изменен с момента вашего последнего посещения.");
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+</body>
+</html>
