@@ -154,6 +154,9 @@
 				}
 				else{
 					this.style.border = "7px solid rgba(255, 0, 0, 0.48)";
+					setTimeout(function(){
+						$("input").css("border", "7px solid rgba(0, 0, 0, 0.48)");
+					}, 2500)
 					if(messageElement) messageElement.style.visibility = "visible";
 					if(e.preventDefault) e.preventDefault();
 					if(e.returnValue) e.returnValue = false;
@@ -306,7 +309,7 @@
 			g.closePath();
 			g.fillStyle = "#5F6DD8";
 			g.fill();
-			g.fillText("Сумма капитала", 20, 35);
+			g.fillText("Сумма кредита", 20, 35);
 			var bal = principal;
 			g.beginPath();
 			g.moveTo(paymentToX(0), amountToY(bal));
