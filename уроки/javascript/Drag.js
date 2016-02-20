@@ -35,7 +35,6 @@ function drag(elementToDrag, event){
 		elementToDrag.style.top = (e.clientY - deltaY) + "px";
 		if(e.stopPropagation) e.stopPropagation();
 		else e.cancelBubble = true;
-		drawLine();
 	}
 
 	function upHandler(e){
