@@ -6,10 +6,36 @@
 	<script src="Create.js"></script>
 	<script src="DrawLine.js"></script>
 	<script type="text/javascript">
+		function createP() {
+			removeTransform();
+			removeDraw();
+ 			addCreate();
+ 			addMove();
+ 			addContext();
+		}
 
+		function transformP() {
+ 			removeCreate();
+ 			removeDraw();
+ 			removeMove();
+ 			removeContext();
+ 			addTransform();
+		}
+
+		function drawL() {
+ 			removeCreate();
+ 			removeMove();
+ 			removeContext();
+ 			removeTransform();
+ 			addDraw();
+		}
 	</script>
 </head>
 <body>
-	
+	<form style="float: left;">
+		<input type="radio" name="mode" id="points" onclick="if(this.checked){createP()}">Create points<br/>
+		<input type="radio" name="mode" id="transform" onclick="if(this.checked){transformP()}">Transform<br/>
+		<input type="radio" name="mode" id="drawl" onclick="if(this.checked){drawL()}">Drawing lines
+	</form>
 </body>
 </html>
