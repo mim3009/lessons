@@ -1,4 +1,20 @@
 function drag(elementToDrag, event){
+	var tr = document.getElementById("pointsTable").getElementsByTagName('tr');
+	var findX = null;
+	var findY = null;
+	var findR = null;
+	for(var i = 0; i < tr.length; i++){
+		var td = tr[i].getElementsByTagName('td');
+		for(var j = 0; j < td.length; j++){
+			if(Number(td[0].innerHTML.replace(/\D+/g,"")) == parseInt(Number(elementToDrag.style.left.replace(/\D+/g,"")) + Number(elementToDrag.style.width.replace(/\D+/g,""))/2) && Number(td[1].innerHTML.replace(/\D+/g,"")) == parseInt(Number(elementToDrag.style.top.replace(/\D+/g,"")) + Number(elementToDrag.style.height.replace(/\D+/g,""))/2)){
+				findX = td[0];
+				findY = td[1];
+				findR = td[3];
+				break;
+			}
+		}
+	}
+
 	var startX = event.clientX;
 	var startY = event.clientY;
 	var origX = elementToDrag.offsetLeft;
@@ -6,23 +22,32 @@ function drag(elementToDrag, event){
 	var deltaX = startX - origX;
 	var deltaY = startY - origY;
 
+	var x = event.clientX - deltaX;
+	var y = event.clientY - deltaY;
+
+	var rad1 = parseInt(Number(elementToDrag.style.height.replace(/\D+/g,""))/2);
+	var svg = document.getElementsByTagName("svg");
+	var lines = document.getElementsByTagName("line");
+	var findedLines = new Array();
+	var j = 0;
+	for(var i = 0; i < lines.length; i++){
+		if(lines[i].getAttribute("x1") == (x-svg[0].offsetLeft+rad1) && lines[i].getAttribute("y1") == (y-svg[0].offsetTop+rad1)){
+			findedLines[j] = lines[i];
+			findedLines[j].setAttribute("ch", "1");
+			j++;
+		}
+		if(lines[i].getAttribute("x2") == (x-svg[0].offsetLeft+rad1) && lines[i].getAttribute("y2") == (y-svg[0].offsetTop+rad1)){
+			findedLines[j] = lines[i];
+			findedLines[j].setAttribute("ch", "2");
+			j++;
+		}
+	}
+
 	if(document.addEventListener){
 		document.addEventListener("mousemove", moveHandler, true);
 		document.addEventListener("mouseup", upHandler, true);
 	}
-	else if(document.attachEvent){
-		elementToDrag.setCapture();
-		elementToDrag.attachEvent("onmousemove", moveHandler);
-		elementToDrag.attachEvent("onmouseup", upHandler);
-		elementToDrag.attachEvent("onlosecapture", upHandler);
-	}
-	else{
-		var oldmovehandler = document.onmousemove;
-		var olduphandler = document.onmouseup;
-		document.onmousemove = moveHandler;
-		document.onmouseup = upHandler;
-	}
-
+	
 	if(event.stopPropagation) event.stopPropagation();
 	else event.cancelBubble = true;
 
@@ -33,26 +58,34 @@ function drag(elementToDrag, event){
 		if(!e) e = window.event;
 		elementToDrag.style.left = (e.clientX - deltaX) + "px";
 		elementToDrag.style.top = (e.clientY - deltaY) + "px";
+
+		for(var i = 0; i < findedLines.length; i++){
+			var fLine = findedLines[i];
+			var x1 = Number(fLine.getAttribute("x1"))-rad1+svg[0].offsetLeft;
+			var y1 = Number(fLine.getAttribute("y1"))-rad1+svg[0].offsetTop;
+			var x2 = Number(fLine.getAttribute("x2"))-rad1+svg[0].offsetLeft;
+			var y2 = Number(fLine.getAttribute("y2"))-rad1+svg[0].offsetTop;
+			if(fLine.getAttribute("ch") == "1"){
+				fLine.setAttribute("x1", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
+				fLine.setAttribute("y1", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
+			}
+			else if(fLine.getAttribute("ch") == "2"){
+				fLine.setAttribute("x2", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
+				fLine.setAttribute("y2", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
+			}
+		}
+
+		findX.innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,"")) + Number(elementToDrag.style.width.replace(/\D+/g,""))/2) + "px";
+		findY.innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,"")) + Number(elementToDrag.style.height.replace(/\D+/g,""))/2) + "px";
+		findR.innerHTML = parseInt(Number(elementToDrag.style.height.replace(/\D+/g,""))/2);
 		if(e.stopPropagation) e.stopPropagation();
 		else e.cancelBubble = true;
 	}
 
 	function upHandler(e){
 		if(!e) e = window.event;
-		if(document.removeEventListener){
-			document.removeEventListener("mouseup", upHandler, true);
-			document.removeEventListener("mousemove", moveHandler, true);
-		}
-		else if(document.detachEvent){
-			elementToDrag.detachEvent("onlosecapture", upHandler);
-			elementToDrag.detachEvent("onmouseup", upHandler);
-			elementToDrag.detachEvent("onmousemove", moveHandler);
-			elementToDrag.releaseCapture();
-		}
-		else{
-			document.onmouseup = olduphandler;
-			document.onmousemove = oldmovehandler;
-		}
+		document.removeEventListener("mouseup", upHandler, true);
+		document.removeEventListener("mousemove", moveHandler, true);
 
 		if(e.stopPropagation) e.stopPropagation();
 		else e.cancelBubble = true;
