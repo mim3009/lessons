@@ -29,12 +29,55 @@
  			addDraw();
 		}
 	</script>
+	<style type="text/css">
+		table,td,th,tr {
+			border:1px solid #ddf;
+			border-collapse:collapse;
+			width: 71px;
+			text-align: center;
+		}
+	</style>
 </head>
 <body>
-	<form style="float: left;">
-		<input type="radio" name="mode" id="points" onclick="if(this.checked){createP()}">Create points<br/>
-		<input type="radio" name="mode" id="transform" onclick="if(this.checked){transformP()}">Transform<br/>
-		<input type="radio" name="mode" id="drawl" onclick="if(this.checked){drawL()}">Drawing lines
-	</form>
+	<div style="float:left;">
+		<form>
+			<input type="radio" name="mode" id="points" onclick="if(this.checked){createP()}">Create points<br/>
+			<input type="radio" name="mode" id="transform" onclick="if(this.checked){transformP()}">Transform<br/>
+			<input type="radio" name="mode" id="drawl" onclick="if(this.checked){drawL()}">Drawing lines
+		</form>
+	</div>
+	<div style="float: right;">
+		<div>
+		<table style="width: 280px">
+			<tr>
+				<th>x1</th>
+				<th>y1</th>
+				<th>c</th>
+				<th>r</th>
+			</tr>
+		</table>
+		<div style="height: 250px; width: 295px; overflow: auto;" >
+		    <table id="pointsTable" style="width: 280px;"></table>
+		</div>
+	</div>
+	<br/>
+	<div>
+		<table style="width: 280px">
+			<tr>
+				<th>x1</th>
+				<th>y1</th>
+				<th>x2</th>
+				<th>y2</th>
+			</tr>
+		</table>
+		<div style="height: 250px; width: 295px; overflow: auto;" >
+		    <table id="linesTable" style="width: 280px;"></table>
+		</div>
+	</div>
+	</div>
+	<br/><br/><br/><br/>
+	<div>
+		<svg class="svg" style="height: 500px; width: 900px; background: rgba(0, 65, 255, 0.25);" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
+	</div>
 </body>
 </html>
