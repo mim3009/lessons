@@ -3,10 +3,6 @@ function drag(elementToDrag, event){
 	var findX = null;
 	var findY = null;
 	var findR = null;
-	var findX1 = new Array();
-	var findY1 = new Array();
-	var findX2 = new Array();
-	var findY2 = new Array();
 	for(var i = 0; i < tr.length; i++){
 		var td = tr[i].getElementsByTagName('td');
 		for(var j = 0; j < td.length; j++){
@@ -60,8 +56,6 @@ function drag(elementToDrag, event){
 			}
 		}
 	}
-
-	console.log(findTR);
 
 	if(document.addEventListener){
 		document.addEventListener("mousemove", moveHandler, true);
