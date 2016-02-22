@@ -166,6 +166,17 @@ function changeColour(e){
 			}
 		}
 		for(var i = 0; i < findedLines.length; i++){
+			var table = document.getElementById("linesTable");
+			var tr = document.getElementById("linesTable").getElementsByTagName('tr');
+			for(var j = 0; j < tr.length; j++){
+				var td = tr[j].getElementsByTagName('td');
+				for(var k = 0; k < td.length; k++){
+					if(parseInt(Number(findedLines[i].getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(findedLines[i].getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(findedLines[i].getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(findedLines[i].getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
+						table.deleteRow(j);
+						break;
+					}
+				}
+			}
 			svg[0].removeChild(findedLines[i]);
 		}
 	
