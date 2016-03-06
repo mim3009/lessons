@@ -36,6 +36,20 @@ function removeContext(){
 	}
 }
 
+function addContextLine(){
+	var elements = document.getElementsByTagName('line');
+	for(var i = 0; i < elements.length; i++){
+		elements[i].oncontextmenu = changeColorLine;
+	}
+}
+
+function removeContextLine(){
+	var elements = document.getElementsByTagName('line');
+	for(var i = 0; i < elements.length; i++){
+		elements[i].oncontextmenu = null;
+	}
+}
+
 function addTransform(){
 	var elements = document.getElementsByClassName('movedElement');
 	for(var i = 0; i < elements.length; i++){
@@ -73,7 +87,8 @@ function creatingPoints(e){
 	if(element == '[object SVGSVGElement]'){
 		var div = document.createElement("div");
 		div.className = "movedElement";
-		div.style.background = "gray";
+		div.style.background = "rgba(128, 128, 128, 0.29)";
+		//div.style.background = "gray";
 		div.style.left = (e.pageX - 10) + "px";
 		div.style.top = (e.pageY - 10) + "px";
 		div.style.position = "absolute";
@@ -81,6 +96,7 @@ function creatingPoints(e){
 		div.style.width = "20px";
 		div.style.borderRadius = "100%";
 		div.style.zIndex = "1";
+		div.setAttribute("mass", "10kg");
 		
 		div.onmousedown = function(e){
 			drag(this, e);
@@ -96,10 +112,12 @@ function creatingPoints(e){
 		var cell1 = row.insertCell(1);
 		var cell2 = row.insertCell(2);
 		var cell3 = row.insertCell(3);
+		var cell4 = row.insertCell(4);
 		cell0.innerHTML = Number(div.style.left.replace(/\D+/g,"")) + Number(div.style.width.replace(/\D+/g,""))/2 + "px";
 		cell1.innerHTML = Number(div.style.top.replace(/\D+/g,"")) + Number(div.style.height.replace(/\D+/g,""))/2 + "px";
 		cell2.innerHTML = div.style.background;
 		cell3.innerHTML = Number(div.style.height.replace(/\D+/g,""))/2;
+		cell4.innerHTML = div.getAttribute("mass");
 		row.style.background = div.style.background; 
 	}
 	
@@ -190,6 +208,7 @@ function changeRadius(elementToChange, event){
 	var findX = null;
 	var findY = null;
 	var findR = null;
+	var findM = null;
 	for(var i = 0; i < tr.length; i++){
 		var td = tr[i].getElementsByTagName('td');
 		for(var j = 0; j < td.length; j++){
@@ -197,6 +216,7 @@ function changeRadius(elementToChange, event){
 				findX = td[0];
 				findY = td[1];
 				findR = td[3];
+				findM = td[4];
 				break;
 			}
 		}
@@ -253,6 +273,7 @@ function changeRadius(elementToChange, event){
 		findX.innerHTML = parseInt(Number(elementToChange.style.left.replace(/\D+/g,"")) + Number(elementToChange.style.width.replace(/\D+/g,""))/2) + "px";
 		findY.innerHTML = parseInt(Number(elementToChange.style.top.replace(/\D+/g,"")) + Number(elementToChange.style.height.replace(/\D+/g,""))/2) + "px";
 		findR.innerHTML = parseInt(Number(elementToChange.style.height.replace(/\D+/g,""))/2);
+		findM.innerHTML = parseInt(Number(elementToChange.style.height.replace(/\D+/g,""))/2) + "kg";
 		if(e.stopPropagation) e.stopPropagation();
 		else e.cancelBubble = true;
 	}
@@ -265,6 +286,15 @@ function changeRadius(elementToChange, event){
 		if(e.stopPropagation) e.stopPropagation();
 		else e.cancelBubble = true;	
 	}
+}
+
+function get_angle(center, point){ 
+	var x = point.x - center.x; 
+	var y = point.y - center.y; 
+	if(x==0) return (y>0) ? 180 : 0; 
+	var a = Math.atan(y/x)*180/Math.PI; 
+	a = (x > 0) ? a+90 : a+270; 
+	return a;
 }
 
 function drawLine(el, event){
@@ -309,7 +339,10 @@ function drawLine(el, event){
 				line.setAttribute("y1", y1+rad1-svg[0].offsetTop);
 				line.setAttribute("x2", x2+rad2-svg[0].offsetLeft);
 				line.setAttribute("y2", y2+rad2-svg[0].offsetTop);
-				line.setAttribute("style", "stroke: rgb(255,0,0); stroke-width: 3");
+				line.setAttribute("style", "stroke: red; stroke-width: 3");
+
+				line.oncontextmenu = changeColorLine;
+
 				svg[0].appendChild(line);
 
 				var table = document.getElementById("linesTable");
@@ -318,10 +351,56 @@ function drawLine(el, event){
 				var cell1 = row.insertCell(1);
 				var cell2 = row.insertCell(2);
 				var cell3 = row.insertCell(3);
+				var cell4 = row.insertCell(4);
 				cell0.innerHTML = x1+rad1;
 				cell1.innerHTML = y1+rad1;
 				cell2.innerHTML = x2+rad2;
 				cell3.innerHTML = y2+rad2;
+				cell4.innerHTML = line.style.stroke;
+				row.style.background = line.style.stroke;
+
+				var polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+				var center = {};
+				center.x = parseInt(Number(x1+rad1-svg[0].offsetLeft)); 
+				center.y = parseInt(Number(y1+rad1-svg[0].offsetTop));
+				var point = {};
+				point.x = parseInt(Number(x2+rad2-svg[0].offsetLeft)); 
+				point.y =  parseInt(Number(y2+rad2-svg[0].offsetTop));
+				var angle = get_angle(center, point);
+				console.log("angle = " + angle);
+				if(angle == 90 || angle == 270){
+					polygon.setAttribute("points", parseInt(Number(x1+rad1-svg[0].offsetLeft)) + "," + parseInt(Number(y1+rad1+rad1-svg[0].offsetTop-1)) + " " + parseInt(Number(x1+rad1-svg[0].offsetLeft)) + "," + parseInt(Number(y1+rad1-rad1-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-svg[0].offsetLeft)) + "," + parseInt(Number(y2+rad2-rad2-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-svg[0].offsetLeft)) + "," + parseInt(Number(y2+rad2+rad2-svg[0].offsetTop-1)));
+				}
+				else if(angle == 0 || angle == 180){
+					polygon.setAttribute("points", parseInt(Number(x1+rad1-rad1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-svg[0].offsetTop)) + " " + parseInt(Number(x1+rad1+rad1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-svg[0].offsetTop)) + " " + parseInt(Number(x2+rad2+rad2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-svg[0].offsetTop)) + " " + parseInt(Number(x2+rad2-rad2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-svg[0].offsetTop)));
+				}
+				/*if((angle == 90 || angle == 270) || (angle >= 45 && angle < 135) || (angle >= 225 && angle < 315)){
+					polygon.setAttribute("points", parseInt(Number(x1+rad1-svg[0].offsetLeft)) + "," + parseInt(Number(y1+rad1+rad1-svg[0].offsetTop-1)) + " " + parseInt(Number(x1+rad1-svg[0].offsetLeft)) + "," + parseInt(Number(y1+rad1-rad1-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-svg[0].offsetLeft)) + "," + parseInt(Number(y2+rad2-rad2-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-svg[0].offsetLeft)) + "," + parseInt(Number(y2+rad2+rad2-svg[0].offsetTop-1)));
+				}
+				else if((angle == 0 || angle == 180) || (angle >= 135 && angle < 225) || (angle >= 315 && angle < 45)){
+					polygon.setAttribute("points", parseInt(Number(x1+rad1-rad1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-svg[0].offsetTop)) + " " + parseInt(Number(x1+rad1+rad1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-svg[0].offsetTop)) + " " + parseInt(Number(x2+rad2+rad2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-svg[0].offsetTop)) + " " + parseInt(Number(x2+rad2-rad2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-svg[0].offsetTop)));
+				}
+
+				*/
+				else if(angle > 90 && angle < 180){
+					var angle2 = 180-Number(angle);
+					var angle3 = 180-(90+angle2);
+					var a = Math.abs((rad1*Math.sin(angle3))/Math.sin(90));
+					var c = Math.sqrt(Math.abs(rad1*rad1 - a*a));
+					var a1 = Math.abs((rad1*Math.sin(angle2))/Math.sin(90));
+					var c1 = Math.sqrt(Math.abs(rad1*rad1 - a*a));
+					var a2 = Math.abs((rad2*Math.sin(angle2))/Math.sin(90));
+					var c2 = Math.sqrt(Math.abs(rad2*rad2 - a2*a2));
+					var a3 = Math.abs((rad2*Math.sin(angle3))/Math.sin(90));
+					var c3 = Math.sqrt(Math.abs(rad2*rad2 - a2*a2));
+					var raz = Math.abs(rad1-c);
+					var raz2 = Math.abs(rad2-c2);
+					polygon.setAttribute("points", parseInt(Number(x1+rad1+c-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-a-svg[0].offsetTop-1)) + " " + parseInt(Number(x1+rad1-c1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1+a-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-c2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2+a2-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2+c2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-a2-svg[0].offsetTop-1)));
+					console.log("a = " + a + " c = " + c + " a2 = " + a2 + " c2 = " + c2 + " raz = " + raz);
+				}
+
+				polygon.setAttribute("style", "fill: #FFECAD; stroke: purple; stroke-width: 1;");
+				svg[0].appendChild(polygon);
 			}
 		}
 		document.removeEventListener("mouseup", upHandl, true);
@@ -330,4 +409,41 @@ function drawLine(el, event){
 		if(e.stopPropagation) e.stopPropagation();
 		else e.cancelBubble = true;	
 	}
+}
+
+function changeColorLine(e){
+	e = e || window.event;
+	e.preventDefault ? e.preventDefault() : e.returnValue = false;
+	var el = e.target || e.srcElement;
+	if(el.style.stroke == "red"){
+		el.style.stroke = "white";
+		var svg = document.getElementsByTagName("svg");
+		var tr = document.getElementById("linesTable").getElementsByTagName('tr');
+		for(var i = 0; i < tr.length; i++){
+			var td = tr[i].getElementsByTagName('td');
+			for(var j = 0; j < td.length; j++){
+				if(parseInt(Number(el.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(el.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(el.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(el.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
+					td[4].innerHTML = el.style.stroke;
+					tr[i].style.background = el.style.stroke;
+					break;
+				}
+			}
+		}
+	}
+	else if(el.style.stroke == "white"){
+		var svg = document.getElementsByTagName("svg");
+		var table = document.getElementById("linesTable");
+		var tr = document.getElementById("linesTable").getElementsByTagName('tr');
+		for(var i = 0; i < tr.length; i++){
+			var td = tr[i].getElementsByTagName('td');
+			for(var j = 0; j < td.length; j++){
+				if(parseInt(Number(el.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(el.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(el.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(el.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
+					table.deleteRow(i);
+					break;
+				}
+			}
+		}
+		svg[0].removeChild(el);
+	}
+	e.stopPropagation();
 }
