@@ -8,6 +8,7 @@
 		function createP() {
 			removeTransform();
 			removeDraw();
+			removeContextLine();
  			addCreate();
  			addMove();
  			addContext();
@@ -18,6 +19,7 @@
  			removeDraw();
  			removeMove();
  			removeContext();
+ 			removeContextLine();
  			addTransform();
 		}
 
@@ -27,6 +29,7 @@
  			removeContext();
  			removeTransform();
  			addDraw();
+ 			addContextLine();
 		}
 	</script>
 	<style type="text/css">
@@ -41,43 +44,45 @@
 <body>
 	<div style="float:left;">
 		<form>
-			<input type="radio" name="mode" id="points" onclick="if(this.checked){createP()}">Create points<br/>
-			<input type="radio" name="mode" id="transform" onclick="if(this.checked){transformP()}">Transform<br/>
-			<input type="radio" name="mode" id="drawl" onclick="if(this.checked){drawL()}">Drawing lines
+			<input type="radio" name="mode" id="points" onclick="if(this.checked){createP()}">Create mode<br/>
+			<input type="radio" name="mode" id="transform" onclick="if(this.checked){transformP()}">Transform mode<br/>
+			<input type="radio" name="mode" id="drawl" onclick="if(this.checked){drawL()}">Drawing lines mode
 		</form>
 	</div>
 	<div style="float: right;">
 		<div>
-		<table style="width: 280px">
+		<table style="width: 300px">
 			<tr>
 				<th>x1</th>
 				<th>y1</th>
 				<th>c</th>
 				<th>r</th>
+				<th>m</th>
 			</tr>
 		</table>
-		<div style="height: 250px; width: 295px; overflow: auto;" >
-		    <table id="pointsTable" style="width: 280px;"></table>
+		<div style="height: 290px; width: 315px; overflow: auto;" >
+		    <table id="pointsTable" style="width: 300px;"></table>
 		</div>
 	</div>
 	<br/>
 	<div>
-		<table style="width: 280px">
+		<table style="width: 300px">
 			<tr>
 				<th>x1</th>
 				<th>y1</th>
 				<th>x2</th>
 				<th>y2</th>
+				<th>c</th>
 			</tr>
 		</table>
-		<div style="height: 250px; width: 295px; overflow: auto;" >
-		    <table id="linesTable" style="width: 280px;"></table>
+		<div style="height: 290px; width: 315px; overflow: auto;" >
+		    <table id="linesTable" style="width: 300px;"></table>
 		</div>
 	</div>
 	</div>
 	<br/><br/><br/><br/>
 	<div>
-		<svg class="svg" style="height: 500px; width: 900px; background: rgba(0, 65, 255, 0.25); border: 1px solid black;" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
+		<svg class="svg" style="height: 560px; width: 1000px; background: rgba(0, 65, 255, 0.25); border: 1px solid black;" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
 	</div>
 </body>
 </html>
