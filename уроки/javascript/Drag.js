@@ -69,47 +69,138 @@ function drag(elementToDrag, event){
 	else event.returnValue = false;
 
 	function moveHandler(e){
-		if(!e) e = window.event;
-		elementToDrag.style.left = (e.clientX - deltaX) + "px";
-		elementToDrag.style.top = (e.clientY - deltaY) + "px";
-
+		var p = 0;
 		for(var i = 0; i < findedLines.length; i++){
-			var fLine = findedLines[i];
-			var x1 = Number(fLine.getAttribute("x1"))-rad1+svg[0].offsetLeft;
-			var y1 = Number(fLine.getAttribute("y1"))-rad1+svg[0].offsetTop;
-			var x2 = Number(fLine.getAttribute("x2"))-rad1+svg[0].offsetLeft;
-			var y2 = Number(fLine.getAttribute("y2"))-rad1+svg[0].offsetTop;
-			if(fLine.getAttribute("ch") == "1"){
-
-				for(var u = 0; u < findTR.length; u++){
-					var td = findTR[u].getElementsByTagName('td');
-					if(parseInt(Number(fLine.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
-						td[0].innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1);
-						td[1].innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1);
-					}
-				}
-
-				fLine.setAttribute("x1", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
-				fLine.setAttribute("y1", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
-			}
-			else if(fLine.getAttribute("ch") == "2"){
-
-				for(var u = 0; u < findTR.length; u++){
-					var td = findTR[u].getElementsByTagName('td');
-					if(parseInt(Number(fLine.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
-						td[2].innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1);
-						td[3].innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1);
-					}
-				}
-
-				fLine.setAttribute("x2", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
-				fLine.setAttribute("y2", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
+			if(findedLines[i].getAttribute("lengthLine")){
+				p++;
 			}
 		}
+		if(p == 0){
+			if(!e) e = window.event;
+			elementToDrag.style.left = (e.clientX - deltaX) + "px";
+			elementToDrag.style.top = (e.clientY - deltaY) + "px";
 
-		findX.innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,"")) + Number(elementToDrag.style.width.replace(/\D+/g,""))/2) + "px";
-		findY.innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,"")) + Number(elementToDrag.style.height.replace(/\D+/g,""))/2) + "px";
-		findR.innerHTML = parseInt(Number(elementToDrag.style.height.replace(/\D+/g,""))/2);
+			for(var i = 0; i < findedLines.length; i++){
+				var fLine = findedLines[i];
+				var x1 = Number(fLine.getAttribute("x1"))-rad1+svg[0].offsetLeft;
+				var y1 = Number(fLine.getAttribute("y1"))-rad1+svg[0].offsetTop;
+				var x2 = Number(fLine.getAttribute("x2"))-rad1+svg[0].offsetLeft;
+				var y2 = Number(fLine.getAttribute("y2"))-rad1+svg[0].offsetTop;
+				if(fLine.getAttribute("ch") == "1"){
+
+					for(var u = 0; u < findTR.length; u++){
+						var td = findTR[u].getElementsByTagName('td');
+						if(parseInt(Number(fLine.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
+							td[0].innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1);
+							td[1].innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1);
+						}
+					}
+
+					fLine.setAttribute("x1", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
+					fLine.setAttribute("y1", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
+				}
+				else if(fLine.getAttribute("ch") == "2"){
+
+					for(var u = 0; u < findTR.length; u++){
+						var td = findTR[u].getElementsByTagName('td');
+						if(parseInt(Number(fLine.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
+							td[2].innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1);
+							td[3].innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1);
+						}
+					}
+
+					fLine.setAttribute("x2", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
+					fLine.setAttribute("y2", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
+				}
+			}
+
+			findX.innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,"")) + Number(elementToDrag.style.width.replace(/\D+/g,""))/2) + "px";
+			findY.innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,"")) + Number(elementToDrag.style.height.replace(/\D+/g,""))/2) + "px";
+			findR.innerHTML = parseInt(Number(elementToDrag.style.height.replace(/\D+/g,""))/2);
+		}
+		else if(p == 1){
+			var fixLine = null;
+			for(var i = 0; i < findedLines.length; i++){
+				if(findedLines[i].getAttribute("lengthLine")){
+					fixLine = findedLines[i];
+				}
+			}
+			var lineLength = Number(fixLine.getAttribute("lengthLine"));
+			var xfix = 0;
+			var yfix = 0;
+			if(fixLine.getAttribute("ch") == "1"){
+				xfix = Number(fixLine.getAttribute("x2"))+svg[0].offsetLeft;
+				yfix = Number(fixLine.getAttribute("y2"))+svg[0].offsetTop;
+			}
+			else{
+				xfix = Number(fixLine.getAttribute("x1"))+svg[0].offsetLeft;
+				yfix = Number(fixLine.getAttribute("y1"))+svg[0].offsetTop;
+			}
+
+			if(!e) e = window.event;
+
+			var center = {};
+			center.x = xfix; 
+			center.y = yfix;
+			var point = {};
+			point.x = (e.clientX - deltaX) + Number(elementToDrag.style.height.replace(/\D+/g,""))/2; 
+			point.y = (e.clientY - deltaY) + Number(elementToDrag.style.height.replace(/\D+/g,""))/2;
+			var angle = get_angle(center, point);
+			
+			var radius = lineLength;
+			var angleOffset = -90;
+			var deg2rad = Math.PI/180;
+			var rad2deg = 180/Math.PI;
+			var centerx = xfix;
+			var centery = yfix;
+			var angle2 = angle + angleOffset;
+			var radangle = angle2*deg2rad;
+			var left = radius*Math.cos(radangle) + xfix - Number(elementToDrag.style.height.replace(/\D+/g,""))/2;
+			var top = radius*Math.sin(radangle) + yfix - Number(elementToDrag.style.height.replace(/\D+/g,""))/2;
+
+			elementToDrag.style.left = parseInt(left) + "px";
+			elementToDrag.style.top = parseInt(top) + "px";
+
+			for(var i = 0; i < findedLines.length; i++){
+				var fLine = findedLines[i];
+				var x1 = Number(fLine.getAttribute("x1"))-rad1+svg[0].offsetLeft;
+				var y1 = Number(fLine.getAttribute("y1"))-rad1+svg[0].offsetTop;
+				var x2 = Number(fLine.getAttribute("x2"))-rad1+svg[0].offsetLeft;
+				var y2 = Number(fLine.getAttribute("y2"))-rad1+svg[0].offsetTop;
+				if(fLine.getAttribute("ch") == "1"){
+
+					for(var u = 0; u < findTR.length; u++){
+						var td = findTR[u].getElementsByTagName('td');
+						if(parseInt(Number(fLine.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
+							td[0].innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1);
+							td[1].innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1);
+						}
+					}
+
+					fLine.setAttribute("x1", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
+					fLine.setAttribute("y1", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
+				}
+				else if(fLine.getAttribute("ch") == "2"){
+
+					for(var u = 0; u < findTR.length; u++){
+						var td = findTR[u].getElementsByTagName('td');
+						if(parseInt(Number(fLine.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
+							td[2].innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1);
+							td[3].innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1);
+						}
+					}
+
+					fLine.setAttribute("x2", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
+					fLine.setAttribute("y2", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
+				}
+			}
+
+			findX.innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,"")) + Number(elementToDrag.style.width.replace(/\D+/g,""))/2) + "px";
+			findY.innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,"")) + Number(elementToDrag.style.height.replace(/\D+/g,""))/2) + "px";
+			findR.innerHTML = parseInt(Number(elementToDrag.style.height.replace(/\D+/g,""))/2);
+
+		}
+		else{}
 		if(e.stopPropagation) e.stopPropagation();
 		else e.cancelBubble = true;
 	}
