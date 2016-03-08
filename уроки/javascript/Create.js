@@ -87,8 +87,8 @@ function creatingPoints(e){
 	if(element == '[object SVGSVGElement]'){
 		var div = document.createElement("div");
 		div.className = "movedElement";
-		div.style.background = "rgba(128, 128, 128, 0.29)";
-		//div.style.background = "gray";
+		//div.style.background = "rgba(128, 128, 128, 0.29)";
+		div.style.background = "gray";
 		div.style.left = (e.pageX - 10) + "px";
 		div.style.top = (e.pageY - 10) + "px";
 		div.style.position = "absolute";
@@ -339,11 +339,9 @@ function drawLine(el, event){
 				line.setAttribute("y1", y1+rad1-svg[0].offsetTop);
 				line.setAttribute("x2", x2+rad2-svg[0].offsetLeft);
 				line.setAttribute("y2", y2+rad2-svg[0].offsetTop);
-				line.setAttribute("style", "stroke: red; stroke-width: 3");
+				line.setAttribute("style", "stroke: red; stroke-width: 3; z-index: 1;");
 
 				line.oncontextmenu = changeColorLine;
-
-				svg[0].appendChild(line);
 
 				var table = document.getElementById("linesTable");
 				var row = table.insertRow(table.rows.length);
@@ -367,7 +365,7 @@ function drawLine(el, event){
 				point.x = parseInt(Number(x2+rad2-svg[0].offsetLeft)); 
 				point.y =  parseInt(Number(y2+rad2-svg[0].offsetTop));
 				var angle = get_angle(center, point);
-				console.log("angle = " + angle);
+				//console.log("angle = " + angle);
 				if(angle == 90 || angle == 270){
 					polygon.setAttribute("points", parseInt(Number(x1+rad1-svg[0].offsetLeft)) + "," + parseInt(Number(y1+rad1+rad1-svg[0].offsetTop-1)) + " " + parseInt(Number(x1+rad1-svg[0].offsetLeft)) + "," + parseInt(Number(y1+rad1-rad1-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-svg[0].offsetLeft)) + "," + parseInt(Number(y2+rad2-rad2-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-svg[0].offsetLeft)) + "," + parseInt(Number(y2+rad2+rad2-svg[0].offsetTop-1)));
 				}
@@ -380,27 +378,47 @@ function drawLine(el, event){
 				else if((angle == 0 || angle == 180) || (angle >= 135 && angle < 225) || (angle >= 315 && angle < 45)){
 					polygon.setAttribute("points", parseInt(Number(x1+rad1-rad1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-svg[0].offsetTop)) + " " + parseInt(Number(x1+rad1+rad1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-svg[0].offsetTop)) + " " + parseInt(Number(x2+rad2+rad2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-svg[0].offsetTop)) + " " + parseInt(Number(x2+rad2-rad2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-svg[0].offsetTop)));
 				}
-
 				*/
-				else if(angle > 90 && angle < 180){
-					var angle2 = 180-Number(angle);
-					var angle3 = 180-(90+angle2);
-					var a = Math.abs((rad1*Math.sin(angle3))/Math.sin(90));
-					var c = Math.sqrt(Math.abs(rad1*rad1 - a*a));
-					var a1 = Math.abs((rad1*Math.sin(angle2))/Math.sin(90));
-					var c1 = Math.sqrt(Math.abs(rad1*rad1 - a*a));
-					var a2 = Math.abs((rad2*Math.sin(angle2))/Math.sin(90));
-					var c2 = Math.sqrt(Math.abs(rad2*rad2 - a2*a2));
-					var a3 = Math.abs((rad2*Math.sin(angle3))/Math.sin(90));
-					var c3 = Math.sqrt(Math.abs(rad2*rad2 - a2*a2));
-					var raz = Math.abs(rad1-c);
-					var raz2 = Math.abs(rad2-c2);
-					polygon.setAttribute("points", parseInt(Number(x1+rad1+c-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-a-svg[0].offsetTop-1)) + " " + parseInt(Number(x1+rad1-c1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1+a-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-c2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2+a2-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2+c2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-a2-svg[0].offsetTop-1)));
-					console.log("a = " + a + " c = " + c + " a2 = " + a2 + " c2 = " + c2 + " raz = " + raz);
+				else if(angle > 0 && angle < 90){
+					var h = rad1*(1-Math.cos(angle/2));
+					var P = rad1-h;
+					var ang = (180-angle)/2;
+					var angt = 180-(90+ang);
+					var xfind = Math.abs(rad1*Math.sin(angt));
+					var z = Math.sqrt((rad1*rad1)-(xfind*xfind));
+					var g = rad1-z; 
+
+					var angle2 = angle;
+					var h2 = rad2*(1-Math.cos(angle2/2));
+					var P2 = rad2-h2;
+					var ang2 = (180-angle2)/2;
+					var angt2 = 180-(90+ang2);
+					var xfind2 = Math.abs(rad2*Math.sin(angt2));
+					var z2 = Math.sqrt((rad2*rad2)-(xfind2*xfind2));
+					var g2 = rad2-z2; 
+
+					/*var line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+					line2.setAttribute("x1", x1+rad1-xfind-svg[0].offsetLeft);
+					line2.setAttribute("y1", y1+g-svg[0].offsetTop);
+					line2.setAttribute("x2", x2+rad2-xfind2-svg[0].offsetLeft);
+					line2.setAttribute("y2", y2+g2-svg[0].offsetTop);
+					line2.setAttribute("style", "stroke: red; stroke-width: 3");
+					console.log("angle = " + angle + " rad1 = " + rad1 + " xfind = " + xfind + " g = " + g);
+					var line3 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+					line3.setAttribute("x1", x1+rad1+rad1-g-svg[0].offsetLeft);
+					line3.setAttribute("y1", y1+rad1+xfind-svg[0].offsetTop);
+					line3.setAttribute("x2", x2+rad2+rad2-g2-svg[0].offsetLeft);
+					line3.setAttribute("y2", y2+rad2+xfind2-svg[0].offsetTop);
+					line3.setAttribute("style", "stroke: red; stroke-width: 3");
+					console.log("angle2 = " + angle2 + " rad2 = " + rad2 + " xfind2 = " + xfind2 + " g2 = " + g2);*/
+					polygon.setAttribute("points", Number(x1+rad1-xfind-svg[0].offsetLeft-1) + "," + Number(y1+g-svg[0].offsetTop-1) + " " + Number(x2+rad2-xfind2-svg[0].offsetLeft-1) + "," + Number(y2+g2-svg[0].offsetTop-1) + " " + Number(x2+rad2+z2-svg[0].offsetLeft-1) + "," + Number(y2+rad2+xfind2-svg[0].offsetTop-1) + " " + Number(x1+rad1+rad1-g-svg[0].offsetLeft-1) + "," + Number(y1+rad1+xfind-svg[0].offsetTop-1));
 				}
 
 				polygon.setAttribute("style", "fill: #FFECAD; stroke: purple; stroke-width: 1;");
-				svg[0].appendChild(polygon);
+				//svg[0].appendChild(polygon);
+				//svg[0].appendChild(line2);
+				//svg[0].appendChild(line3);
+				svg[0].appendChild(line);
 			}
 		}
 		document.removeEventListener("mouseup", upHandl, true);
@@ -411,12 +429,23 @@ function drawLine(el, event){
 	}
 }
 
+function getLineLength(line){
+	var x1 = line.getAttribute("x1");
+	var y1 = line.getAttribute("y1");
+	var x2 = line.getAttribute("x2");
+	var y2 = line.getAttribute("y2");
+	var res = Math.sqrt(Math.pow((x2-x1), 2) + Math.pow((y2-y1), 2));
+	return res;
+}
+
 function changeColorLine(e){
 	e = e || window.event;
 	e.preventDefault ? e.preventDefault() : e.returnValue = false;
 	var el = e.target || e.srcElement;
 	if(el.style.stroke == "red"){
 		el.style.stroke = "white";
+		var len = getLineLength(el);
+		el.setAttribute("lengthLine", len);
 		var svg = document.getElementsByTagName("svg");
 		var tr = document.getElementById("linesTable").getElementsByTagName('tr');
 		for(var i = 0; i < tr.length; i++){
