@@ -22,6 +22,22 @@ function removeMove(){
 	}
 }
 
+function addMoveLines(){
+	var elements = document.getElementsByTagName('line');
+	for(var i = 0; i < elements.length; i++){
+		elements[i].onmousedown = function(e){
+			dragLine(this, e);
+		}
+	}
+}
+
+function removeMoveLines(){
+	var elements = document.getElementsByTagName('line');
+	for(var i = 0; i < elements.length; i++){
+		elements[i].onmousedown = null;
+	}
+}
+
 function addContext(){
 	var elements = document.getElementsByClassName('movedElement');
 	for(var i = 0; i < elements.length; i++){
@@ -342,6 +358,9 @@ function drawLine(el, event){
 				line.setAttribute("style", "stroke: red; stroke-width: 3; z-index: 1;");
 
 				line.oncontextmenu = changeColorLine;
+				line.onmousedown = function(e){
+					dragLine(this, e);
+				}
 
 				var table = document.getElementById("linesTable");
 				var row = table.insertRow(table.rows.length);
@@ -365,53 +384,22 @@ function drawLine(el, event){
 				point.x = parseInt(Number(x2+rad2-svg[0].offsetLeft)); 
 				point.y =  parseInt(Number(y2+rad2-svg[0].offsetTop));
 				var angle = get_angle(center, point);
-				//console.log("angle = " + angle);
 				if(angle == 90 || angle == 270){
 					polygon.setAttribute("points", parseInt(Number(x1+rad1-svg[0].offsetLeft)) + "," + parseInt(Number(y1+rad1+rad1-svg[0].offsetTop-1)) + " " + parseInt(Number(x1+rad1-svg[0].offsetLeft)) + "," + parseInt(Number(y1+rad1-rad1-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-svg[0].offsetLeft)) + "," + parseInt(Number(y2+rad2-rad2-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-svg[0].offsetLeft)) + "," + parseInt(Number(y2+rad2+rad2-svg[0].offsetTop-1)));
 				}
 				else if(angle == 0 || angle == 180){
 					polygon.setAttribute("points", parseInt(Number(x1+rad1-rad1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-svg[0].offsetTop)) + " " + parseInt(Number(x1+rad1+rad1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-svg[0].offsetTop)) + " " + parseInt(Number(x2+rad2+rad2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-svg[0].offsetTop)) + " " + parseInt(Number(x2+rad2-rad2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-svg[0].offsetTop)));
 				}
-				/*if((angle == 90 || angle == 270) || (angle >= 45 && angle < 135) || (angle >= 225 && angle < 315)){
-					polygon.setAttribute("points", parseInt(Number(x1+rad1-svg[0].offsetLeft)) + "," + parseInt(Number(y1+rad1+rad1-svg[0].offsetTop-1)) + " " + parseInt(Number(x1+rad1-svg[0].offsetLeft)) + "," + parseInt(Number(y1+rad1-rad1-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-svg[0].offsetLeft)) + "," + parseInt(Number(y2+rad2-rad2-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-svg[0].offsetLeft)) + "," + parseInt(Number(y2+rad2+rad2-svg[0].offsetTop-1)));
-				}
-				else if((angle == 0 || angle == 180) || (angle >= 135 && angle < 225) || (angle >= 315 && angle < 45)){
-					polygon.setAttribute("points", parseInt(Number(x1+rad1-rad1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-svg[0].offsetTop)) + " " + parseInt(Number(x1+rad1+rad1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-svg[0].offsetTop)) + " " + parseInt(Number(x2+rad2+rad2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-svg[0].offsetTop)) + " " + parseInt(Number(x2+rad2-rad2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-svg[0].offsetTop)));
-				}
-				*/
-				else if(angle > 0 && angle < 90){
-					var h = rad1*(1-Math.cos(angle/2));
-					var P = rad1-h;
-					var ang = (180-angle)/2;
-					var angt = 180-(90+ang);
-					var xfind = Math.abs(rad1*Math.sin(angt));
-					var z = Math.sqrt((rad1*rad1)-(xfind*xfind));
-					var g = rad1-z; 
-
-					var angle2 = angle;
-					var h2 = rad2*(1-Math.cos(angle2/2));
-					var P2 = rad2-h2;
-					var ang2 = (180-angle2)/2;
-					var angt2 = 180-(90+ang2);
-					var xfind2 = Math.abs(rad2*Math.sin(angt2));
-					var z2 = Math.sqrt((rad2*rad2)-(xfind2*xfind2));
-					var g2 = rad2-z2; 
-
-					/*var line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-					line2.setAttribute("x1", x1+rad1-xfind-svg[0].offsetLeft);
-					line2.setAttribute("y1", y1+g-svg[0].offsetTop);
-					line2.setAttribute("x2", x2+rad2-xfind2-svg[0].offsetLeft);
-					line2.setAttribute("y2", y2+g2-svg[0].offsetTop);
-					line2.setAttribute("style", "stroke: red; stroke-width: 3");
-					console.log("angle = " + angle + " rad1 = " + rad1 + " xfind = " + xfind + " g = " + g);
-					var line3 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-					line3.setAttribute("x1", x1+rad1+rad1-g-svg[0].offsetLeft);
-					line3.setAttribute("y1", y1+rad1+xfind-svg[0].offsetTop);
-					line3.setAttribute("x2", x2+rad2+rad2-g2-svg[0].offsetLeft);
-					line3.setAttribute("y2", y2+rad2+xfind2-svg[0].offsetTop);
-					line3.setAttribute("style", "stroke: red; stroke-width: 3");
-					console.log("angle2 = " + angle2 + " rad2 = " + rad2 + " xfind2 = " + xfind2 + " g2 = " + g2);*/
-					polygon.setAttribute("points", Number(x1+rad1-xfind-svg[0].offsetLeft-1) + "," + Number(y1+g-svg[0].offsetTop-1) + " " + Number(x2+rad2-xfind2-svg[0].offsetLeft-1) + "," + Number(y2+g2-svg[0].offsetTop-1) + " " + Number(x2+rad2+z2-svg[0].offsetLeft-1) + "," + Number(y2+rad2+xfind2-svg[0].offsetTop-1) + " " + Number(x1+rad1+rad1-g-svg[0].offsetLeft-1) + "," + Number(y1+rad1+xfind-svg[0].offsetTop-1));
+				else{
+					var len = getLineLength(line);
+					console.log(len);
+					//var line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+					//line2.setAttribute("x1", x1+rad1-xfind-svg[0].offsetLeft);
+					//line2.setAttribute("y1", y1+g-svg[0].offsetTop);
+					//line2.setAttribute("x2", x2+rad2-xfind2-svg[0].offsetLeft);
+					//line2.setAttribute("y2", y2+g2-svg[0].offsetTop);
+					//line2.setAttribute("style", "stroke: red; stroke-width: 3");
+					//polygon.setAttribute("points", Number(x1+rad1-xfind-svg[0].offsetLeft-1) + "," + Number(y1+g-svg[0].offsetTop-1) + " " + Number(x2+rad2-xfind2-svg[0].offsetLeft-1) + "," + Number(y2+g2-svg[0].offsetTop-1) + " " + Number(x2+rad2+z2-svg[0].offsetLeft-1) + "," + Number(y2+rad2+xfind2-svg[0].offsetTop-1) + " " + Number(x1+rad1+rad1-g-svg[0].offsetLeft-1) + "," + Number(y1+rad1+xfind-svg[0].offsetTop-1));
 				}
 
 				polygon.setAttribute("style", "fill: #FFECAD; stroke: purple; stroke-width: 1;");
