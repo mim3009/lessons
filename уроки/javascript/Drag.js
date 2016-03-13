@@ -57,18 +57,7 @@ function drag(elementToDrag, event){
 		}
 	}
 
-	if(document.addEventListener){
-		document.addEventListener("mousemove", moveHandler, true);
-		document.addEventListener("mouseup", upHandler, true);
-	}
-	
-	if(event.stopPropagation) event.stopPropagation();
-	else event.cancelBubble = true;
-
-	if(event.preventDefault) event.preventDefault();
-	else event.returnValue = false;
-
-	function moveHandler(e){
+	function dragG(elementToDrag, e){
 		var p = 0;
 		for(var i = 0; i < findedLines.length; i++){
 			if(findedLines[i].getAttribute("lengthLine")){
@@ -93,6 +82,7 @@ function drag(elementToDrag, event){
 						if(parseInt(Number(fLine.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
 							td[0].innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1);
 							td[1].innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1);
+							break;
 						}
 					}
 
@@ -106,6 +96,7 @@ function drag(elementToDrag, event){
 						if(parseInt(Number(fLine.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
 							td[2].innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1);
 							td[3].innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1);
+							break;
 						}
 					}
 
@@ -151,8 +142,6 @@ function drag(elementToDrag, event){
 			var angleOffset = -90;
 			var deg2rad = Math.PI/180;
 			var rad2deg = 180/Math.PI;
-			var centerx = xfix;
-			var centery = yfix;
 			var angle2 = angle + angleOffset;
 			var radangle = angle2*deg2rad;
 			var left = radius*Math.cos(radangle) + xfix - Number(elementToDrag.style.height.replace(/\D+/g,""))/2;
@@ -201,6 +190,21 @@ function drag(elementToDrag, event){
 
 		}
 		else{}
+	}
+
+	if(document.addEventListener){
+		document.addEventListener("mousemove", moveHandler, true);
+		document.addEventListener("mouseup", upHandler, true);
+	}
+	
+	if(event.stopPropagation) event.stopPropagation();
+	else event.cancelBubble = true;
+
+	if(event.preventDefault) event.preventDefault();
+	else event.returnValue = false;
+
+	function moveHandler(e){
+		dragG(elementToDrag,e);
 		if(e.stopPropagation) e.stopPropagation();
 		else e.cancelBubble = true;
 	}
