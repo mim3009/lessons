@@ -105,8 +105,7 @@ function dragLine(lineToDrag, event){
 	if(event.preventDefault) event.preventDefault();
 	else event.returnValue = false;
 
-	function moveHandler(e){
-		if(!e) e = window.event;
+	function moveLine(lineToDrag,e){
 		var x11 = Number(lineToDrag.getAttribute("x1"));
 		var y11 = Number(lineToDrag.getAttribute("y1"));
 		var x22 = Number(lineToDrag.getAttribute("x2"));
@@ -181,9 +180,77 @@ function dragLine(lineToDrag, event){
 				}
 			}
 			else{
-
+				var fALx1 = Number(findedAllLines[i].getAttribute("x1"));
+				var fALy1 = Number(findedAllLines[i].getAttribute("y1"));
+				var fALx2 = Number(findedAllLines[i].getAttribute("x2"));
+				var fALy2 = Number(findedAllLines[i].getAttribute("y2"));
+				if(findedAllLines[i].getAttribute("ch") == "1"){
+					var td1 = null;
+					for(var u = 0; u < findTR.length; u++){
+						var td = findTR[u].getElementsByTagName('td');
+						if((parseInt(Number(findedAllLines[i].getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(findedAllLines[i].getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,""))) || (parseInt(Number(findedAllLines[i].getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(findedAllLines[i].getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")))){
+							td1 = td;
+							break;
+						}
+					}
+					if(fALx1 == x11){
+						findedAllLines[i].setAttribute("x1", parseInt(Number(lineToDrag.getAttribute("x1"))));
+						findedAllLines[i].setAttribute("y1", parseInt(Number(lineToDrag.getAttribute("y1"))));
+						findedAllLines[i].setAttribute("x2", fALx2 + parseInt(Number(lineToDrag.getAttribute("x2"))) - x22);
+						findedAllLines[i].setAttribute("y2", fALy2 + parseInt(Number(lineToDrag.getAttribute("y2"))) - y22);
+						td1[0].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("x1"))) + svg[0].offsetLeft;
+						td1[1].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("y1"))) + svg[0].offsetTop;
+						td1[2].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("x2"))) + svg[0].offsetLeft;
+						td1[3].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("y2"))) + svg[0].offsetTop;
+					}
+					else if(fALx1 == x22){
+						findedAllLines[i].setAttribute("x1", parseInt(Number(lineToDrag.getAttribute("x2"))));
+						findedAllLines[i].setAttribute("y1", parseInt(Number(lineToDrag.getAttribute("y2"))));
+						findedAllLines[i].setAttribute("x2", fALx2 + parseInt(Number(lineToDrag.getAttribute("x2"))) - x22);
+						findedAllLines[i].setAttribute("y2", fALy2 + parseInt(Number(lineToDrag.getAttribute("y2"))) - y22);
+						td1[0].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("x1"))) + svg[0].offsetLeft;
+						td1[1].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("y1"))) + svg[0].offsetTop;
+						td1[2].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("x2"))) + svg[0].offsetLeft;
+						td1[3].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("y2"))) + svg[0].offsetTop;
+					}					
+				}
+				else{
+					var td1 = null;
+					for(var u = 0; u < findTR.length; u++){
+						var td = findTR[u].getElementsByTagName('td');
+						if((parseInt(Number(findedAllLines[i].getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(findedAllLines[i].getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,""))) || (parseInt(Number(findedAllLines[i].getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(findedAllLines[i].getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")))){
+							td1 = td;
+							break;
+						}
+					}
+					if(fALx2 == x22){
+						findedAllLines[i].setAttribute("x1", fALx1 + parseInt(Number(lineToDrag.getAttribute("x1"))) - x11);
+						findedAllLines[i].setAttribute("y1", fALy1 + parseInt(Number(lineToDrag.getAttribute("y1"))) - y11);
+						findedAllLines[i].setAttribute("x2", parseInt(Number(lineToDrag.getAttribute("x2"))));
+						findedAllLines[i].setAttribute("y2", parseInt(Number(lineToDrag.getAttribute("y2"))));
+						td1[0].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("x1"))) + svg[0].offsetLeft;
+						td1[1].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("y1"))) + svg[0].offsetTop;
+						td1[2].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("x2"))) + svg[0].offsetLeft;
+						td1[3].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("y2"))) + svg[0].offsetTop;
+					}
+					else if(fALx2 == x11){
+						findedAllLines[i].setAttribute("x1", fALx1 + parseInt(Number(lineToDrag.getAttribute("x1"))) - x11);
+						findedAllLines[i].setAttribute("y1", fALy1 + parseInt(Number(lineToDrag.getAttribute("y1"))) - y11);
+						findedAllLines[i].setAttribute("x2", parseInt(Number(lineToDrag.getAttribute("x1"))));
+						findedAllLines[i].setAttribute("y2", parseInt(Number(lineToDrag.getAttribute("y1"))));
+						td1[0].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("x1"))) + svg[0].offsetLeft;
+						td1[1].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("y1"))) + svg[0].offsetTop;
+						td1[2].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("x2"))) + svg[0].offsetLeft;
+						td1[3].innerHTML = parseInt(Number(findedAllLines[i].getAttribute("y2"))) + svg[0].offsetTop;
+					}
+				}
 			}
 		}
+	}
+
+	function moveHandler(e){
+		if(!e) e = window.event;
+		moveLine(lineToDrag,e);
 
 		if(e.stopPropagation) e.stopPropagation();
 		else e.cancelBubble = true;
