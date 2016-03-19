@@ -1,4 +1,11 @@
 function drag(elementToDrag, event){
+	var distance = 0;
+	var findX_of_element_i = new Array();
+	var findY_of_element_i = new Array();
+	var distance_for_another_points = new Array();
+	for(var i = 0; i < 100; i++){
+		distance_for_another_points[i] = 0;
+	}
 	var tr = document.getElementById("pointsTable").getElementsByTagName('tr');
 	var findX = null;
 	var findY = null;
@@ -58,6 +65,9 @@ function drag(elementToDrag, event){
 	}
 
 	function dragG(elementToDrag, e){
+		var array_of_moved_points = new Array();
+		var array_of_moved_lines = new Array();
+		var l = 0;
 		var p = 0;
 		for(var i = 0; i < findedLines.length; i++){
 			if(findedLines[i].getAttribute("lengthLine")){
@@ -198,13 +208,18 @@ function drag(elementToDrag, event){
 				findR.innerHTML = parseInt(Number(elementToDrag.style.height.replace(/\D+/g,""))/2);
 			}
 			else if(second_fixed_point.style.background == "red"){
-				 red_point(second_fixed_point, fixLine, svg, e);
+				array_of_moved_lines[l] = fixLine;
+				array_of_moved_points[l] = second_fixed_point;
+				l++;
+				red_point(second_fixed_point, fixLine, svg, e, array_of_moved_points, array_of_moved_lines);
 			}
 		}
 		else{}
 	}
 
-	function red_point(second_fixed_point, fixLine, svg, e){
+	function red_point(second_fixed_point, fixLine, svg, e, array_of_moved_points, array_of_moved_lines){
+		console.log(fixLine);
+		console.log(second_fixed_point);	
 		var rad11 = parseInt(Number(second_fixed_point.style.height.replace(/\D+/g,""))/2);
 		var findedLines2 = new Array();
 		var j = 0;
@@ -230,12 +245,10 @@ function drag(elementToDrag, event){
 			}
 		}
 		if(k == 0){
-			console.log(second_fixed_point);
-			x_fixed_red_point = parseInt(Number(second_fixed_point.style.left.replace(/\D+/g,""))+rad11);
-			y_fixed_red_point = parseInt(Number(second_fixed_point.style.top.replace(/\D+/g,""))+rad11);
+			var x_fixed_red_point = parseInt(Number(second_fixed_point.style.left.replace(/\D+/g,""))+rad11);
+			var y_fixed_red_point = parseInt(Number(second_fixed_point.style.top.replace(/\D+/g,""))+rad11);
 			var fixLineLength = Number(fixLine.getAttribute("lengthLine"));
 			
-			//**начало + разобраться с положением (не правильно крутится) .. причина в дистансе каждый раз переписывается, гдето посчитать длины а потом просто их брать
 			if(!e) e = window.event;
 
 			var center2 = {};
@@ -245,11 +258,12 @@ function drag(elementToDrag, event){
 			point2.x = (e.clientX - deltaX) + Number(elementToDrag.style.height.replace(/\D+/g,""))/2; 
 			point2.y = (e.clientY - deltaY) + Number(elementToDrag.style.height.replace(/\D+/g,""))/2;
 			var angle4 = get_angle(center2, point2);
-			console.log(point2.x + "    " + point2.y);
 			var point_x_of_dragged_element = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1);
 			var point_y_of_dragged_element = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1);
 
-			var distance = Math.sqrt(Math.pow((x_fixed_red_point-point_x_of_dragged_element), 2) + Math.pow((y_fixed_red_point-point_x_of_dragged_element), 2));
+			if(distance == 0){
+				distance = Math.sqrt(Math.pow((x_fixed_red_point-point_x_of_dragged_element), 2) + Math.pow((y_fixed_red_point-point_y_of_dragged_element), 2));
+			}
 			
 			var radius2 = distance;
 			var angleOffset = -90;
@@ -302,6 +316,115 @@ function drag(elementToDrag, event){
 			findR.innerHTML = parseInt(Number(elementToDrag.style.height.replace(/\D+/g,""))/2);
 			//**конец + после этого добавить чтобы все остальные точки и линии двигались аналогично
 
+			var tr_point = document.getElementById("pointsTable").getElementsByTagName('tr');
+			for(var i = 1; i < array_of_moved_points.length; i++){
+				for(var k = 0; k < tr_point.length; k++){
+					var td = tr_point[k].getElementsByTagName('td');
+					for(var j = 0; j < td.length; j++){
+						if(Number(td[0].innerHTML.replace(/\D+/g,"")) == parseInt(Number(array_of_moved_points[i].style.left.replace(/\D+/g,"")) + Number(array_of_moved_points[i].style.width.replace(/\D+/g,""))/2) && Number(td[1].innerHTML.replace(/\D+/g,"")) == parseInt(Number(array_of_moved_points[i].style.top.replace(/\D+/g,"")) + Number(array_of_moved_points[i].style.height.replace(/\D+/g,""))/2)){
+							findX_of_element_i[i] = td[0];
+							findY_of_element_i[i] = td[1];
+							break;
+						}
+					}
+				}
+			}
+
+			var o = 0;
+			var findTR_line = new Array();
+			for(var i = 0; i < array_of_moved_lines.length; i++){
+				var table = document.getElementById("linesTable");
+				var tr = document.getElementById("linesTable").getElementsByTagName('tr');
+				for(var j = 0; j < tr.length; j++){
+					var td = tr[j].getElementsByTagName('td');
+					if(parseInt(Number(array_of_moved_lines[i].getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(array_of_moved_lines[i].getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(array_of_moved_lines[i].getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(array_of_moved_lines[i].getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
+						findTR_line[o] = tr[j];
+						o++;
+						break;
+					}
+				}
+			}
+
+			for(var i = 1; i < array_of_moved_points.length; i++){
+				//пройти по всем линиям и найти только те которые к точке прилягают
+				var z = 0;
+				var array_of_moved_lines_for_point_i = new Array();
+				for(var j = 0; j < array_of_moved_lines.length; j++){
+					if(array_of_moved_lines[j].getAttribute("x1") == fixLine.getAttribute("x1") && array_of_moved_lines[j].getAttribute("y1") == fixLine.getAttribute("y1") && array_of_moved_lines[j].getAttribute("x2") == fixLine.getAttribute("x2") && array_of_moved_lines[j].getAttribute("y2") == fixLine.getAttribute("y2")) continue;
+					if(((Number(array_of_moved_points[i].style.left.replace(/\D+/g,"")) + (parseInt(Number(array_of_moved_points[i].style.height.replace(/\D+/g,"")))/2) - Number(svg[0].offsetLeft)) == array_of_moved_lines[j].getAttribute("x1") && (Number(array_of_moved_points[i].style.top.replace(/\D+/g,"")) + (parseInt(Number(array_of_moved_points[i].style.height.replace(/\D+/g,"")))/2) - Number(svg[0].offsetTop)) == array_of_moved_lines[j].getAttribute("y1")) || ((Number(array_of_moved_points[i].style.left.replace(/\D+/g,"")) + (parseInt(Number(array_of_moved_points[i].style.height.replace(/\D+/g,"")))/2) - Number(svg[0].offsetLeft)) == array_of_moved_lines[j].getAttribute("x2") && (Number(array_of_moved_points[i].style.top.replace(/\D+/g,"")) + (parseInt(Number(array_of_moved_points[i].style.height.replace(/\D+/g,"")))/2) - Number(svg[0].offsetTop)) == array_of_moved_lines[j].getAttribute("y2"))){
+						array_of_moved_lines_for_point_i[z] = array_of_moved_lines[j];
+						z++;
+					}
+				}
+			
+				var origX_of_moved_point_i = array_of_moved_points[i].offsetLeft;
+				var origY_of_moved_point_i = array_of_moved_points[i].offsetTop;
+				var deltaX_of_moved_point_i = startX - origX_of_moved_point_i;
+				var deltaY_of_moved_point_i = startY - origY_of_moved_point_i;
+
+				var point3 = {};
+				point3.x = (e.clientX - deltaX_of_moved_point_i) + Number(array_of_moved_points[i].style.height.replace(/\D+/g,""))/2; 
+				point3.y = (e.clientY - deltaY_of_moved_point_i) + Number(array_of_moved_points[i].style.height.replace(/\D+/g,""))/2;
+				var angle6 = get_angle(center2, point3);
+				var point_x_of_element_i = parseInt(Number(array_of_moved_points[i].style.left.replace(/\D+/g,""))+Number(array_of_moved_points[i].style.height.replace(/\D+/g,""))/2);
+				var point_y_of_element_i = parseInt(Number(array_of_moved_points[i].style.top.replace(/\D+/g,""))+Number(array_of_moved_points[i].style.height.replace(/\D+/g,""))/2);
+
+				if(distance_for_another_points[i] == 0 || distance_for_another_points[i] === undefined){
+					distance_for_another_points[i] = Math.sqrt(Math.pow((x_fixed_red_point-point_x_of_element_i), 2) + Math.pow((y_fixed_red_point-point_y_of_element_i), 2));
+				}
+				
+				var radius_of_element_i = distance_for_another_points[i];
+				var angleOffset = -90;
+				var deg2rad = Math.PI/180;
+				var rad2deg = 180/Math.PI;
+				var angle7 = angle6 + angleOffset;
+				var radangle3 = angle7*deg2rad;
+				var left3 = radius_of_element_i*Math.cos(radangle3) + x_fixed_red_point - Number(array_of_moved_points[i].style.height.replace(/\D+/g,""))/2;
+				var top3 = radius_of_element_i*Math.sin(radangle3) + y_fixed_red_point - Number(array_of_moved_points[i].style.height.replace(/\D+/g,""))/2;
+
+				array_of_moved_points[i].style.left = parseInt(left3) + "px";
+				array_of_moved_points[i].style.top = parseInt(top3) + "px";
+				findX_of_element_i[i].innerHTML =  parseInt(left3) + Number(array_of_moved_points[i].style.width.replace(/\D+/g,""))/2 + "px";
+				findY_of_element_i[i].innerHTML =  parseInt(top3) + Number(array_of_moved_points[i].style.height.replace(/\D+/g,""))/2 + "px";
+
+				for(var d = 0; d < array_of_moved_lines_for_point_i.length; d++){
+					var fLine = array_of_moved_lines_for_point_i[d];
+					var x1 = Number(fLine.getAttribute("x1"))-Number(array_of_moved_points[d].style.width.replace(/\D+/g,""))/2+svg[0].offsetLeft;
+					var y1 = Number(fLine.getAttribute("y1"))-Number(array_of_moved_points[d].style.width.replace(/\D+/g,""))/2+svg[0].offsetTop;
+					var x2 = Number(fLine.getAttribute("x2"))-Number(array_of_moved_points[d].style.width.replace(/\D+/g,""))/2+svg[0].offsetLeft;
+					var y2 = Number(fLine.getAttribute("y2"))-Number(array_of_moved_points[d].style.width.replace(/\D+/g,""))/2+svg[0].offsetTop;
+					if(fLine.getAttribute("ch") == "1"){
+
+						for(var u = 0; u < findTR_line.length; u++){
+							var td = findTR_line[u].getElementsByTagName('td');
+							if(parseInt(Number(fLine.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
+								td[0].innerHTML = parseInt(Number(array_of_moved_points[d].style.left.replace(/\D+/g,""))+Number(array_of_moved_points[d].style.width.replace(/\D+/g,""))/2);
+								td[1].innerHTML = parseInt(Number(array_of_moved_points[d].style.top.replace(/\D+/g,""))+Number(array_of_moved_points[d].style.width.replace(/\D+/g,""))/2);
+							}
+						}
+
+						fLine.setAttribute("x1", parseInt(Number(array_of_moved_points[d].style.left.replace(/\D+/g,""))+Number(array_of_moved_points[d].style.width.replace(/\D+/g,""))/2-svg[0].offsetLeft));
+						fLine.setAttribute("y1", parseInt(Number(array_of_moved_points[d].style.top.replace(/\D+/g,""))+Number(array_of_moved_points[d].style.width.replace(/\D+/g,""))/2-svg[0].offsetTop));
+					}
+					else if(fLine.getAttribute("ch") == "2"){
+
+						for(var u = 0; u < findTR_line.length; u++){
+							var td = findTR_line[u].getElementsByTagName('td');
+							if(parseInt(Number(fLine.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
+								td[2].innerHTML = parseInt(Number(array_of_moved_points[d].style.left.replace(/\D+/g,""))+Number(array_of_moved_points[d].style.width.replace(/\D+/g,""))/2);
+								td[3].innerHTML = parseInt(Number(array_of_moved_points[d].style.top.replace(/\D+/g,""))+Number(array_of_moved_points[d].style.width.replace(/\D+/g,""))/2);
+							}
+						}
+
+						fLine.setAttribute("x2", parseInt(Number(array_of_moved_points[d].style.left.replace(/\D+/g,""))+Number(array_of_moved_points[d].style.width.replace(/\D+/g,""))/2-svg[0].offsetLeft));
+						fLine.setAttribute("y2", parseInt(Number(array_of_moved_points[d].style.top.replace(/\D+/g,""))+Number(array_of_moved_points[d].style.width.replace(/\D+/g,""))/2-svg[0].offsetTop));
+					}
+				}
+				
+			}
+			
+
+
 
 		}
 		else if(k == 1){
@@ -331,11 +454,16 @@ function drag(elementToDrag, event){
 				}
 			}
 
+			//дописать действия на то что точка последняя будет серой
 			if(third_point.style.background == "gray"){
 				console.log(third_point_x + "    " + third_point_y);
+				//red_point(third_point, white_line, svg, e);
 			}
 			else if(third_point.style.background == "red"){
-				red_point(third_point, white_line, svg, e);
+				array_of_moved_lines[l] = white_line;
+				array_of_moved_points[l] = second_fixed_point;
+				l++;
+				red_point(third_point, white_line, svg, e, array_of_moved_points, array_of_moved_lines);
 			}
 		}
 		else if(k > 1){
