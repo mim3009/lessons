@@ -392,20 +392,53 @@ function drawLine(el, event){
 				}
 				else{
 					var len = getLineLength(line);
-					console.log(len);
-					//var line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-					//line2.setAttribute("x1", x1+rad1-xfind-svg[0].offsetLeft);
-					//line2.setAttribute("y1", y1+g-svg[0].offsetTop);
-					//line2.setAttribute("x2", x2+rad2-xfind2-svg[0].offsetLeft);
-					//line2.setAttribute("y2", y2+g2-svg[0].offsetTop);
-					//line2.setAttribute("style", "stroke: red; stroke-width: 3");
-					//polygon.setAttribute("points", Number(x1+rad1-xfind-svg[0].offsetLeft-1) + "," + Number(y1+g-svg[0].offsetTop-1) + " " + Number(x2+rad2-xfind2-svg[0].offsetLeft-1) + "," + Number(y2+g2-svg[0].offsetTop-1) + " " + Number(x2+rad2+z2-svg[0].offsetLeft-1) + "," + Number(y2+rad2+xfind2-svg[0].offsetTop-1) + " " + Number(x1+rad1+rad1-g-svg[0].offsetLeft-1) + "," + Number(y1+rad1+xfind-svg[0].offsetTop-1));
+					var l = Math.sqrt(len*len - rad1*rad1);
+					var l2 = Math.sqrt(len*len - rad2*rad2);
+					var ya;
+					var yb;
+					var xa;
+					var xb;
+					var ya2;
+				    var yb2;
+				    var xa2;
+				    var xb2;
+					if(len > rad1){
+						var e = center.x - point.x;
+						var c = center.y - point.y;
+					    var q = (l*l - rad1*rad1 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
+					    var A = c*c + e*e; 
+					    var B = (center.x*e*c - c*q - center.y*e*e)*2;
+					    var C = center.x*center.x*e*e - 2*center.x*e*q + q*q + center.y*center.y*e*e - rad1*rad1*e*e;
+					    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+					    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+					    xa = (q - ya*c)/e;
+					    xb = (q - yb*c)/e;
+					    console.log("2 " + xa + " " + ya + " " + xb + " " + yb);
+
+
+						var e2 = point.x - center.x;
+						var c2 = point.y - center.y;
+					    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
+					    var A2 = c2*c2 + e2*e2; 
+					    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
+					    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
+					    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+					    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+					    xa2 = (q2 - ya2*c2)/e2;
+					    xb2 = (q2 - yb2*c2)/e2;
+					    console.log("2 " + xa2 + " " + ya2 + " " + xb2 + " " + yb2);
+					}
+					else if(len == rad1){
+						console.log("1 " + point.x + " " + point.y);
+					}
+					else if(len < rad1){
+						console.log("can`t find");
+					}
+					polygon.setAttribute("points", parseInt(xa) + "," + parseInt(ya) + " " + parseInt(xa2) + "," + parseInt(ya2) + " " + parseInt(xb2) + "," + parseInt(yb2) + " " + parseInt(xb) + "," + parseInt(yb));
 				}
 
 				polygon.setAttribute("style", "fill: #FFECAD; stroke: purple; stroke-width: 1;");
-				//svg[0].appendChild(polygon);
-				//svg[0].appendChild(line2);
-				//svg[0].appendChild(line3);
+				svg[0].appendChild(polygon);
 				svg[0].appendChild(line);
 			}
 		}
