@@ -311,8 +311,7 @@ function changeRadius(elementToChange, event){
 		findM.innerHTML = parseInt(Number(elementToChange.style.height.replace(/\D+/g,""))/2) + "kg";
 
 		var polygons = document.getElementsByTagName("polygon");
-		var finded_polygons = new Array();
-		var b = 0;
+		var rad3 = parseInt(Number(elementToChange.style.width.replace(/\D+/g,""))/2);
 		for(var i = 0; i < findedLines.length; i++){
 			if(findedLines[i].getAttribute("ch") == "1"){
 				var x_of_second_point = Number(findedLines[i].getAttribute("x2")) + svg[0].offsetLeft;
@@ -391,12 +390,58 @@ function changeRadius(elementToChange, event){
 			    var coordinates23 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
 			    var coordinates24 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
 			   
+			    var finded_poly = null;
 			    for(var t = 0; t < polygons.length; t++){
 			    	if(String(polygons[t].getAttribute("points")) == coordinates1 || String(polygons[t].getAttribute("points")) == coordinates2 || String(polygons[t].getAttribute("points")) == coordinates3 || String(polygons[t].getAttribute("points")) == coordinates4 || String(polygons[t].getAttribute("points")) == coordinates5 || String(polygons[t].getAttribute("points")) == coordinates6 || String(polygons[t].getAttribute("points")) == coordinates7 || String(polygons[t].getAttribute("points")) == coordinates8 || String(polygons[t].getAttribute("points")) == coordinates9 || String(polygons[t].getAttribute("points")) == coordinates10 || String(polygons[t].getAttribute("points")) == coordinates11 || String(polygons[t].getAttribute("points")) == coordinates12 || String(polygons[t].getAttribute("points")) == coordinates13 || String(polygons[t].getAttribute("points")) == coordinates14 || String(polygons[t].getAttribute("points")) == coordinates15 || String(polygons[t].getAttribute("points")) == coordinates16 || String(polygons[t].getAttribute("points")) == coordinates17 || String(polygons[t].getAttribute("points")) == coordinates18 || String(polygons[t].getAttribute("points")) == coordinates19 || String(polygons[t].getAttribute("points")) == coordinates20 || String(polygons[t].getAttribute("points")) == coordinates21 || String(polygons[t].getAttribute("points")) == coordinates22 || String(polygons[t].getAttribute("points")) == coordinates23 || String(polygons[t].getAttribute("points")) == coordinates24){
-			    		finded_polygons[b] = polygons[t];
-			    		b++;
+			    		finded_poly = polygons[t];
+			    		break;
 			    	}
 			    }
+
+				var len = getLineLength(findedLines[i]);
+				var l = Math.sqrt(len*len - rad3*rad3);
+				var l2 = Math.sqrt(len*len - rad2*rad2);
+				var ya;
+				var yb;
+				var xa;
+				var xb;
+				var ya2;
+			    var yb2;
+			    var xa2;
+			    var xb2;
+				if(len > rad3){
+					var e3 = center.x - point.x;
+					var c = center.y - point.y;
+				    var q = (l*l - rad3*rad3 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
+				    var A = c*c + e3*e3; 
+				    var B = (center.x*e3*c - c*q - center.y*e3*e3)*2;
+				    var C = center.x*center.x*e3*e3 - 2*center.x*e3*q + q*q + center.y*center.y*e3*e3 - rad3*rad3*e3*e3;
+				    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    xa = (q - ya*c)/e3;
+				    xb = (q - yb*c)/e3;
+				    console.log("2 " + xa + " " + ya + " " + xb + " " + yb);
+
+
+					var e2 = point.x - center.x;
+					var c2 = point.y - center.y;
+				    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
+				    var A2 = c2*c2 + e2*e2; 
+				    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
+				    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
+				    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    xa2 = (q2 - ya2*c2)/e2;
+				    xb2 = (q2 - yb2*c2)/e2;
+				    console.log("2 " + xa2 + " " + ya2 + " " + xb2 + " " + yb2);
+				}
+				else if(len == rad3){
+					console.log("1 " + point.x + " " + point.y);
+				}
+				else if(len < rad3){
+					console.log("can`t find");
+				}
+				finded_poly.setAttribute("points", parseInt(xa-svg[0].offsetLeft) + "," + parseInt(ya-svg[0].offsetTop) + " " + parseInt(xa2-svg[0].offsetLeft) + "," + parseInt(ya2-svg[0].offsetTop) + " " + parseInt(xb2-svg[0].offsetLeft) + "," + parseInt(yb2-svg[0].offsetTop) + " " + parseInt(xb-svg[0].offsetLeft) + "," + parseInt(yb-svg[0].offsetTop));
 
 			}
 			else if(findedLines[i].getAttribute("ch") == "2"){
@@ -476,17 +521,61 @@ function changeRadius(elementToChange, event){
 			    var coordinates23 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
 			    var coordinates24 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
 			   
+			    var finded_poly = null;
 			    for(var t = 0; t < polygons.length; t++){
 			    	if(String(polygons[t].getAttribute("points")) == coordinates1 || String(polygons[t].getAttribute("points")) == coordinates2 || String(polygons[t].getAttribute("points")) == coordinates3 || String(polygons[t].getAttribute("points")) == coordinates4 || String(polygons[t].getAttribute("points")) == coordinates5 || String(polygons[t].getAttribute("points")) == coordinates6 || String(polygons[t].getAttribute("points")) == coordinates7 || String(polygons[t].getAttribute("points")) == coordinates8 || String(polygons[t].getAttribute("points")) == coordinates9 || String(polygons[t].getAttribute("points")) == coordinates10 || String(polygons[t].getAttribute("points")) == coordinates11 || String(polygons[t].getAttribute("points")) == coordinates12 || String(polygons[t].getAttribute("points")) == coordinates13 || String(polygons[t].getAttribute("points")) == coordinates14 || String(polygons[t].getAttribute("points")) == coordinates15 || String(polygons[t].getAttribute("points")) == coordinates16 || String(polygons[t].getAttribute("points")) == coordinates17 || String(polygons[t].getAttribute("points")) == coordinates18 || String(polygons[t].getAttribute("points")) == coordinates19 || String(polygons[t].getAttribute("points")) == coordinates20 || String(polygons[t].getAttribute("points")) == coordinates21 || String(polygons[t].getAttribute("points")) == coordinates22 || String(polygons[t].getAttribute("points")) == coordinates23 || String(polygons[t].getAttribute("points")) == coordinates24){
-			    		finded_polygons[b] = polygons[t];
-			    		b++;
+			    		finded_poly = polygons[t];
+			    		break;
 			    	}
 			    }
+
+				var len = getLineLength(findedLines[i]);
+				var l = Math.sqrt(len*len - rad3*rad3);
+				var l2 = Math.sqrt(len*len - rad2*rad2);
+				var ya;
+				var yb;
+				var xa;
+				var xb;
+				var ya2;
+			    var yb2;
+			    var xa2;
+			    var xb2;
+				if(len > rad3){
+					var e3 = center.x - point.x;
+					var c = center.y - point.y;
+				    var q = (l*l - rad3*rad3 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
+				    var A = c*c + e3*e3; 
+				    var B = (center.x*e3*c - c*q - center.y*e3*e3)*2;
+				    var C = center.x*center.x*e3*e3 - 2*center.x*e3*q + q*q + center.y*center.y*e3*e3 - rad3*rad3*e3*e3;
+				    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    xa = (q - ya*c)/e3;
+				    xb = (q - yb*c)/e3;
+				    console.log("2 " + xa + " " + ya + " " + xb + " " + yb);
+
+
+					var e2 = point.x - center.x;
+					var c2 = point.y - center.y;
+				    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
+				    var A2 = c2*c2 + e2*e2; 
+				    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
+				    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
+				    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    xa2 = (q2 - ya2*c2)/e2;
+				    xb2 = (q2 - yb2*c2)/e2;
+				    console.log("2 " + xa2 + " " + ya2 + " " + xb2 + " " + yb2);
+				}
+				else if(len == rad3){
+					console.log("1 " + point.x + " " + point.y);
+				}
+				else if(len < rad3){
+					console.log("can`t find");
+				}
+				finded_poly.setAttribute("points", parseInt(xa-svg[0].offsetLeft) + "," + parseInt(ya-svg[0].offsetTop) + " " + parseInt(xa2-svg[0].offsetLeft) + "," + parseInt(ya2-svg[0].offsetTop) + " " + parseInt(xb2-svg[0].offsetLeft) + "," + parseInt(yb2-svg[0].offsetTop) + " " + parseInt(xb-svg[0].offsetLeft) + "," + parseInt(yb-svg[0].offsetTop));
 			}
 		}
-
-		console.log(finded_polygons);
-
+		
 		if(e.stopPropagation) e.stopPropagation();
 		else e.cancelBubble = true;
 	}
