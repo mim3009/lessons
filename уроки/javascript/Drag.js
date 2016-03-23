@@ -60,6 +60,7 @@ function drag(elementToDrag, event){
 	}
 
 	function dragG(elementToDrag, e){
+		var polygons = document.getElementsByTagName("polygon");
 		var p = 0;
 		for(var i = 0; i < findedLines.length; i++){
 			if(findedLines[i].getAttribute("lengthLine")){
@@ -88,8 +89,141 @@ function drag(elementToDrag, event){
 						}
 					}
 
-					fLine.setAttribute("x1", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
+					var x_center = Number(fLine.getAttribute("x1")) + svg[0].offsetLeft;
+					var y_center = Number(fLine.getAttribute("y1")) + svg[0].offsetTop;
+					var x_of_second_point = Number(fLine.getAttribute("x2")) + svg[0].offsetLeft;
+					var y_of_second_point = Number(fLine.getAttribute("y2")) + svg[0].offsetTop;
+
+					var points = document.getElementsByClassName("movedElement");
+					var findedPoint;
+					for(var o = 0; o < points.length; o++){
+						if(Number(points[o].style.left.replace(/\D+/g,""))+parseInt(Number(points[o].style.width.replace(/\D+/g,""))/2) == parseInt(x_of_second_point) && Number(points[o].style.top.replace(/\D+/g,""))+parseInt(Number(points[o].style.height.replace(/\D+/g,""))/2) == parseInt(y_of_second_point)){
+							findedPoint = points[o];
+							break;
+						}
+					}
+					var rad2 = parseInt(Number(findedPoint.style.width.replace(/\D+/g,""))/2);
+
+					var len = getLineLength(fLine);
+					var l = Math.sqrt(len*len - rad1*rad1);
+					var l2 = Math.sqrt(len*len - rad2*rad2);
+					var ya;
+					var yb;
+					var xa;
+					var xb;
+					var ya2;
+				    var yb2;
+				    var xa2;
+				    var xb2;
+				    var center = {};
+				    center.x = x_center;
+				    center.y = y_center;
+				    var point = {};
+				    point.x = x_of_second_point;
+				    point.y = y_of_second_point;
+					var e3 = center.x - point.x;
+					var c = center.y - point.y;
+				    var q = (l*l - rad1*rad1 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
+				    var A = c*c + e3*e3; 
+				    var B = (center.x*e3*c - c*q - center.y*e3*e3)*2;
+				    var C = center.x*center.x*e3*e3 - 2*center.x*e3*q + q*q + center.y*center.y*e3*e3 - rad1*rad1*e3*e3;
+				    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    xa = (q - ya*c)/e3;
+				    xb = (q - yb*c)/e3;
+				    
+					var e2 = point.x - center.x;
+					var c2 = point.y - center.y;
+				    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
+				    var A2 = c2*c2 + e2*e2; 
+				    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
+				    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
+				    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    xa2 = (q2 - ya2*c2)/e2;
+				    xb2 = (q2 - yb2*c2)/e2;
+				   	
+				   	var coordinates1 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates2 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates3 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates4 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates5 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates6 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates7 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates8 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates9 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates10 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates11 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates12 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates13 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates14 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates15 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates16 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates17 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates18 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates19 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				    var coordinates20 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates21 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				    var coordinates22 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				    var coordinates23 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				    var coordinates24 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   
+				    var finded_poly = null;
+				    for(var t = 0; t < polygons.length; t++){
+				    	if(String(polygons[t].getAttribute("points")) == coordinates1 || String(polygons[t].getAttribute("points")) == coordinates2 || String(polygons[t].getAttribute("points")) == coordinates3 || String(polygons[t].getAttribute("points")) == coordinates4 || String(polygons[t].getAttribute("points")) == coordinates5 || String(polygons[t].getAttribute("points")) == coordinates6 || String(polygons[t].getAttribute("points")) == coordinates7 || String(polygons[t].getAttribute("points")) == coordinates8 || String(polygons[t].getAttribute("points")) == coordinates9 || String(polygons[t].getAttribute("points")) == coordinates10 || String(polygons[t].getAttribute("points")) == coordinates11 || String(polygons[t].getAttribute("points")) == coordinates12 || String(polygons[t].getAttribute("points")) == coordinates13 || String(polygons[t].getAttribute("points")) == coordinates14 || String(polygons[t].getAttribute("points")) == coordinates15 || String(polygons[t].getAttribute("points")) == coordinates16 || String(polygons[t].getAttribute("points")) == coordinates17 || String(polygons[t].getAttribute("points")) == coordinates18 || String(polygons[t].getAttribute("points")) == coordinates19 || String(polygons[t].getAttribute("points")) == coordinates20 || String(polygons[t].getAttribute("points")) == coordinates21 || String(polygons[t].getAttribute("points")) == coordinates22 || String(polygons[t].getAttribute("points")) == coordinates23 || String(polygons[t].getAttribute("points")) == coordinates24){
+				    		finded_poly = polygons[t];
+				    		break;
+				    	}
+				    }
+
+				    fLine.setAttribute("x1", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
 					fLine.setAttribute("y1", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
+
+					var x_changed_of_the_first_point = Number(fLine.getAttribute("x1")) + svg[0].offsetLeft;
+					var y_changed_of_the_first_point = Number(fLine.getAttribute("y1")) + svg[0].offsetTop;
+
+					var len = getLineLength(fLine);
+					var l = Math.sqrt(len*len - rad1*rad1);
+					var l2 = Math.sqrt(len*len - rad2*rad2);
+					var ya;
+					var yb;
+					var xa;
+					var xb;
+					var ya2;
+				    var yb2;
+				    var xa2;
+				    var xb2;
+				    var center = {};
+				    center.x = x_changed_of_the_first_point;
+				    center.y = y_changed_of_the_first_point;
+				    var point = {};
+				    point.x = x_of_second_point;
+				    point.y = y_of_second_point;
+					
+					var e3 = center.x - point.x;
+					var c = center.y - point.y;
+				    var q = (l*l - rad1*rad1 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
+				    var A = c*c + e3*e3; 
+				    var B = (center.x*e3*c - c*q - center.y*e3*e3)*2;
+				    var C = center.x*center.x*e3*e3 - 2*center.x*e3*q + q*q + center.y*center.y*e3*e3 - rad1*rad1*e3*e3;
+				    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    xa = (q - ya*c)/e3;
+				    xb = (q - yb*c)/e3;
+
+					var e2 = point.x - center.x;
+					var c2 = point.y - center.y;
+				    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
+				    var A2 = c2*c2 + e2*e2; 
+				    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
+				    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
+				    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    xa2 = (q2 - ya2*c2)/e2;
+				    xb2 = (q2 - yb2*c2)/e2;
+
+					finded_poly.setAttribute("points", parseInt(xa-svg[0].offsetLeft) + "," + parseInt(ya-svg[0].offsetTop) + " " + parseInt(xa2-svg[0].offsetLeft) + "," + parseInt(ya2-svg[0].offsetTop) + " " + parseInt(xb2-svg[0].offsetLeft) + "," + parseInt(yb2-svg[0].offsetTop) + " " + parseInt(xb-svg[0].offsetLeft) + "," + parseInt(yb-svg[0].offsetTop));
+
 				}
 				else if(fLine.getAttribute("ch") == "2"){
 
@@ -102,8 +236,140 @@ function drag(elementToDrag, event){
 						}
 					}
 
-					fLine.setAttribute("x2", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
+					var x_center = Number(fLine.getAttribute("x2")) + svg[0].offsetLeft;
+					var y_center = Number(fLine.getAttribute("y2")) + svg[0].offsetTop;
+					var x_of_second_point = Number(fLine.getAttribute("x1")) + svg[0].offsetLeft;
+					var y_of_second_point = Number(fLine.getAttribute("y1")) + svg[0].offsetTop;
+
+					var points = document.getElementsByClassName("movedElement");
+					var findedPoint;
+					for(var o = 0; o < points.length; o++){
+						if(Number(points[o].style.left.replace(/\D+/g,""))+parseInt(Number(points[o].style.width.replace(/\D+/g,""))/2) == parseInt(x_of_second_point) && Number(points[o].style.top.replace(/\D+/g,""))+parseInt(Number(points[o].style.height.replace(/\D+/g,""))/2) == parseInt(y_of_second_point)){
+							findedPoint = points[o];
+							break;
+						}
+					}
+					var rad2 = parseInt(Number(findedPoint.style.width.replace(/\D+/g,""))/2);
+
+					var len = getLineLength(fLine);
+					var l = Math.sqrt(len*len - rad1*rad1);
+					var l2 = Math.sqrt(len*len - rad2*rad2);
+					var ya;
+					var yb;
+					var xa;
+					var xb;
+					var ya2;
+				    var yb2;
+				    var xa2;
+				    var xb2;
+				    var center = {};
+				    center.x = x_center;
+				    center.y = y_center;
+				    var point = {};
+				    point.x = x_of_second_point;
+				    point.y = y_of_second_point;
+					var e3 = center.x - point.x;
+					var c = center.y - point.y;
+				    var q = (l*l - rad1*rad1 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
+				    var A = c*c + e3*e3; 
+				    var B = (center.x*e3*c - c*q - center.y*e3*e3)*2;
+				    var C = center.x*center.x*e3*e3 - 2*center.x*e3*q + q*q + center.y*center.y*e3*e3 - rad1*rad1*e3*e3;
+				    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    xa = (q - ya*c)/e3;
+				    xb = (q - yb*c)/e3;
+				    
+					var e2 = point.x - center.x;
+					var c2 = point.y - center.y;
+				    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
+				    var A2 = c2*c2 + e2*e2; 
+				    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
+				    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
+				    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    xa2 = (q2 - ya2*c2)/e2;
+				    xb2 = (q2 - yb2*c2)/e2;
+				   	
+				   	var coordinates1 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates2 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates3 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates4 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates5 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates6 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates7 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates8 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates9 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates10 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates11 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates12 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates13 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates14 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates15 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates16 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates17 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates18 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates19 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				    var coordinates20 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates21 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				    var coordinates22 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				    var coordinates23 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				    var coordinates24 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   
+				    var finded_poly = null;
+				    for(var t = 0; t < polygons.length; t++){
+				    	if(String(polygons[t].getAttribute("points")) == coordinates1 || String(polygons[t].getAttribute("points")) == coordinates2 || String(polygons[t].getAttribute("points")) == coordinates3 || String(polygons[t].getAttribute("points")) == coordinates4 || String(polygons[t].getAttribute("points")) == coordinates5 || String(polygons[t].getAttribute("points")) == coordinates6 || String(polygons[t].getAttribute("points")) == coordinates7 || String(polygons[t].getAttribute("points")) == coordinates8 || String(polygons[t].getAttribute("points")) == coordinates9 || String(polygons[t].getAttribute("points")) == coordinates10 || String(polygons[t].getAttribute("points")) == coordinates11 || String(polygons[t].getAttribute("points")) == coordinates12 || String(polygons[t].getAttribute("points")) == coordinates13 || String(polygons[t].getAttribute("points")) == coordinates14 || String(polygons[t].getAttribute("points")) == coordinates15 || String(polygons[t].getAttribute("points")) == coordinates16 || String(polygons[t].getAttribute("points")) == coordinates17 || String(polygons[t].getAttribute("points")) == coordinates18 || String(polygons[t].getAttribute("points")) == coordinates19 || String(polygons[t].getAttribute("points")) == coordinates20 || String(polygons[t].getAttribute("points")) == coordinates21 || String(polygons[t].getAttribute("points")) == coordinates22 || String(polygons[t].getAttribute("points")) == coordinates23 || String(polygons[t].getAttribute("points")) == coordinates24){
+				    		finded_poly = polygons[t];
+				    		break;
+				    	}
+				    }
+
+				    fLine.setAttribute("x2", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
 					fLine.setAttribute("y2", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
+
+					var x_changed_of_the_first_point = Number(fLine.getAttribute("x2")) + svg[0].offsetLeft;
+					var y_changed_of_the_first_point = Number(fLine.getAttribute("y2")) + svg[0].offsetTop;
+
+					var len = getLineLength(fLine);
+					var l = Math.sqrt(len*len - rad1*rad1);
+					var l2 = Math.sqrt(len*len - rad2*rad2);
+					var ya;
+					var yb;
+					var xa;
+					var xb;
+					var ya2;
+				    var yb2;
+				    var xa2;
+				    var xb2;
+				    var center = {};
+				    center.x = x_changed_of_the_first_point;
+				    center.y = y_changed_of_the_first_point;
+				    var point = {};
+				    point.x = x_of_second_point;
+				    point.y = y_of_second_point;
+					
+					var e3 = center.x - point.x;
+					var c = center.y - point.y;
+				    var q = (l*l - rad1*rad1 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
+				    var A = c*c + e3*e3; 
+				    var B = (center.x*e3*c - c*q - center.y*e3*e3)*2;
+				    var C = center.x*center.x*e3*e3 - 2*center.x*e3*q + q*q + center.y*center.y*e3*e3 - rad1*rad1*e3*e3;
+				    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    xa = (q - ya*c)/e3;
+				    xb = (q - yb*c)/e3;
+
+					var e2 = point.x - center.x;
+					var c2 = point.y - center.y;
+				    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
+				    var A2 = c2*c2 + e2*e2; 
+				    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
+				    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
+				    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    xa2 = (q2 - ya2*c2)/e2;
+				    xb2 = (q2 - yb2*c2)/e2;
+					
+					finded_poly.setAttribute("points", parseInt(xa-svg[0].offsetLeft) + "," + parseInt(ya-svg[0].offsetTop) + " " + parseInt(xa2-svg[0].offsetLeft) + "," + parseInt(ya2-svg[0].offsetTop) + " " + parseInt(xb2-svg[0].offsetLeft) + "," + parseInt(yb2-svg[0].offsetTop) + " " + parseInt(xb-svg[0].offsetLeft) + "," + parseInt(yb-svg[0].offsetTop));
 				}
 			}
 
@@ -168,8 +434,140 @@ function drag(elementToDrag, event){
 						}
 					}
 
-					fLine.setAttribute("x1", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
+					var x_center = Number(fLine.getAttribute("x1")) + svg[0].offsetLeft;
+					var y_center = Number(fLine.getAttribute("y1")) + svg[0].offsetTop;
+					var x_of_second_point = Number(fLine.getAttribute("x2")) + svg[0].offsetLeft;
+					var y_of_second_point = Number(fLine.getAttribute("y2")) + svg[0].offsetTop;
+
+					var points = document.getElementsByClassName("movedElement");
+					var findedPoint;
+					for(var o = 0; o < points.length; o++){
+						if(Number(points[o].style.left.replace(/\D+/g,""))+parseInt(Number(points[o].style.width.replace(/\D+/g,""))/2) == parseInt(x_of_second_point) && Number(points[o].style.top.replace(/\D+/g,""))+parseInt(Number(points[o].style.height.replace(/\D+/g,""))/2) == parseInt(y_of_second_point)){
+							findedPoint = points[o];
+							break;
+						}
+					}
+					var rad2 = parseInt(Number(findedPoint.style.width.replace(/\D+/g,""))/2);
+
+					var len = getLineLength(fLine);
+					var l = Math.sqrt(len*len - rad1*rad1);
+					var l2 = Math.sqrt(len*len - rad2*rad2);
+					var ya;
+					var yb;
+					var xa;
+					var xb;
+					var ya2;
+				    var yb2;
+				    var xa2;
+				    var xb2;
+				    var center = {};
+				    center.x = x_center;
+				    center.y = y_center;
+				    var point = {};
+				    point.x = x_of_second_point;
+				    point.y = y_of_second_point;
+					var e3 = center.x - point.x;
+					var c = center.y - point.y;
+				    var q = (l*l - rad1*rad1 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
+				    var A = c*c + e3*e3; 
+				    var B = (center.x*e3*c - c*q - center.y*e3*e3)*2;
+				    var C = center.x*center.x*e3*e3 - 2*center.x*e3*q + q*q + center.y*center.y*e3*e3 - rad1*rad1*e3*e3;
+				    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    xa = (q - ya*c)/e3;
+				    xb = (q - yb*c)/e3;
+				    
+					var e2 = point.x - center.x;
+					var c2 = point.y - center.y;
+				    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
+				    var A2 = c2*c2 + e2*e2; 
+				    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
+				    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
+				    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    xa2 = (q2 - ya2*c2)/e2;
+				    xb2 = (q2 - yb2*c2)/e2;
+				   	
+				   	var coordinates1 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates2 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates3 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates4 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates5 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates6 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates7 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates8 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates9 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates10 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates11 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates12 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates13 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates14 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates15 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates16 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates17 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates18 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates19 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				    var coordinates20 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates21 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				    var coordinates22 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				    var coordinates23 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				    var coordinates24 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   
+				    var finded_poly = null;
+				    for(var t = 0; t < polygons.length; t++){
+				    	if(String(polygons[t].getAttribute("points")) == coordinates1 || String(polygons[t].getAttribute("points")) == coordinates2 || String(polygons[t].getAttribute("points")) == coordinates3 || String(polygons[t].getAttribute("points")) == coordinates4 || String(polygons[t].getAttribute("points")) == coordinates5 || String(polygons[t].getAttribute("points")) == coordinates6 || String(polygons[t].getAttribute("points")) == coordinates7 || String(polygons[t].getAttribute("points")) == coordinates8 || String(polygons[t].getAttribute("points")) == coordinates9 || String(polygons[t].getAttribute("points")) == coordinates10 || String(polygons[t].getAttribute("points")) == coordinates11 || String(polygons[t].getAttribute("points")) == coordinates12 || String(polygons[t].getAttribute("points")) == coordinates13 || String(polygons[t].getAttribute("points")) == coordinates14 || String(polygons[t].getAttribute("points")) == coordinates15 || String(polygons[t].getAttribute("points")) == coordinates16 || String(polygons[t].getAttribute("points")) == coordinates17 || String(polygons[t].getAttribute("points")) == coordinates18 || String(polygons[t].getAttribute("points")) == coordinates19 || String(polygons[t].getAttribute("points")) == coordinates20 || String(polygons[t].getAttribute("points")) == coordinates21 || String(polygons[t].getAttribute("points")) == coordinates22 || String(polygons[t].getAttribute("points")) == coordinates23 || String(polygons[t].getAttribute("points")) == coordinates24){
+				    		finded_poly = polygons[t];
+				    		break;
+				    	}
+				    }
+
+				    fLine.setAttribute("x1", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
 					fLine.setAttribute("y1", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
+
+					var x_changed_of_the_first_point = Number(fLine.getAttribute("x1")) + svg[0].offsetLeft;
+					var y_changed_of_the_first_point = Number(fLine.getAttribute("y1")) + svg[0].offsetTop;
+
+					var len = getLineLength(fLine);
+					var l = Math.sqrt(len*len - rad1*rad1);
+					var l2 = Math.sqrt(len*len - rad2*rad2);
+					var ya;
+					var yb;
+					var xa;
+					var xb;
+					var ya2;
+				    var yb2;
+				    var xa2;
+				    var xb2;
+				    var center = {};
+				    center.x = x_changed_of_the_first_point;
+				    center.y = y_changed_of_the_first_point;
+				    var point = {};
+				    point.x = x_of_second_point;
+				    point.y = y_of_second_point;
+					
+					var e3 = center.x - point.x;
+					var c = center.y - point.y;
+				    var q = (l*l - rad1*rad1 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
+				    var A = c*c + e3*e3; 
+				    var B = (center.x*e3*c - c*q - center.y*e3*e3)*2;
+				    var C = center.x*center.x*e3*e3 - 2*center.x*e3*q + q*q + center.y*center.y*e3*e3 - rad1*rad1*e3*e3;
+				    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    xa = (q - ya*c)/e3;
+				    xb = (q - yb*c)/e3;
+
+					var e2 = point.x - center.x;
+					var c2 = point.y - center.y;
+				    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
+				    var A2 = c2*c2 + e2*e2; 
+				    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
+				    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
+				    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    xa2 = (q2 - ya2*c2)/e2;
+				    xb2 = (q2 - yb2*c2)/e2;
+
+					finded_poly.setAttribute("points", parseInt(xa-svg[0].offsetLeft) + "," + parseInt(ya-svg[0].offsetTop) + " " + parseInt(xa2-svg[0].offsetLeft) + "," + parseInt(ya2-svg[0].offsetTop) + " " + parseInt(xb2-svg[0].offsetLeft) + "," + parseInt(yb2-svg[0].offsetTop) + " " + parseInt(xb-svg[0].offsetLeft) + "," + parseInt(yb-svg[0].offsetTop));
 				}
 				else if(fLine.getAttribute("ch") == "2"){
 
@@ -181,51 +579,140 @@ function drag(elementToDrag, event){
 						}
 					}
 
-					fLine.setAttribute("x2", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
-					fLine.setAttribute("y2", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
-				}
-			}
+					var x_center = Number(fLine.getAttribute("x2")) + svg[0].offsetLeft;
+					var y_center = Number(fLine.getAttribute("y2")) + svg[0].offsetTop;
+					var x_of_second_point = Number(fLine.getAttribute("x1")) + svg[0].offsetLeft;
+					var y_of_second_point = Number(fLine.getAttribute("y1")) + svg[0].offsetTop;
 
-			findX.innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,"")) + parseInt(Number(elementToDrag.style.width.replace(/\D+/g,""))/2)) + "px";
-			findY.innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,"")) + parseInt(Number(elementToDrag.style.height.replace(/\D+/g,""))/2)) + "px";
-			findR.innerHTML = parseInt(Number(elementToDrag.style.height.replace(/\D+/g,""))/2);
-		}
-		else if(p > 1 && elementToDrag.style.background == "red"){
-			if(!e) e = window.event;
-
-			elementToDrag.style.left = (e.clientX - deltaX) + "px";
-			elementToDrag.style.top = (e.clientY - deltaY) + "px";
-
-			for(var i = 0; i < findedLines.length; i++){
-								
-				var fLine = findedLines[i];
-				var length_of_line = Number(fLine.getAttribute("lengthLine"));
-
-				if(fLine.getAttribute("ch") == "1"){
-
-					for(var u = 0; u < findTR.length; u++){
-						var td = findTR[u].getElementsByTagName('td');
-						if(parseInt(Number(fLine.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
-							td[0].innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1);
-							td[1].innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1);
+					var points = document.getElementsByClassName("movedElement");
+					var findedPoint;
+					for(var o = 0; o < points.length; o++){
+						if(Number(points[o].style.left.replace(/\D+/g,""))+parseInt(Number(points[o].style.width.replace(/\D+/g,""))/2) == parseInt(x_of_second_point) && Number(points[o].style.top.replace(/\D+/g,""))+parseInt(Number(points[o].style.height.replace(/\D+/g,""))/2) == parseInt(y_of_second_point)){
+							findedPoint = points[o];
+							break;
 						}
 					}
+					var rad2 = parseInt(Number(findedPoint.style.width.replace(/\D+/g,""))/2);
 
-					fLine.setAttribute("x1", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
-					fLine.setAttribute("y1", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
-				}
-				else if(fLine.getAttribute("ch") == "2"){
+					var len = getLineLength(fLine);
+					var l = Math.sqrt(len*len - rad1*rad1);
+					var l2 = Math.sqrt(len*len - rad2*rad2);
+					var ya;
+					var yb;
+					var xa;
+					var xb;
+					var ya2;
+				    var yb2;
+				    var xa2;
+				    var xb2;
+				    var center = {};
+				    center.x = x_center;
+				    center.y = y_center;
+				    var point = {};
+				    point.x = x_of_second_point;
+				    point.y = y_of_second_point;
+					var e3 = center.x - point.x;
+					var c = center.y - point.y;
+				    var q = (l*l - rad1*rad1 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
+				    var A = c*c + e3*e3; 
+				    var B = (center.x*e3*c - c*q - center.y*e3*e3)*2;
+				    var C = center.x*center.x*e3*e3 - 2*center.x*e3*q + q*q + center.y*center.y*e3*e3 - rad1*rad1*e3*e3;
+				    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    xa = (q - ya*c)/e3;
+				    xb = (q - yb*c)/e3;
+				    
+					var e2 = point.x - center.x;
+					var c2 = point.y - center.y;
+				    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
+				    var A2 = c2*c2 + e2*e2; 
+				    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
+				    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
+				    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    xa2 = (q2 - ya2*c2)/e2;
+				    xb2 = (q2 - yb2*c2)/e2;
+				   	
+				   	var coordinates1 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates2 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates3 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates4 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates5 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates6 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates7 = String(String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates8 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates9 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates10 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates11 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				   	var coordinates12 = String(String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates13 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates14 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates15 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop));
+				   	var coordinates16 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates17 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates18 = String(String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   	var coordinates19 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				    var coordinates20 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				   	var coordinates21 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop));
+				    var coordinates22 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				    var coordinates23 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop));
+				    var coordinates24 = String(String(parseInt(xb)-svg[0].offsetLeft) + "," + String(parseInt(yb)-svg[0].offsetTop) + " " + String(parseInt(xb2)-svg[0].offsetLeft) + "," + String(parseInt(yb2)-svg[0].offsetTop) + " " + String(parseInt(xa2)-svg[0].offsetLeft) + "," + String(parseInt(ya2)-svg[0].offsetTop) + " " + String(parseInt(xa)-svg[0].offsetLeft) + "," + String(parseInt(ya)-svg[0].offsetTop));
+				   
+				    var finded_poly = null;
+				    for(var t = 0; t < polygons.length; t++){
+				    	if(String(polygons[t].getAttribute("points")) == coordinates1 || String(polygons[t].getAttribute("points")) == coordinates2 || String(polygons[t].getAttribute("points")) == coordinates3 || String(polygons[t].getAttribute("points")) == coordinates4 || String(polygons[t].getAttribute("points")) == coordinates5 || String(polygons[t].getAttribute("points")) == coordinates6 || String(polygons[t].getAttribute("points")) == coordinates7 || String(polygons[t].getAttribute("points")) == coordinates8 || String(polygons[t].getAttribute("points")) == coordinates9 || String(polygons[t].getAttribute("points")) == coordinates10 || String(polygons[t].getAttribute("points")) == coordinates11 || String(polygons[t].getAttribute("points")) == coordinates12 || String(polygons[t].getAttribute("points")) == coordinates13 || String(polygons[t].getAttribute("points")) == coordinates14 || String(polygons[t].getAttribute("points")) == coordinates15 || String(polygons[t].getAttribute("points")) == coordinates16 || String(polygons[t].getAttribute("points")) == coordinates17 || String(polygons[t].getAttribute("points")) == coordinates18 || String(polygons[t].getAttribute("points")) == coordinates19 || String(polygons[t].getAttribute("points")) == coordinates20 || String(polygons[t].getAttribute("points")) == coordinates21 || String(polygons[t].getAttribute("points")) == coordinates22 || String(polygons[t].getAttribute("points")) == coordinates23 || String(polygons[t].getAttribute("points")) == coordinates24){
+				    		finded_poly = polygons[t];
+				    		break;
+				    	}
+				    }
 
-					for(var u = 0; u < findTR.length; u++){
-						var td = findTR[u].getElementsByTagName('td');
-						if(parseInt(Number(fLine.getAttribute("x1"))+svg[0].offsetLeft) == Number(td[0].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y1"))+svg[0].offsetTop) == Number(td[1].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("x2"))+svg[0].offsetLeft) == Number(td[2].innerHTML.replace(/\D+/g,"")) && parseInt(Number(fLine.getAttribute("y2"))+svg[0].offsetTop) == Number(td[3].innerHTML.replace(/\D+/g,""))){
-							td[2].innerHTML = parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1);
-							td[3].innerHTML = parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1);
-						}
-					}
-
-					fLine.setAttribute("x2", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
+				    fLine.setAttribute("x2", parseInt(Number(elementToDrag.style.left.replace(/\D+/g,""))+rad1-svg[0].offsetLeft));
 					fLine.setAttribute("y2", parseInt(Number(elementToDrag.style.top.replace(/\D+/g,""))+rad1-svg[0].offsetTop));
+
+					var x_changed_of_the_first_point = Number(fLine.getAttribute("x2")) + svg[0].offsetLeft;
+					var y_changed_of_the_first_point = Number(fLine.getAttribute("y2")) + svg[0].offsetTop;
+
+					var len = getLineLength(fLine);
+					var l = Math.sqrt(len*len - rad1*rad1);
+					var l2 = Math.sqrt(len*len - rad2*rad2);
+					var ya;
+					var yb;
+					var xa;
+					var xb;
+					var ya2;
+				    var yb2;
+				    var xa2;
+				    var xb2;
+				    var center = {};
+				    center.x = x_changed_of_the_first_point;
+				    center.y = y_changed_of_the_first_point;
+				    var point = {};
+				    point.x = x_of_second_point;
+				    point.y = y_of_second_point;
+					
+					var e3 = center.x - point.x;
+					var c = center.y - point.y;
+				    var q = (l*l - rad1*rad1 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
+				    var A = c*c + e3*e3; 
+				    var B = (center.x*e3*c - c*q - center.y*e3*e3)*2;
+				    var C = center.x*center.x*e3*e3 - 2*center.x*e3*q + q*q + center.y*center.y*e3*e3 - rad1*rad1*e3*e3;
+				    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    xa = (q - ya*c)/e3;
+				    xb = (q - yb*c)/e3;
+
+					var e2 = point.x - center.x;
+					var c2 = point.y - center.y;
+				    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
+				    var A2 = c2*c2 + e2*e2; 
+				    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
+				    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
+				    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    xa2 = (q2 - ya2*c2)/e2;
+				    xb2 = (q2 - yb2*c2)/e2;
+					
+					finded_poly.setAttribute("points", parseInt(xa-svg[0].offsetLeft) + "," + parseInt(ya-svg[0].offsetTop) + " " + parseInt(xa2-svg[0].offsetLeft) + "," + parseInt(ya2-svg[0].offsetTop) + " " + parseInt(xb2-svg[0].offsetLeft) + "," + parseInt(yb2-svg[0].offsetTop) + " " + parseInt(xb-svg[0].offsetLeft) + "," + parseInt(yb-svg[0].offsetTop));	
 				}
 			}
 
