@@ -1,3 +1,8 @@
+window.onload = function(){
+	var table2 = document.getElementById("table2");
+	table2.style.display = "none";
+}
+
 function addCreate(){	
 	document.addEventListener('click', creatingPoints, false);
 }
@@ -89,6 +94,20 @@ function addDraw(){
 			drawLine(this, e);
 		}
 	}
+}
+
+function tableWithParametersShow(){
+	var table1 = document.getElementById("table1");
+	var table2 = document.getElementById("table2");
+	table1.style.display = "block";
+	table2.style.display = "none";
+}
+
+function inputsShow(){
+	var table1 = document.getElementById("table1");
+	var table2 = document.getElementById("table2");
+	table2.style.display = "block";
+	table1.style.display = "none";
 }
 
 function removeDraw(){
