@@ -50,43 +50,57 @@
 			<input type="radio" name="mode" id="drawl" onclick="if(this.checked){drawL()}">Drawing lines mode
 		</form>
 	</div>
-	<div style="float: right;">
-		<div>
-		<table style="width: 300px">
-			<tr>
-				<th>x1</th>
-				<th>y1</th>
-				<th>c</th>
-				<th>r</th>
-				<th>m</th>
-			</tr>
-		</table>
-		<div style="height: 290px; width: 315px; overflow: auto;" >
-		    <table id="pointsTable" style="width: 300px;"></table>
+	<div style="float:right; width:380px;">
+		<div style="float:left;" id="buttons">
+			<div id="btn1" style="-moz-transform: rotate(180deg); -webkit-transform: rotate(180deg); -o-transform: rotate(180deg); writing-mode: tb-rl;">Tables with parameters</div><br><br>
+			<div id="btn2" style="-moz-transform: rotate(180deg); -webkit-transform: rotate(180deg); -o-transform: rotate(180deg); writing-mode: tb-rl;">Inputs</div>
 		</div>
-	</div>
-	<br/>
-	<div>
-		<table style="width: 300px">
-			<tr>
-				<th>x1</th>
-				<th>y1</th>
-				<th>x2</th>
-				<th>y2</th>
-				<th>c</th>
-			</tr>
-		</table>
-		<div style="height: 290px; width: 315px; overflow: auto;" >
-		    <table id="linesTable" style="width: 300px;"></table>
+		<div id="table1" style="float: right;">
+			<div>
+				<table style="width: 300px">
+					<tr>
+						<th>x1</th>
+						<th>y1</th>
+						<th>c</th>
+						<th>r</th>
+						<th>m</th>
+					</tr>
+				</table>
+				<div style="height: 290px; width: 315px; overflow: auto;" >
+				    <table id="pointsTable" style="width: 300px;"></table>
+				</div>
+			</div>
+			<br/>
+			<div>
+				<table style="width: 300px">
+					<tr>
+						<th>x1</th>
+						<th>y1</th>
+						<th>x2</th>
+						<th>y2</th>
+						<th>c</th>
+					</tr>
+				</table>
+				<div style="height: 290px; width: 315px; overflow: auto;" >
+				    <table id="linesTable" style="width: 300px;"></table>
+				</div>
+			</div>
 		</div>
-	</div>
+		<div id="table2" style="float: right;">
+			<span>Speed: <input id="speed" style="float:right;"></span><br><br>
+			<span>Breaking speed: <input id="break" style="float:right;"></span><br><br>
+			<span>Max load on the prop: <input id="loadProp" style="float:right;"></span><br><br>
+			<div id="btnCalculate" onclick="calculate();">Calculate</div>
+		</div>
 	</div>
 	<br/><br/><br/><br/>
 	<div>
-		<svg class="svg" style="height: 560px; width: 70%; background: rgba(0, 65, 255, 0.25); border: 1px solid black;" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
+		<svg class="svg" style="height: 560px; width: 70%; background-image: url(image.jpg); border: 1px solid black;" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
 	</div>
 	<script src="Drag.js"></script>
 	<script src="DragLine.js"></script>
 	<script src="Create.js"></script>
+	<script src="jquery-2.2.3.min.js"></script>
+	<script src="usingjQuery.js"></script>
 </body>
 </html>
