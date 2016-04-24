@@ -98,6 +98,17 @@ function removeDraw(){
 	}
 }
 
+function calculate(){
+	var elements = document.getElementsByClassName('movedElement');
+	var allMass = 0;
+	for(var i = 0; i < elements.length; i++){
+		if(elements[i].style.background == "red"){
+			allMass += Number(elements[i].getAttribute("mass").replace(/\D+/g,""));
+		}
+	}
+	alert(allMass);
+}
+
 function creatingPoints(e){
 	var element = e.target || e.srcElement;
 	if(element == '[object SVGSVGElement]'){
@@ -157,14 +168,20 @@ function changeColour(e){
 		}
 	}
 	else if(el.style.background == "red"){
-		el.style.background = "green";
-		var tr = document.getElementById("pointsTable").getElementsByTagName('tr');
-		for(var i = 0; i < tr.length; i++){
-			var td = tr[i].getElementsByTagName('td');
-			for(var j = 0; j < td.length; j++){
-				if(Number(td[0].innerHTML.replace(/\D+/g,"")) == parseInt(Number(el.style.left.replace(/\D+/g,"")) + Number(el.style.width.replace(/\D+/g,""))/2) && Number(td[1].innerHTML.replace(/\D+/g,"")) == parseInt(Number(el.style.top.replace(/\D+/g,"")) + Number(el.style.height.replace(/\D+/g,""))/2)){
-					td[2].innerHTML = el.style.background;
-					tr[i].style.background = el.style.background;
+		var allPoints = document.getElementsByClassName("movedElement");
+		var isGreenPointAlreadyExists = 0;
+		for(var i = 0; i < allPoints.length; i++)
+			if(allPoints[i].style.background == "green") isGreenPointAlreadyExists = 1;
+		if(isGreenPointAlreadyExists == 0){
+			el.style.background = "green";
+			var tr = document.getElementById("pointsTable").getElementsByTagName('tr');
+			for(var i = 0; i < tr.length; i++){
+				var td = tr[i].getElementsByTagName('td');
+				for(var j = 0; j < td.length; j++){
+					if(Number(td[0].innerHTML.replace(/\D+/g,"")) == parseInt(Number(el.style.left.replace(/\D+/g,"")) + Number(el.style.width.replace(/\D+/g,""))/2) && Number(td[1].innerHTML.replace(/\D+/g,"")) == parseInt(Number(el.style.top.replace(/\D+/g,"")) + Number(el.style.height.replace(/\D+/g,""))/2)){
+						td[2].innerHTML = el.style.background;
+						tr[i].style.background = el.style.background;
+					}
 				}
 			}
 		}
@@ -834,55 +851,49 @@ function drawLine(el, event){
 				point.x = parseInt(Number(x2+rad2-svg[0].offsetLeft)); 
 				point.y =  parseInt(Number(y2+rad2-svg[0].offsetTop));
 				var angle = get_angle(center, point);
-				if(angle == 90 || angle == 270){
-					polygon.setAttribute("points", parseInt(Number(x1+rad1-svg[0].offsetLeft)) + "," + parseInt(Number(y1+rad1+rad1-svg[0].offsetTop-1)) + " " + parseInt(Number(x1+rad1-svg[0].offsetLeft)) + "," + parseInt(Number(y1+rad1-rad1-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-svg[0].offsetLeft)) + "," + parseInt(Number(y2+rad2-rad2-svg[0].offsetTop-1)) + " " + parseInt(Number(x2+rad2-svg[0].offsetLeft)) + "," + parseInt(Number(y2+rad2+rad2-svg[0].offsetTop-1)));
+				
+				var len = getLineLength(line);
+				var l = Math.sqrt(len*len - rad1*rad1);
+				var l2 = Math.sqrt(len*len - rad2*rad2);
+				var ya;
+				var yb;
+				var xa;
+				var xb;
+				var ya2;
+			    var yb2;
+			    var xa2;
+			    var xb2;
+				if(len > rad1){
+					var e = center.x - point.x;
+					var c = center.y - point.y;
+				    var q = (l*l - rad1*rad1 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
+				    var A = c*c + e*e; 
+				    var B = (center.x*e*c - c*q - center.y*e*e)*2;
+				    var C = center.x*center.x*e*e - 2*center.x*e*q + q*q + center.y*center.y*e*e - rad1*rad1*e*e;
+				    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
+				    xa = (q - ya*c)/e;
+				    xb = (q - yb*c)/e;
+				   
+					var e2 = point.x - center.x;
+					var c2 = point.y - center.y;
+				    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
+				    var A2 = c2*c2 + e2*e2; 
+				    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
+				    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
+				    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
+				    xa2 = (q2 - ya2*c2)/e2;
+				    xb2 = (q2 - yb2*c2)/e2;
 				}
-				else if(angle == 0 || angle == 180){
-					polygon.setAttribute("points", parseInt(Number(x1+rad1-rad1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-svg[0].offsetTop)) + " " + parseInt(Number(x1+rad1+rad1-svg[0].offsetLeft-1)) + "," + parseInt(Number(y1+rad1-svg[0].offsetTop)) + " " + parseInt(Number(x2+rad2+rad2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-svg[0].offsetTop)) + " " + parseInt(Number(x2+rad2-rad2-svg[0].offsetLeft-1)) + "," + parseInt(Number(y2+rad2-svg[0].offsetTop)));
+				else if(len == rad1){
+					console.log("1 " + point.x + " " + point.y);
 				}
-				else{
-					var len = getLineLength(line);
-					var l = Math.sqrt(len*len - rad1*rad1);
-					var l2 = Math.sqrt(len*len - rad2*rad2);
-					var ya;
-					var yb;
-					var xa;
-					var xb;
-					var ya2;
-				    var yb2;
-				    var xa2;
-				    var xb2;
-					if(len > rad1){
-						var e = center.x - point.x;
-						var c = center.y - point.y;
-					    var q = (l*l - rad1*rad1 + center.y*center.y - point.y*point.y + center.x*center.x - point.x*point.x)/2;
-					    var A = c*c + e*e; 
-					    var B = (center.x*e*c - c*q - center.y*e*e)*2;
-					    var C = center.x*center.x*e*e - 2*center.x*e*q + q*q + center.y*center.y*e*e - rad1*rad1*e*e;
-					    ya = (Math.sqrt(B*B - 4*A*C) - B) / (2*A);
-					    yb = (-Math.sqrt(B*B - 4*A*C) - B) / (2*A);
-					    xa = (q - ya*c)/e;
-					    xb = (q - yb*c)/e;
-					   
-						var e2 = point.x - center.x;
-						var c2 = point.y - center.y;
-					    var q2 = (l2*l2 - rad2*rad2 + point.y*point.y - center.y*center.y + point.x*point.x - center.x*center.x)/2;
-					    var A2 = c2*c2 + e2*e2; 
-					    var B2 = (point.x*e2*c2 - c2*q2 - point.y*e2*e2)*2;
-					    var C2 = point.x*point.x*e2*e2 - 2*point.x*e2*q2 + q2*q2 + point.y*point.y*e2*e2 - rad2*rad2*e2*e2;
-					    ya2 = (Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
-					    yb2 = (-Math.sqrt(B2*B2 - 4*A2*C2) - B2) / (2*A2);
-					    xa2 = (q2 - ya2*c2)/e2;
-					    xb2 = (q2 - yb2*c2)/e2;
-					}
-					else if(len == rad1){
-						console.log("1 " + point.x + " " + point.y);
-					}
-					else if(len < rad1){
-						console.log("can`t find");
-					}
-					polygon.setAttribute("points", parseInt(xa) + "," + parseInt(ya) + " " + parseInt(xa2) + "," + parseInt(ya2) + " " + parseInt(xb2) + "," + parseInt(yb2) + " " + parseInt(xb) + "," + parseInt(yb));
+				else if(len < rad1){
+					console.log("can`t find");
 				}
+				polygon.setAttribute("points", parseInt(xa) + "," + parseInt(ya) + " " + parseInt(xa2) + "," + parseInt(ya2) + " " + parseInt(xb2) + "," + parseInt(yb2) + " " + parseInt(xb) + "," + parseInt(yb));
+				
 
 				polygon.setAttribute("style", "fill: #FFECAD; stroke: purple; stroke-width: 1;");
 				svg[0].appendChild(polygon);
