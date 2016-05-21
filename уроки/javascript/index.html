@@ -87,10 +87,13 @@
 			</div>
 		</div>
 		<div id="table2" style="float: right;">
-			<span>Speed: <input id="speed" style="float:right;"></span><br><br>
-			<span>Breaking speed: <input id="break" style="float:right;"></span><br><br>
-			<span>Max load on the prop: <input id="loadProp" style="float:right;"></span><br><br>
-			<div id="btnCalculate" onclick="calculate();">Calculate</div>
+			<form action="">
+				Speed: <input id="speed" type="text" name="speed"/><br>
+				Breaking Speed: <input id="breakingSpeed" type="text" name="breakingSpeed"><br>
+				Max load on prop: <input id="maxLoad" type="text" name="maxLoad"><br>
+				<input type="submit" name="submit" value="Submit">				
+			</form>
+			<ul id="result"></ul>
 		</div>
 	</div>
 	<br/><br/><br/><br/>
@@ -100,5 +103,22 @@
 	<script src="Drag.js"></script>
 	<script src="DragLine.js"></script>
 	<script src="Create.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+		var socket = io();
+		$('form').submit(function(){
+			var parameters = {
+				speed: $('#speed').val(),
+				breakingSpeed: $('#breakingSpeed').val(),
+				maxLoad: $('#maxLoad').val()
+			};
+			socket.emit('calculate', parameters);
+			return false;
+		});
+		socket.on('calculate', function(msg){
+			$('#result').append($('<li>').text(msg));
+		});
+	</script>
 </body>
 </html>
