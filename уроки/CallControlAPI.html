@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            background-color: #e0f5ff;
+        }
+
+        .inputs {
+            padding-left: 0!important;
+            padding-right: 1em;
+        }
+
+        #log {
+            background-color: #fff;
+            font-size: small;
+	        overflow-y: scroll;
+            position: absolute;
+            bottom: 3px;
+            top: 90px;
+            left: 3px;
+            right: 3px;
+        }
+
+        #requestString {
+            font-size: small;
+        }
+        
+        .main {
+            margin: 3px;
+        }
+
+        .row {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .red {
+            color: red;
+            font-weight: 800;
+        }
+
+        .green {
+            color: green;
+            font-weight: 800;
+        }
+
+        #connect {
+            margin-left: -6px;
+        }
+
+        #disconnect {
+            margin-left: 6px;
+        }
+
+	@media only screen and (max-width: 767px) {
+		#log {
+		    top: 190px;
+		}
+		
+		#buttons {
+			margin-top: 3px;
+			margin-left: 8px;
+		}
+	}
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6 inputs">
+                    <input type="text" id="wsURI" class="form-control" placeholder="wsURI" value="wss://centrex.netw.fr/ws" />
+                </div>
+                <div class="col-sm-2 inputs">
+                    <input type="text" id="login" class="form-control" placeholder="login" value="porta-support" />
+                </div>
+                <div class="col-sm-2 inputs">
+                    <input type="text" id="password" class="form-control" placeholder="password" value="t6FZGY059HzM" />
+                </div>
+                <div id="buttons">
+                    <button type="button" id="connect" class="col-sm-1 btn btn-success">Connect</button>
+                    <button type="button" id="disconnect" class="col-sm-1 btn btn-danger">Disconnect</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">API method <span class="caret"></span></button>
+                        <ul id="selectMethod" class="dropdown-menu" role="menu">
+                            <li><a href="#" value="originate_call">originate_call</a></li>
+                            <li><a href="#" value="enable_api_notifications">enable_api_notifications</a></li>
+                            <li><a href="#" value="disable_api_notifications">disable_api_notifications</a></li>
+                            <li><a href="#" value="get_sip_calls_list">get_sip_calls_list</a></li>
+                            <li><a href="#" value="answer_call">answer_call</a></li>
+                            <li><a href="#" value="terminate_call">terminate_call</a></li>
+                            <li><a href="#" value="hold_call">hold_call</a></li>
+                            <li><a href="#" value="unhold_call">unhold_call</a></li>
+                            <li><a href="#" value="transfer_call">transfer_call</a></li>
+                            <li><a href="#" value="join_calls">join_calls</a></li>
+                        </ul>
+                    </div>
+                    <input type="text" id="requestString" class="form-control" placeholder="Request String" />
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary" id="makeCall">Make API call</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--think about this element position for adaptive design...-->
+        <div id="log"></div>
+    </div>
+    
+    <script type="text/javascript">
+        var connectBtn = document.getElementById("connect");
+        var disconnectBtn = document.getElementById("disconnect");
+        var makeApiCallBtn = document.getElementById("makeCall");
+        var selectMethodBtn = document.getElementById("selectMethod");
+        var log = document.getElementById("log");
+        var prepareRequest = document.getElementById("prepareRequest");
+        var websocket = null;
+        var sessionID = null;
+        var cseq = 1;
+        var transport_id = " ";
+        var id = " ";
+        var tag = " ";
+
+        connectBtn.addEventListener('click', makeConnection);
+        disconnectBtn.addEventListener('click', closeConnection);
+        makeApiCallBtn.addEventListener('click', makeApiCall);
+        selectMethodBtn.addEventListener('click', createRequestString)
+
+        function makeConnection() {
+            var wsUri = document.getElementById("wsURI").value;
+            var login = document.getElementById("login").value;
+            var password = document.getElementById("password").value;
+
+            //create new socket
+            websocket = new WebSocket(wsUri);
+
+            //onopen socket - bind connection to the server socket and make a login
+            websocket.onopen = function () {
+                closeConnection();
+                websocket.send('{"cseq": ' + cseq++ + ', "service": "Session", "method": "login", "params": { "login": "' + login + '", "password": "' + password + '" }}');
+            }
+
+            //each server responce will be processed here
+            websocket.onmessage = function (event) {
+                var now = new Date();
+                writeToLog("<b>" + now + "</b>" + " <span class='green'>RECEIVED:</span> " + event.data);
+                var obj = JSON.parse(event.data);
+                if (obj.result && obj.result.session_id) {
+                    sessionID = obj.result.session_id;
+                    writeToLog("connected");
+                }
+                if (obj.result.call_info) {
+                    transport_id = obj.result.call_info.transport_id;
+                    id = obj.result.call_info.call.id;
+                    tag = obj.result.call_info.call.tag;
+                }
+            };
+
+            //remove standart action on close socket
+            websocket.onclose = function (event) { };
+
+            //make a ping request every 5 min to let socket know that we are still alive :)
+            setInterval(function () {
+                websocket.send("Ping");
+            }, 300000);
+        }
+
+        //function for closing connection
+        function closeConnection() {
+            if (!sessionID) return;
+            websocket.close();
+            writeToLog("disconnected session " + sessionID);
+            sessionID = null;
+        }
+
+        //function for making api call. It gets value from the requestString input and send it to the server
+        function makeApiCall() {
+            var now = new Date();
+            websocket.send(document.getElementById("requestString").value);
+            cseq++;
+            writeToLog("<b>" + now + "</b>" + " <span class='red'>SENT:</span> " + document.getElementById("requestString").value);
+        }
+
+        //function generates correct json for sending it on the server's side
+        function createRequestString() {
+            var target = window.event.target;
+            if (target.tagName != 'A') return;
+            window.event.preventDefault();
+            
+            switch (target.getAttribute("value")) {
+                case 'originate_call':
+                    document.getElementById("requestString").value = '{ "cseq": ' + cseq + ', "service": "CallControl", "method": "originate_call", "auth_info": { "session_id": "' + sessionID + '" }, "params": { "i_account": "1130", "cld": "00099997", "callee_autopickup": "Y" } }';
+                    break;
+                case 'enable_api_notifications':
+                    document.getElementById("requestString").value = '{ "cseq": ' + cseq + ', "service": "Account", "method": "enable_api_notifications", "auth_info": { "session_id": "' + sessionID + '" }, "params": { "i_account": "1130", "event": "sip.call_control_notifications" } }';
+                    break;
+                case 'disable_api_notifications':
+                    document.getElementById("requestString").value = '{ "cseq": ' + cseq + ', "service": "Account", "method": "disable_api_notifications", "auth_info": { "session_id": "' + sessionID + '" }, "params": { "i_account": "1130", "event": "sip.call_control_notifications" } }';
+                    break;
+                case 'get_sip_calls_list':
+                    document.getElementById("requestString").value = '{ "cseq": ' + cseq + ', "service": "CallControl", "method": "get_sip_calls_list", "auth_info": { "session_id": "' + sessionID + '" }, "params": { "i_account": "1130" } }';
+                    break;
+                case 'answer_call':
+                    document.getElementById("requestString").value = '{ "cseq": ' + cseq + ', "service": "CallControl", "method": "answer_call", "auth_info": { "session_id": "' + sessionID + '" }, "params": { "transport_id": "' + transport_id + '", "callee_answer_mode": "invite", "call": { "tag": "' + tag + '", "id": "' + id + '" } } }';
+                    break;
+                case 'terminate_call':
+                    document.getElementById("requestString").value = '{ "cseq": ' + cseq + ', "service": "CallControl", "method": "terminate_call", "auth_info": { "session_id": "' + sessionID + '" }, "params": { "transport_id": "' + transport_id + '", "call": { "tag": "' + tag + '", "id": "' + id + '" } } }';
+                    break;
+                case 'hold_call':
+                    document.getElementById("requestString").value = '{ "cseq": ' + cseq + ', "service": "CallControl", "method": "hold_call", "auth_info": { "session_id": "' + sessionID + '" }, "params": { "transport_id": "' + transport_id + '", "call": { "tag": "' + tag + '", "id": "' + id + '" } } }';
+                    break;
+                case 'unhold_call':
+                    document.getElementById("requestString").value = '{ "cseq": ' + cseq + ', "service": "CallControl", "method": "unhold_call", "auth_info": { "session_id": "' + sessionID + '" }, "params": { "transport_id": "' + transport_id + '", "call": { "tag": "' + tag + '", "id": "' + id + '" } } }';
+                    break;
+                case 'transfer_call':
+                    document.getElementById("requestString").value = '{ "cseq": ' + cseq + ', "service": "CallControl", "method": "transfer_call", "auth_info": { "session_id": "' + sessionID + '" }, "params": { "cld": "00099996", "transport_id": "' + transport_id + '", "call": { "tag": "' + tag + '", "id": "' + id + '" } } }';
+                    break;
+                case 'join_calls':
+                    document.getElementById("requestString").value = '{ "cseq": ' + cseq + ', "service": "CallControl", "method": "join_calls", "auth_info": { "session_id": "' + sessionID + '" }, "params": { "to_call": { "tag": "' + tag + '", "id": "' + id + '" }, "transport_id": "' + transport_id + '", "call": { "tag": "' + tag + '" , "id": "' + id + '" } } }';
+                    break;
+                default:
+                    writeToLog("method: " + method + " was not found");
+                    break;
+            }
+        }
+
+        //function for writing all messages to the log
+        function writeToLog(message) {
+            var p = document.createElement("p");
+            p.innerHTML = message;
+            log.appendChild(p);
+        }
+
+        //close socket connection if browser tab was closed or browser was closed. NOTE: doesn't work for every browser
+        window.onbeforeunload = function () {
+            websocket.close()
+        };
+    </script>
+</body>
+</html>
